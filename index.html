@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZAREN VETO</title>
+    <title>ZAREN VETO | Official Profile</title>
     <style>
         body { background-color: #f0f2f5; font-family: Arial, sans-serif; margin: 0; padding: 0; }
         .header-wrapper { background-color: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
@@ -12,20 +12,24 @@
         .profile-header { display: flex; align-items: flex-end; margin-top: -100px; padding: 0 30px; padding-bottom: 20px; }
         .profile-pic { width: 168px; height: 168px; border-radius: 50%; border: 4px solid white; background: white; object-fit: cover; }
         .profile-details { margin-right: 20px; margin-bottom: 15px; flex-grow: 1; }
-        .name-wrapper { display: flex; align-items: center; gap: 8px; }
+        .name-wrapper { display: flex; align-items: center; gap: 6px; }
         .profile-name { font-size: 32px; font-weight: bold; margin: 0; color: #050505; }
-        /* شارة التحقق الزرقاء مخصصة لحسابكِ هنا فقط */
-        .verified-badge { width: 22px; height: 22px; background-color: #0866ff; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
-        .profile-bio { color: #65676b; margin: 5px 0; font-size: 16px; font-weight: 600; }
+        
+        /* شارة التوثيق المطابقة تماماً لفيسبوك (Vérifié) */
+        .verified-badge { width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; margin-top: 4px; }
+        
+        .stats-info { color: #65676b; font-size: 15px; margin: 5px 0; font-weight: bold; }
+        .profile-bio { color: #050505; margin: 8px 0; font-size: 16px; line-height: 1.4; max-width: 600px; }
         .action-buttons { display: flex; gap: 10px; margin-bottom: 15px; }
-        .btn { padding: 8px 16px; border-radius: 6px; border: none; font-weight: bold; cursor: pointer; font-size: 15px; }
-        .btn-primary { background-color: #0866ff; color: white; }
+        .btn { padding: 8px 20px; border-radius: 6px; border: none; font-weight: bold; cursor: pointer; font-size: 15px; display: flex; align-items: center; gap: 5px; }
+        .btn-follow { background-color: #0866ff; color: white; }
         .btn-secondary { background-color: #e4e6eb; color: #050505; }
         
         @media (max-width: 700px) {
             .profile-header { flex-direction: column; align-items: center; margin-top: -85px; }
             .profile-details { margin-right: 0; text-align: center; margin-top: 10px; }
             .name-wrapper { justify-content: center; }
+            .verified-badge { margin-top: 2px; }
             .action-buttons { justify-content: center; }
         }
     </style>
@@ -40,14 +44,17 @@
                     <div class="name-wrapper">
                         <h1 class="profile-name" translate="no">ZAREN VETO</h1>
                         <div class="verified-badge" title="Compte vérifié">
-                            <svg viewBox="0 0 24 24" width="14" height="14" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"></path></svg>
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="#0866ff"><path d="M22.5 12.5c0-1.58-.88-2.95-2.18-3.66.54-1.22.4-2.66-.41-3.71-1.04-1.35-2.64-1.81-4.1-.97C14.82 3.1 13.52 2.5 12 2.5s-2.82.6-3.81 1.66c-1.46-.84-3.06-.38-4.1.97-.81 1.05-.95 2.49-.41 3.71-1.3.71-2.18 2.08-2.18 3.66 0 1.58.88 2.95 2.18 3.66-.54 1.22-.4 2.66.41 3.71 1.04 1.35 2.64 1.81 4.1.97.99 1.06 2.29 1.66 3.81 1.66s2.82-.6 3.81-1.66c1.46.84 3.06.38 4.1-.97.81-1.05.95-2.49.41-3.71 1.3-.71 2.18-2.08 2.18-3.66zM10 17.5l-4.5-4.5 1.5-1.5 3 3 7-7 1.5 1.5-8.5 8.5z"></path></svg>
                         </div>
                     </div>
-                    <p class="profile-bio">منصة تواصل اجتماعي حرة تحترم السيادة الرقمية والخصوصية دون قيود الهوية الرسمية</p>
+                    <p class="stats-info">1.2M متابع • 150 يتابعون</p>
+                    <p class="profile-bio">الحساب الرسمي لمنصة ZAREN VETO. نحو سيادة رقمية كاملة وحرية تعبير بلا قيود.</p>
                 </div>
                 <div class="action-buttons">
-                    <button class="btn btn-primary">إضافة منشور</button>
-                    <button class="btn btn-secondary">تعديل الملف الشخصي</button>
+                    <button class="btn btn-follow">
+                         <span>+</span> Suivre
+                    </button>
+                    <button class="btn btn-secondary">Message</button>
                 </div>
             </div>
         </div>
