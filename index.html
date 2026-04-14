@@ -3,123 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zaren Veto | Global Platform</title>
+    <title>Zaren Veto | Secure Space</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body { background-color: #f0f2f5; font-family: 'Segoe UI', Helvetica, Arial, sans-serif; margin: 0; }
+        body { background-color: #f0f2f5; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; overflow-x: hidden; }
+        .main-wrapper { max-width: 1030px; margin: 0 auto; background: white; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); padding-bottom: 20px;}
         
-        /* واجهة الدخول */
-        #authPage { display: flex; align-items: center; justify-content: center; height: 100vh; }
-        .auth-box { background: white; padding: 40px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); width: 100%; max-width: 400px; text-align: center; }
-        .auth-box h2 { color: #1877f2; font-size: 35px; margin-bottom: 20px; }
-        .input-field { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; font-size: 16px; outline: none; }
-        .btn-auth { width: 100%; background: #1877f2; color: white; border: none; padding: 12px; border-radius: 6px; font-size: 18px; font-weight: bold; cursor: pointer; }
-
-        /* واجهة المنصة (تظهر بعد الدخول) */
-        #mainPlatform { display: none; }
-        .top-nav { background-color: #ffffff; height: 56px; display: flex; align-items: center; padding: 0 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100; }
-        .nav-logo { font-weight: bold; color: #1877f2; font-size: 24px; text-decoration: none; }
-        .main-wrapper { max-width: 1030px; margin: 0 auto; padding-top: 20px; }
+        /* 1. حل مشكلة تداخل الاسم مع صورة الغلاف */
+        .cover-container { width: 100%; height: 350px; background: #242526; background-image: url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1000'); background-size: cover; background-position: center; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px;}
         
-        /* الهوية البصرية */
-        .header-card { background: white; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); overflow: hidden; }
-        .cover-photo { width: 100%; height: 350px; background: #242526; background-image: url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1000'); background-size: cover; position: relative; }
-        .profile-header { display: flex; align-items: flex-end; padding: 0 32px 20px; margin-top: -60px; position: relative; }
-        .profile-pic-container { position: relative; border: 4px solid white; border-radius: 50%; width: 160px; height: 160px; background: white; display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; }
-        .shield-svg { width: 120px; height: 120px; color: #1877f2; }
-        .z-inner { position: absolute; font-size: 80px; font-weight: 900; color: #1877f2; user-select: none; }
-        .profile-info { margin-left: 20px; margin-bottom: 10px; }
-        .profile-name { font-size: 32px; font-weight: bold; margin: 0; color: #050505; user-select: none; }
+        .profile-header-area { display: flex; flex-direction: column; align-items: center; text-align: center; margin-top: -75px; /* يرفع القرص نصف مسافته فوق الغلاف */ padding: 0 20px; position: relative; z-index: 10; }
         
-        /* التفاعل */
-        .stats { color: #65676b; font-weight: 600; margin-top: 5px; }
-        .btn-follow { background: #1877f2; color: white; border: none; padding: 8px 24px; border-radius: 6px; font-weight: 600; cursor: pointer; margin-left: auto; margin-bottom: 10px; }
-        .btn-follow.active { background: #e4e6eb; color: #050505; }
+        /* 2. تلبية طلب القرص باللون الأزرق (الحدود) وقابلية تغيير الصورة */
+        .profile-pic-circle { position: relative; border: 4px solid #1877f2; /* الحدود زرقاء */ border-radius: 50%; width: 150px; height: 150px; background: white; flex-shrink: 0; display: flex; align-items: center; justify-content: center; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.2); cursor: pointer;}
+        .profile-pic-circle img { width: 100%; height: 100%; object-fit: cover; display: none; }
+        .default-shield { width: 100px; height: 100px; color: #1877f2; }
+        
+        /* زر الكاميرا لتغيير صورة القرص */
+        .edit-profile-icon { position: absolute; bottom: 5px; right: 5px; background: #e4e6eb; border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; cursor: pointer; border: 2px solid white; z-index: 11;}
+        
+        /* 3. تلبية طلب الاسم باللون الأزرق */
+        .profile-name { font-size: 28px; font-weight: bold; margin: 15px 0 5px; color: #1877f2; /* الاسم أزرق */ user-select: none; }
+        
+        .stats { color: #65676b; font-weight: 600; font-size: 14px; margin-bottom: 15px;}
+        
+        /* 4. تلبية طلب واجهة التطبيق المشوهة (تحسين التنسيق) */
+        .welcome-card { background: #f0f2f5; padding: 20px; border-radius: 8px; margin: 20px; text-align: center; max-width: 600px; margin-left: auto; margin-right: auto;}
+        
+        input[type="file"] { display: none; }
     </style>
 </head>
 <body>
 
-<div id="authPage">
-    <div class="auth-box">
-        <h2>Zaren Veto</h2>
-        <input type="email" id="emailInput" class="input-field" placeholder="Email Address">
-        <input type="password" id="passInput" class="input-field" placeholder="Password">
-        <button class="btn-auth" onclick="login()">Create Account / Login</button>
-        <p style="font-size: 12px; color: #65676b; margin-top: 15px;">Secure connection via Zaren Veto Protocol</p>
-    </div>
-</div>
-
-<div id="mainPlatform">
-    <nav class="top-nav">
-        <a href="#" class="nav-logo">Zaren Veto</a>
-        <button onclick="logout()" style="margin-left: auto; border:none; background:none; color:#65676b; cursor:pointer;">Log Out</button>
-    </nav>
-
     <div class="main-wrapper">
-        <div class="header-card">
-            <div class="cover-photo"></div>
-            <div class="profile-header">
-                <div class="profile-pic-container">
-                    <svg class="shield-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                    </svg>
-                    <span class="z-inner">Z</span>
+        <div class="cover-container"></div>
+        
+        <div class="profile-header-area">
+            <label for="profilePicInput" class="profile-pic-circle" id="profileCircle">
+                <img id="profileImage" src="" alt="Profile Picture">
+                <svg id="shieldSvg" class="default-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                    <text x="50%" y="65%" text-anchor="middle" font-size="10" font-weight="bold" fill="currentColor">Z</text>
+                </svg>
+                <div class="edit-profile-icon">
+                    <i class="fas fa-camera"></i>
                 </div>
-                <div class="profile-info">
-                    <h1 class="profile-name">Zaren Veto</h1>
-                    <div class="stats" id="followStats">250k followers • 0 following</div>
-                </div>
-                <button id="followBtn" class="btn-follow" onclick="toggleFollow()">Follow</button>
-            </div>
+            </label>
+            <input type="file" id="profilePicInput" accept="image/*" onchange="loadProfilePicture(event)">
+            
+            <h1 class="profile-name">Zaren Veto</h1>
+            <div class="stats">250k followers • 0 following</div>
         </div>
         
-        <div style="background: white; padding: 20px; border-radius: 8px; margin-top: 20px; text-align: center;">
-            <h3>Welcome to your secure space</h3>
-            <p style="color: #65676b;">Everything is set up. Your identity is protected under the Zaren Veto shield.</p>
+        <div class="welcome-card">
+            <h2 style="color: #1c1e21; margin-top: 0;">Welcome to your secure space</h2>
+            <p style="color: #65676b; margin-bottom: 0;">Your identity is now protected under the Zaren Veto shield. Everything is set up.</p>
         </div>
     </div>
-</div>
 
 <script>
-    let followers = 250000;
-
-    // وظيفة الدخول
-    function login() {
-        const email = document.getElementById('emailInput').value;
-        if(email.includes('@')) {
-            localStorage.setItem('userLoggedIn', 'true');
-            document.getElementById('authPage').style.display = 'none';
-            document.getElementById('mainPlatform').style.display = 'block';
-        } else {
-            alert("Please enter a valid email to open your account.");
-        }
-    }
-
-    function logout() {
-        localStorage.removeItem('userLoggedIn');
-        location.reload();
-    }
-
-    function toggleFollow() {
-        const btn = document.getElementById('followBtn');
-        const stats = document.getElementById('followStats');
-        if(btn.innerText === "Follow") {
-            btn.innerText = "Following";
-            btn.classList.add('active');
-            followers++;
-        } else {
-            btn.innerText = "Follow";
-            btn.classList.remove('active');
-            followers--;
-        }
-        stats.innerText = `${(followers/1000).toFixed(1)}k followers • 0 following`;
-    }
-
-    // التحقق من الجلسة عند التحميل
-    window.onload = function() {
-        if(localStorage.getItem('userLoggedIn') === 'true') {
-            document.getElementById('authPage').style.display = 'none';
-            document.getElementById('mainPlatform').style.display = 'block';
+    // دالة لتسمح لأي مستخدم بتغيير صورة القرص
+    function loadProfilePicture(event) {
+        const image = document.getElementById('profileImage');
+        const shield = document.getElementById('shieldSvg');
+        const file = event.target.files[0];
+        
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                image.src = e.target.result;
+                image.style.display = 'block'; // إظهار الصورة
+                shield.style.display = 'none'; // إخفاء الدرع
+            }
+            reader.readAsDataURL(file);
         }
     }
 </script>
