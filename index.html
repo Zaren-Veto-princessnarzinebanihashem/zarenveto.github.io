@@ -3,116 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zaren Veto | Verified Official</title>
+    <title>Zaren Veto | Profile</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body { background-color: #f0f2f5; font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; }
-        #authPage { display: flex; align-items: center; justify-content: center; height: 100vh; background: #f0f2f5; }
-        .auth-box { background: white; padding: 40px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 100%; max-width: 400px; text-align: center; }
-        .auth-box h2 { color: #1877f2; font-size: 32px; margin-bottom: 25px; }
-        .input-group { margin-bottom: 15px; }
-        .input-group input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 16px; outline: none; }
-        .btn-auth { width: 100%; background: #1877f2; color: white; border: none; padding: 12px; border-radius: 8px; font-size: 18px; font-weight: bold; cursor: pointer; }
-
-        #mainPlatform { display: none; }
-        .main-container { max-width: 1000px; margin: 0 auto; background: white; min-height: 100vh; box-shadow: 0 0 15px rgba(0,0,0,0.05); }
-
-        /* الغلاف */
-        .cover-wrapper { width: 100%; height: 350px; background: #242526; background-image: url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1000'); background-size: cover; background-position: center; position: relative; }
-        .edit-cover-label { position: absolute; bottom: 20px; right: 20px; background: white; padding: 10px 15px; border-radius: 8px; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-
-        /* الهوية */
-        .identity-header { display: flex; flex-direction: column; align-items: center; margin-top: -90px; padding-bottom: 40px; position: relative; }
-        .avatar-box { position: relative; width: 180px; height: 180px; }
-        .avatar-main { width: 100%; height: 100%; border-radius: 50%; border: 6px solid #1877f2; background: white; overflow: hidden; display: flex; align-items: center; justify-content: center; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        .avatar-main img { width: 100%; height: 100%; object-fit: cover; display: none; }
-        .shield-svg { width: 120px; height: 120px; color: #1877f2; }
-        .edit-avatar-label { position: absolute; bottom: 15px; right: 15px; background: #e4e6eb; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; border: 3px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.2); z-index: 10; }
-
-        /* الاسم Zaren Veto بالأزرق مع العلامة الزرقاء */
-        .name-container { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 20px; }
-        .display-name { font-size: 34px; font-weight: bold; color: #1877f2; margin: 0; user-select: none; }
+        body { background-color: #f0f2f5; font-family: 'Segoe UI', sans-serif; margin: 0; }
         
-        /* علامة التوثيق الزرقاء الاحترافية */
-        .verified-badge { color: #1877f2; font-size: 28px; display: flex; align-items: center; justify-content: center; }
+        .nav-bar { background: white; height: 60px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; }
+        .logo { font-weight: bold; color: #1877f2; font-size: 24px; text-decoration: none; }
+        .user-action-icon { font-size: 20px; color: #1877f2; cursor: pointer; background: #e7f3ff; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
 
-        .stats-row { color: #65676b; font-weight: 600; font-size: 18px; margin: 10px 0 20px; }
-        .follow-btn { background: #1877f2; color: white; border: none; padding: 12px 40px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 16px; }
+        .profile-container { max-width: 1000px; margin: 0 auto; background: white; min-height: 100vh; }
+
+        /* 1. أيقونة تغيير الغلاف - واضحة وفي مكانها */
+        .cover-section { width: 100%; height: 350px; background: #242526 url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1000') center/cover; position: relative; }
+        .edit-cover-btn { position: absolute; bottom: 20px; right: 20px; background: white; padding: 10px 15px; border-radius: 8px; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); border: none; }
+
+        .profile-header { display: flex; flex-direction: column; align-items: center; position: relative; padding-top: 100px; background: white; }
+
+        /* 2. أيقونة تغيير صورة الحساب (القرص) */
+        .avatar-wrapper { position: absolute; top: -90px; width: 180px; height: 180px; }
+        .avatar-circle { width: 100%; height: 100%; border-radius: 50%; border: 6px solid #1877f2; background: white; overflow: hidden; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+        .avatar-circle img { width: 100%; height: 100%; object-fit: cover; display: none; }
+        .shield-icon { width: 110px; height: 110px; color: #1877f2; }
+        
+        .edit-avatar-btn { position: absolute; bottom: 12px; right: 12px; background: #e4e6eb; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; border: 3px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.2); z-index: 100; }
+
+        /* الاسم بالأزرق مع علامة التوثيق */
+        .name-area { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
+        .name-style { font-size: 36px; font-weight: bold; color: #1877f2; margin: 0; }
+        .verified-tick { width: 30px; height: 30px; color: #1877f2; }
+
+        .stats-text { color: #65676b; font-weight: 600; font-size: 18px; margin: 10px 0 20px; }
+        .btn-follow-action { background: #1877f2; color: white; border: none; padding: 12px 45px; border-radius: 8px; font-weight: bold; cursor: pointer; }
 
         input[type="file"] { display: none; }
     </style>
 </head>
 <body>
 
-<div id="authPage">
-    <div class="auth-box">
-        <h2>Zaren Veto</h2>
-        <div class="input-group"><input type="email" id="email" placeholder="Email Address"></div>
-        <div class="input-group"><input type="password" id="pass" placeholder="Password"></div>
-        <button class="btn-auth" onclick="handleAuth()">Login / Create Account</button>
+<nav class="nav-bar">
+    <a href="#" class="logo">Zaren Veto</a>
+    <div class="user-action-icon"><i class="fas fa-user-plus"></i></div>
+</nav>
+
+<div class="profile-container">
+    <div class="cover-section" id="coverDisplay">
+        <label for="coverInput" class="edit-cover-btn">
+            <i class="fas fa-camera"></i> Edit Cover Photo
+        </label>
+        <input type="file" id="coverInput" accept="image/*" onchange="updateCover(event)">
     </div>
-</div>
 
-<div id="mainPlatform">
-    <div class="main-container">
-        <div class="cover-wrapper" id="coverDisplay">
-            <label for="coverIn" class="edit-cover-label"><i class="fas fa-camera"></i> Edit Cover</label>
-            <input type="file" id="coverIn" accept="image/*" onchange="upCover(event)">
+    <div class="profile-header">
+        <div class="avatar-wrapper">
+            <div class="avatar-circle">
+                <img id="profileImg" src="" alt="">
+                <svg id="shieldSvg" class="shield-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+            </div>
+            <label for="avatarInput" class="edit-avatar-btn">
+                <i class="fas fa-camera"></i>
+            </label>
+            <input type="file" id="avatarInput" accept="image/*" onchange="updateAvatar(event)">
         </div>
 
-        <div class="identity-header">
-            <div class="avatar-box">
-                <div class="avatar-main">
-                    <img id="pImg" src="" alt="">
-                    <svg id="pShield" class="shield-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                        <text x="50%" y="65%" text-anchor="middle" font-size="10" font-weight="bold" fill="currentColor">Z</text>
-                    </svg>
-                </div>
-                <label for="pIn" class="edit-avatar-label"><i class="fas fa-camera"></i></label>
-                <input type="file" id="pIn" accept="image/*" onchange="upAvatar(event)">
-            </div>
-
-            <div class="name-container">
-                <h1 class="display-name">Zaren Veto</h1>
-                <div class="verified-badge" title="Verified Account">
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M22.5 12.5c0-1.58-.8-3.04-2.12-3.88.59-1.58.2-3.38-1.01-4.59s-3.01-1.6-4.59-1.01C13.94 1.7 12.48.9 10.9.9s-3.04.8-3.88 2.12c-1.58-.59-3.38-.2-4.59 1.01s-1.6 3.01-1.01 4.59C.7 10.06-.1 11.52-.1 13.1s.8 3.04 2.12 3.88c-.59 1.58-.2 3.38 1.01 4.59s3.01 1.6 4.59 1.01c.84 1.32 2.3 2.12 3.88 2.12s3.04-.8 3.88-2.12c1.58.59 3.38.2 4.59-1.01s1.6-3.01 1.01-4.59c1.32-.84 2.12-2.3 2.12-3.88zM10.69 17.5l-4-4 1.41-1.41 2.59 2.58 6.58-6.59 1.41 1.41-7.99 8.01z"/>
-                    </svg>
-                </div>
-            </div>
-
-            <div class="stats-row">250k followers • 0 following</div>
-            <button class="follow-btn" onclick="this.innerText='Following'; this.style.background='#e4e6eb'; this.style.color='#000'">Follow</button>
+        <div class="name-area">
+            <h1 class="name-style">Zaren Veto</h1>
+            <svg class="verified-tick" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M22.5 12.5c0-1.58-.8-3.04-2.12-3.88.59-1.58.2-3.38-1.01-4.59s-3.01-1.6-4.59-1.01C13.94 1.7 12.48.9 10.9.9s-3.04.8-3.88 2.12c-1.58-.59-3.38-.2-4.59 1.01s-1.6 3.01-1.01 4.59C.7 10.06-.1 11.52-.1 13.1s.8 3.04 2.12 3.88c-.59 1.58-.2 3.38 1.01 4.59s3.01 1.6 4.59 1.01c.84 1.32 2.3 2.12 3.88 2.12s3.04-.8 3.88-2.12c1.58.59 3.38.2 4.59-1.01s1.6-3.01 1.01-4.59c1.32-.84 2.12-2.3 2.12-3.88zM10.69 17.5l-4-4 1.41-1.41 2.59 2.58 6.58-6.59 1.41 1.41-7.99 8.01z"/>
+            </svg>
         </div>
+
+        <div class="stats-text">250k followers • 0 following</div>
+        <button class="btn-follow-action">Follow</button>
     </div>
 </div>
 
 <script>
-    function handleAuth() {
-        const mail = document.getElementById('email').value;
-        if(mail.includes('@')) {
-            document.getElementById('authPage').style.display = 'none';
-            document.getElementById('mainPlatform').style.display = 'block';
-        }
-    }
-
-    function upAvatar(event) {
+    // وظيفة تغيير صورة الحساب
+    function updateAvatar(e) {
         const reader = new FileReader();
         reader.onload = function() {
-            document.getElementById('pImg').src = reader.result;
-            document.getElementById('pImg').style.display = 'block';
-            document.getElementById('pShield').style.display = 'none';
+            const img = document.getElementById('profileImg');
+            const shield = document.getElementById('shieldSvg');
+            img.src = reader.result;
+            img.style.display = 'block';
+            shield.style.display = 'none';
         }
-        reader.readAsDataURL(event.target.files[0]);
+        reader.readAsDataURL(e.target.files[0]);
     }
 
-    function upCover(event) {
+    // وظيفة تغيير صورة الغلاف
+    function updateCover(e) {
         const reader = new FileReader();
         reader.onload = function() {
             document.getElementById('coverDisplay').style.backgroundImage = `url('${reader.result}')`;
         }
-        reader.readAsDataURL(event.target.files[0]);
+        reader.readAsDataURL(e.target.files[0]);
     }
 </script>
 
