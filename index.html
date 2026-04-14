@@ -3,95 +3,173 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zaren Veto | المنصة الرسمية</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>Zaren Veto | Official</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { 
-            --zv-blue: #0d47a1; /* اللون الأزرق الموحد للسيادة */
-            --zv-bg: #f0f2f5; 
-            --text-black: #050505; /* لون المنشورات والقواعد */
+        :root { --zv-blue: #1877f2; --text-black: #000; }
+        body { background-color: #f0f2f5; font-family: 'Cairo', sans-serif; margin: 0; overflow-x: hidden; }
+
+        /* شريط التنقل العلوي */
+        .nav-bar { background: white; height: 65px; display: flex; align-items: center; padding: 0 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; justify-content: space-between; border-bottom: 2px solid var(--zv-blue); }
+        .nav-logo { cursor: pointer; display: flex; align-items: center; gap: 10px; text-decoration: none; direction: ltr; }
+        
+        /* الدرع المعتمد (مدبب من الأسفل) */
+        .shield-custom { 
+            background: var(--zv-blue); width: 38px; height: 44px; 
+            display: flex; align-items: center; justify-content: center; 
+            color: white; font-weight: bold; font-size: 22px;
+            clip-path: polygon(0% 0%, 100% 0%, 100% 65%, 50% 100%, 0% 65%);
+            border: 1px solid white;
         }
-        
-        body { background-color: var(--zv-bg); font-family: 'Cairo', sans-serif; margin: 0; padding: 0; direction: rtl; }
-        
-        /* شريط التنقل */
-        .nav-bar { background: white; height: 70px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; border-bottom: 3px solid var(--zv-blue); }
-        .nav-left { display: flex; align-items: center; gap: 10px; direction: ltr; }
-        .app-title { font-family: 'Cormorant Garamond', serif; font-size: 28px; color: var(--zv-blue); text-decoration: none; font-weight: 700; }
-        
-        /* الدرع الصغير في الناف بار */
-        .nav-shield { width: 30px; height: 30px; background: var(--zv-blue); clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 18px; }
 
-        .main-container { max-width: 900px; margin: 0 auto; background: white; min-height: 100vh; }
-        .cover-photo { width: 100%; height: 320px; background: #ccc url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1000') center/cover; position: relative; }
+        /* القائمة الجانبية (الاعدادات والروابط) */
+        .side-menu { position: fixed; right: -300px; top: 0; width: 280px; height: 100%; background: white; box-shadow: -2px 0 5px rgba(0,0,0,0.2); z-index: 2000; transition: 0.3s; padding: 20px; text-align: right; }
+        .side-menu.active { right: 0; }
+        .menu-item { padding: 15px; border-bottom: 1px solid #eee; cursor: pointer; color: var(--text-black); display: flex; align-items: center; gap: 10px; font-weight: 600; }
 
-        /* منطقة الهوية والدرع */
-        .profile-wrap { display: flex; flex-direction: column; align-items: center; margin-top: -100px; padding-bottom: 40px; position: relative; }
+        /* إدارة الصفحات */
+        .page { display: none; max-width: 900px; margin: 0 auto; background: white; min-height: 100vh; }
+        .page.active { display: block; }
+
+        /* الملف الشخصي */
+        .profile-header { display: flex; flex-direction: column; align-items: center; margin-top: -100px; padding-bottom: 40px; position: relative; }
         .avatar-box { position: relative; width: 180px; height: 180px; }
+        .avatar-circle { width: 100%; height: 100%; border-radius: 50%; border: 6px solid var(--zv-blue); background: white; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+        .avatar-circle img { width: 100%; height: 100%; object-fit: cover; cursor: pointer; }
+        .crown-shield { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); z-index: 100; transform: scale(1.2) translateX(-42%); }
         
-        /* حافة القرص الزرقاء الموحدة */
-        .avatar-main { width: 100%; height: 100%; border-radius: 50%; border: 6px solid var(--zv-blue); background: white; overflow: hidden; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
-        .avatar-main img { width: 100%; height: 100%; object-fit: cover; }
+        .name-container { display: flex; align-items: center; justify-content: center; gap: 6px; margin-top: 25px; direction: ltr; }
+        .user-name { font-size: 24px; font-weight: 700; color: #000; margin: 0; }
+        .fb-verify { color: var(--zv-blue); width: 24px; height: 24px; display: none; } /* مخفية افتراضياً للمستخدمين */
+        .is-admin .fb-verify { display: block; } /* تظهر لكِ فقط وللموثقين من قبلك */
 
-        /* الدرع الموحد (التاج) */
-        .crown-shield { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); width: 45px; height: 45px; background: var(--zv-blue); clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 24px; border: 2px solid white; z-index: 100; }
+        .follower-count { color: #65676b; font-size: 16px; font-weight: 600; margin: 10px 0; }
 
-        /* أيقونة كاميرا القرص */
-        .cam-icon { position: absolute; bottom: 8px; right: 8px; width: 36px; height: 36px; background: #e4e6eb; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 3px solid white; cursor: pointer; color: #050505; }
+        /* صندوق النشر */
+        .post-box { background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 15px; margin: 20px; text-align: right; }
+        .post-input { width: 100%; border: none; background: #f0f2f5; padding: 12px; border-radius: 20px; outline: none; font-family: 'Cairo'; margin-bottom: 10px; resize: none; color: black; box-sizing: border-box; }
+        .btn-post { background: var(--zv-blue); color: white; padding: 8px 25px; border: none; border-radius: 6px; font-weight: 700; cursor: pointer; }
 
-        /* الاسم والتوثيق بدقة متناهية */
-        .name-container { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 25px; direction: ltr; } /* استخدام ltr لضمان ظهور العلامة بعد الاسم */
-        .user-name { font-size: 26px; font-weight: 700; color: var(--text-black); margin: 0; font-family: 'Cairo', sans-serif; }
-        .verify-badge { color: var(--zv-blue); font-size: 22px; }
-
-        .follower-info { color: #65676b; font-size: 16px; font-weight: 600; margin: 10px 0; }
-        .btn-follow { background: var(--zv-blue); color: white; border: none; padding: 10px 50px; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 16px; margin-top: 10px; }
-
-        /* المنشورات والقواعد بالأسود */
-        .content-area { max-width: 800px; margin: 30px auto; padding: 20px; border-top: 1px solid #ddd; text-align: right; }
-        .rule-item { color: var(--text-black); font-size: 16px; line-height: 1.8; margin-bottom: 10px; }
+        /* زر Suivre */
+        .btn-follow { background: var(--zv-blue); color: white; border: none; padding: 10px 45px; border-radius: 8px; font-weight: 700; cursor: pointer; margin-top: 10px; }
+        
+        /* التنبيهات */
+        .admin-alert { background: #ffebe9; color: #d93025; padding: 10px; border-radius: 5px; margin: 10px; display: none; font-size: 14px; }
     </style>
 </head>
-<body>
-
-<nav class="nav-bar">
-    <div class="nav-left">
-        <div class="nav-shield">Z</div>
-        <a href="#" class="app-title">Zaren Veto</a>
+<body class="is-admin"> <nav class="nav-bar">
+    <div class="nav-logo" onclick="showPage('home')">
+        <div class="shield-custom">Z</div>
+        <span style="font-family:'Playfair Display'; color:var(--zv-blue); font-size:24px; font-weight:700;">Zaren Veto</span>
     </div>
-    <div class="nav-icons">
-        <button class="nav-btn"><i class="fas fa-search"></i></button>
-        <button class="nav-btn"><i class="fas fa-bars"></i></button>
+    <div style="display: flex; gap: 15px; align-items: center;">
+        <i class="fas fa-bars" style="cursor:pointer; font-size:22px; color:var(--zv-blue);" onclick="toggleMenu()"></i>
     </div>
 </nav>
 
-<div class="main-container">
-    <div class="cover-photo"></div>
-    <div class="profile-wrap">
-        <div class="avatar-box">
-            <div class="crown-shield">Z</div>
-            <div class="avatar-main">
-                <img src="https://via.placeholder.com/200" alt="Princess Narzine">
-            </div>
-            <div class="cam-icon"><i class="fas fa-camera"></i></div>
-        </div>
+<div class="side-menu" id="sideMenu">
+    <h3 style="color:var(--zv-blue)">لوحة التحكم والروابط</h3>
+    <div class="menu-item" onclick="showPage('home')"><i class="fas fa-home"></i> الصفحة الرئيسية</div>
+    <div class="menu-item" onclick="showPage('profile')"><i class="fas fa-user-circle"></i> حسابي الشخصي</div>
+    <div class="menu-item" onclick="copyLink('account')"><i class="fas fa-link"></i> رابط حسابي الخاص</div>
+    <div class="menu-item" onclick="copyLink('app')"><i class="fas fa-share-alt"></i> رابط التطبيق الرسمي</div>
+    <div class="menu-item" onclick="showPage('rules')"><i class="fas fa-gavel"></i> قوانين المنصة</div>
+    <div class="menu-item" onclick="toggleModal('adminModal')"><i class="fas fa-user-shield"></i> إدارة المحظورين</div>
+    <button onclick="toggleMenu()" style="margin-top:30px; width:100%; padding:12px; background:var(--zv-blue); color:white; border:none; border-radius:8px; font-weight:700;">إغلاق</button>
+</div>
 
+<div id="profilePage" class="page active">
+    <div style="width:100%; height:300px; background:#ccc; position:relative; overflow:hidden;">
+        <img id="coverImg" src="https://via.placeholder.com/1200x400" style="width:100%; height:100%; object-fit:cover;">
+        <input type="file" id="coverUpload" style="display:none" onchange="updatePhoto(this, 'coverImg')">
+        <button onclick="document.getElementById('coverUpload').click()" style="position:absolute; bottom:10px; left:10px; padding:8px; background:white; border:none; border-radius:5px; cursor:pointer;"><i class="fas fa-camera"></i> تغيير الغلاف</button>
+    </div>
+    <div class="profile-header">
+        <div class="avatar-box">
+            <div class="shield-custom crown-shield">Z</div>
+            <div class="avatar-circle">
+                <img id="profileImg" src="https://via.placeholder.com/200" onclick="document.getElementById('profileUpload').click()">
+            </div>
+            <input type="file" id="profileUpload" style="display:none" onchange="updatePhoto(this, 'profileImg')">
+        </div>
         <div class="name-container">
             <h1 class="user-name">Princess Narzine Bani Hashem</h1>
-            <i class="fas fa-check-circle verify-badge"></i> </div>
-        
-        <div class="follower-info">250k followers • 0 following</div>
-        <button class="btn-follow">Follow</button>
-    </div>
-
-    <div class="content-area">
-        <h3 style="color: var(--text-black);">قواعد المنصة السيادية:</h3>
-        <div class="rule-item">1. الالتزام بالهوية المستقلة للمنصة.</div>
-        <div class="rule-item">2. المحتوى الأسود مخصص للقواعد والمنشورات لضمان الرسمية.</div>
-        <div class="rule-item">3. التوثيق والدرع هما شعار السيادة في Zaren Veto.</div>
+            <svg class="fb-verify" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zM9.8 17.3l-4.2-4.1L7 11.8l2.8 2.7L17 7.4l1.4 1.4-8.6 8.5z"/></svg>
+        </div>
+        <div class="follower-count">250k followers</div>
+        <button class="btn-follow">Suivre</button>
     </div>
 </div>
+
+<div id="homePage" class="page">
+    <div id="breachAlert" class="admin-alert">تنبيه: محاولة وصول غير مصرح بها للبيانات. تم إرسال إشعار للإيميل.</div>
+    <div class="post-box">
+        <textarea id="postInput" class="post-input" rows="3" placeholder="اكتب منشورك الرسمي (يمنع الروابط الخارجية)..."></textarea>
+        <div style="text-align: left;">
+            <button class="btn-post" onclick="handlePost()">نشر</button>
+        </div>
+    </div>
+    <div id="mainFeed" style="padding: 0 20px;"></div>
+</div>
+
+<div id="rulesPage" class="page" style="padding:40px; color:black; text-align:right;">
+    <h2>ميثاق Zaren Veto</h2>
+    <p>1. يمنع منعاً باتاً نشر أي روابط لفيسبوك، واتساب، أو إنستغرام.</p>
+    <p>2. يمنع نشر الصور الافتراضية، الطبيعة، أو الحيوانات؛ فقط الصور الشخصية الحقيقية.</p>
+    <p>3. يمنع نشر أي محتوى يسيء للأديان أو محتوى غير أخلاقي/إباحي.</p>
+    <p>4. التجاوز يعرض المستخدم للحظر النهائي والفوري.</p>
+</div>
+
+<script>
+    const forbiddenWords = ['facebook', 'instagram', 'whatsapp', 'messenger', 'fb.com', 'wa.me', 'إباحي', 'دين'];
+
+    function toggleMenu() { document.getElementById('sideMenu').classList.toggle('active'); }
+    
+    function showPage(p) {
+        document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+        document.getElementById(p + 'Page').classList.add('active');
+        if (p === 'home') toggleMenu();
+    }
+
+    function handlePost() {
+        const input = document.getElementById('postInput');
+        const text = input.value.toLowerCase();
+        
+        if (forbiddenWords.some(w => text.includes(w))) {
+            alert("⚠️ مخالفة: المنشور يحتوي على كلمات أو روابط محظورة سيادياً.");
+            return;
+        }
+        
+        if (input.value.trim() !== "") {
+            const post = document.createElement('div');
+            post.style.cssText = "background:white; padding:15px; border-radius:8px; margin-bottom:15px; border:1px solid #ddd; color:black; text-align:right;";
+            post.innerHTML = `<strong>المنصة الرسمية:</strong><br>${input.value}`;
+            document.getElementById('mainFeed').prepend(post);
+            input.value = "";
+        }
+    }
+
+    function updatePhoto(input, imgId) {
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(e) { document.getElementById(imgId).src = e.target.result; }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function copyLink(type) {
+        const link = type === 'app' ? window.location.origin : window.location.href + "?user=official";
+        navigator.clipboard.writeText(link);
+        alert("تم نسخ الرابط المطلوب بنجاح.");
+    }
+
+    // محاكاة حماية البيانات
+    function protectData() {
+        document.getElementById('breachAlert').style.display = 'block';
+        console.log("إرسال إيميل تنبيه للمسؤول...");
+    }
+</script>
 
 </body>
 </html>
