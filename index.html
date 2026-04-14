@@ -3,31 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZAREN VETO - Profile</title>
+    <title>ZAREN VETO</title>
     <style>
-        body { background-color: #f0f2f5; font-family: sans-serif; margin: 0; padding: 0; }
-        .cover { width: 100%; height: 200px; background: linear-gradient(to bottom, #1e293b, #000); }
-        .p-container { max-width: 800px; margin: 0 auto; background: white; position: relative; padding-bottom: 20px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); border-bottom-left-radius: 8px; border-bottom-right-radius: 8px; }
-        .p-pic { width: 150px; height: 150px; border-radius: 50%; border: 4px solid white; position: absolute; top: -75px; right: 30px; background: white; object-fit: cover; }
-        .p-info { padding: 85px 30px 10px; text-align: right; }
-        .p-name { font-size: 30px; font-weight: bold; margin: 0; color: #050505; }
-        .p-bio { color: #65676b; margin: 8px 0; font-size: 16px; line-height: 1.4; }
-        .btn-row { display: flex; gap: 10px; margin-top: 15px; border-top: 1px solid #eee; padding-top: 15px; }
-        .btn { padding: 8px 20px; border-radius: 6px; border: none; font-weight: bold; cursor: pointer; font-size: 14px; }
-        .btn-b { background: #0866ff; color: white; }
-        .btn-g { background: #e4e6eb; color: #050505; }
+        body { 
+            background-color: #f0f2f5; 
+            font-family: Arial, sans-serif; 
+            margin: 0; 
+            padding: 0; 
+        }
+        .header-wrapper {
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .cover-photo { 
+            width: 100%; 
+            height: 350px; 
+            background: linear-gradient(to bottom, #1e293b, #000); 
+            background-size: cover;
+            background-position: center;
+        }
+        .profile-container { 
+            max-width: 940px; 
+            margin: 0 auto; 
+            position: relative; 
+            padding-bottom: 20px;
+        }
+        .profile-header {
+            display: flex;
+            align-items: flex-end;
+            margin-top: -100px;
+            padding: 0 30px;
+            padding-bottom: 20px;
+        }
+        .profile-pic-container {
+            position: relative;
+        }
+        .profile-pic { 
+            width: 168px; 
+            height: 168px; 
+            border-radius: 50%; 
+            border: 4px solid white; 
+            background: white;
+            object-fit: cover;
+            display: block;
+        }
+        .profile-details {
+            margin-right: 20px;
+            margin-bottom: 15px;
+            flex-grow: 1;
+        }
+        .profile-name { 
+            font-size: 32px; 
+            font-weight: bold; 
+            margin: 0; 
+            color: #050505; 
+        }
+        .profile-bio { 
+            color: #65676b; 
+            margin: 5px 0; 
+            font-size: 16px; 
+            font-weight: 600;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .btn { 
+            padding: 8px 16px; 
+            border-radius: 6px; 
+            border: none; 
+            font-weight: bold; 
+            cursor: pointer; 
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .btn-primary { background-color: #0866ff; color: white; }
+        .btn-secondary { background-color: #e4e6eb; color: #050505; }
+        
+        @media (max-width: 700px) {
+            .profile-header {
+                flex-direction: column;
+                align-items: center;
+                margin-top: -85px;
+            }
+            .profile-details {
+                margin-right: 0;
+                text-align: center;
+                margin-top: 10px;
+            }
+            .action-buttons {
+                justify-content: center;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="cover"></div>
-    <div class="p-container">
-        <img src="1776120756397.png" class="p-pic" alt="Logo">
-        <div class="p-info">
-            <h1 class="p-name">ZAREN VETO</h1>
-            <p class="p-bio">منصة تواصل اجتماعي حرة تحترم السيادة الرقمية والخصوصية دون قيود الهوية الرسمية</p>
-            <div class="btn-row">
-                <button class="btn btn-b">إضافة منشور</button>
-                <button class="btn btn-g">تعديل الملف الشخصي</button>
+    <div class="header-wrapper">
+        <div class="cover-photo"></div>
+        <div class="profile-container">
+            <div class="profile-header">
+                <div class="profile-pic-container">
+                    <img src="1776120756397.png" class="profile-pic" alt="ZAREN VETO Logo">
+                </div>
+                <div class="profile-details">
+                    <h1 class="profile-name" translate="no">ZAREN VETO</h1>
+                    <p class="profile-bio">منصة تواصل اجتماعي حرة تحترم السيادة الرقمية والخصوصية دون قيود الهوية الرسمية</p>
+                </div>
+                <div class="action-buttons">
+                    <button class="btn btn-primary">إضافة منشور</button>
+                    <button class="btn btn-secondary">تعديل الملف الشخصي</button>
+                </div>
             </div>
         </div>
     </div>
