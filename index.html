@@ -3,111 +3,191 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZAREN VETO | Official Platform</title>
+    <title>Zaren Veto | Social Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body { background-color: #f0f2f5; font-family: Segoe UI, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
+        body { background-color: #f0f2f5; font-family: 'Segoe UI', Helvetica, Arial, sans-serif; margin: 0; }
         
-        /* Navigation Bar */
-        .top-nav { background-color: #ffffff; height: 56px; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; }
-        .nav-logo { font-weight: bold; color: #0866ff; font-size: 24px; text-decoration: none; }
-        .nav-actions { display: flex; gap: 8px; }
+        /* شريط التنقل العلوي */
+        .top-nav { background-color: #ffffff; height: 56px; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100; }
+        .nav-logo { font-weight: bold; color: #1877f2; font-size: 24px; text-decoration: none; }
 
-        .header-wrapper { background-color: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); padding-bottom: 16px; }
+        .main-wrapper { max-width: 1030px; margin: 0 auto; }
         
-        /* Facebook Official Cover Size */
-        .cover-photo { width: 100%; height: 350px; background: linear-gradient(to bottom, #1c1e21, #000); background-size: cover; background-position: center; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px; }
+        /* قسم الغلاف والملف الشخصي */
+        .header-card { background: white; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
+        .cover-photo { width: 100%; height: 380px; background: #242526; background-image: url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1000'); background-size: cover; position: relative; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px; }
         
-        /* Professional Mode Layout (Left Aligned) */
-        .profile-container { max-width: 1030px; margin: 0 auto; position: relative; padding: 0 16px; }
-        .profile-header { display: flex; align-items: flex-end; margin-top: -30px; position: relative; }
+        .profile-header { display: flex; align-items: flex-end; padding: 0 32px 20px; margin-top: -45px; position: relative; }
         
-        /* Profile Pic Official FB Size (168px) */
-        .profile-pic-container { position: relative; margin-right: 16px; }
-        .profile-pic { width: 168px; height: 168px; border-radius: 50%; border: 4px solid white; background: white; object-fit: cover; }
-        
-        .profile-details { flex-grow: 1; padding-bottom: 16px; }
-        .name-wrapper { display: flex; align-items: center; gap: 8px; margin-top: 40px; }
-        .profile-name { font-size: 32px; font-weight: bold; margin: 0; color: #050505; }
-        
-        /* Official Facebook Verified Badge Styling */
-        .verified-badge { display: flex; align-items: center; justify-content: center; }
-        
-        .stats-info { color: #65676b; font-size: 16px; margin: 4px 0; font-weight: 600; }
-        .profile-bio { color: #050505; margin: 8px 0; font-size: 15px; line-height: 1.4; max-width: 600px; }
-        
-        /* Facebook Action Buttons Style */
-        .action-buttons { display: flex; gap: 8px; align-items: center; margin-top: 45px; }
-        .btn { padding: 0 16px; height: 36px; border-radius: 6px; border: none; font-weight: 600; cursor: pointer; font-size: 15px; display: flex; align-items: center; justify-content: center; gap: 6px; text-decoration: none; }
-        .btn-follow { background-color: #0866ff; color: white; }
-        .btn-message { background-color: #e4e6eb; color: #050505; }
-        .btn-outline { background-color: transparent; border: 1px solid #0866ff; color: #0866ff; }
+        /* تصميم الدرع الأزرق مع حرف Z */
+        .profile-pic-container { position: relative; border: 4px solid white; border-radius: 50%; width: 168px; height: 168px; background: white; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+        .shield-svg { width: 125px; height: 125px; color: #1877f2; } /* الدرع أزرق */
+        .z-inner { position: absolute; font-size: 80px; font-weight: 900; color: #1877f2; z-index: 2; } /* حرف Z أزرق */
 
-        /* Signup Modal */
-        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); align-items: center; justify-content: center; }
-        .modal-content { background-color: white; padding: 30px; border-radius: 8px; width: 400px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); text-align: center; position: relative; }
-        .modal-content input { width: 90%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 6px; }
-        .close-btn { position: absolute; top: 10px; right: 10px; cursor: pointer; font-size: 24px; font-weight: bold; color: #65676b; }
+        .profile-info { margin-left: 16px; margin-bottom: 10px; }
+        /* اسم ثابت لا يمكن تعديله */
+        .profile-name { font-size: 32px; font-weight: bold; margin: 0; color: #050505; user-select: none; cursor: default; }
+        .stats { color: #65676b; font-weight: 600; margin-top: 5px; }
 
-        @media (max-width: 850px) {
-            .profile-header { flex-direction: column; align-items: center; text-align: center; margin-top: -84px; }
-            .profile-pic-container { margin-right: 0; }
-            .name-wrapper { justify-content: center; margin-top: 10px; }
-            .action-buttons { margin-top: 15px; width: 100%; justify-content: center; }
-        }
+        /* نظام المنشورات */
+        .feed-container { display: flex; flex-direction: column; gap: 16px; margin-top: 20px; padding-bottom: 50px; }
+        
+        .create-post { background: white; padding: 15px; border-radius: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
+        .post-input { width: 100%; border: none; background: #f0f2f5; padding: 12px; border-radius: 20px; font-size: 16px; outline: none; box-sizing: border-box; }
+        .post-options { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; border-top: 1px solid #ddd; padding-top: 10px; }
+        
+        .upload-label { color: #45bd62; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 6px; padding: 8px; border-radius: 6px; }
+        .upload-label:hover { background: #f2f2f2; }
+        .btn-post { background: #1877f2; color: white; border: none; padding: 8px 28px; border-radius: 6px; font-weight: 600; cursor: pointer; }
+
+        /* تصميم كارت المنشور */
+        .post-card { background: white; padding: 15px; border-radius: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
+        .post-header { display: flex; align-items: center; margin-bottom: 12px; }
+        .mini-shield-box { width: 40px; height: 40px; border-radius: 50%; background: #f0f2f5; display: flex; align-items: center; justify-content: center; margin-right: 10px; }
+        .post-video { width: 100%; border-radius: 8px; margin-top: 10px; background: #000; max-height: 500px; }
+        .post-actions { display: flex; justify-content: space-around; border-top: 1px solid #ddd; border-bottom: 1px solid #ddd; margin-top: 12px; padding: 5px 0; }
+        .action-btn { background: none; border: none; color: #65676b; padding: 8px; cursor: pointer; font-weight: 600; flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px; }
+        .action-btn:hover { background: #f2f2f2; border-radius: 4px; }
+
+        /* تذييل الصفحة */
+        .footer-links { padding: 20px; text-align: center; color: #65676b; font-size: 13px; }
+        .footer-links a { color: #65676b; text-decoration: none; margin: 0 8px; }
+
+        input[type="file"] { display: none; }
     </style>
 </head>
 <body>
 
-    <nav class="top-nav">
-        <a href="#" class="nav-logo">ZAREN VETO</a>
-        <div class="nav-actions">
-            <button class="btn btn-outline" onclick="openModal()">Log In</button>
-            <button class="btn btn-follow" onclick="openModal()">Sign Up</button>
-        </div>
-    </nav>
+<nav class="top-nav">
+    <a href="#" class="nav-logo">Zaren Veto</a>
+</nav>
 
-    <div class="header-wrapper">
-        <div class="profile-container">
-            <div class="cover-photo"></div>
-            <div class="profile-header">
-                <div class="profile-pic-container">
-                    <img src="1776120756397.png" class="profile-pic" alt="ZAREN VETO">
-                </div>
-                <div class="profile-details">
-                    <div class="name-wrapper">
-                        <h1 class="profile-name">ZAREN VETO</h1>
-                        <div class="verified-badge">
-                            <svg viewBox="0 0 24 24" width="22" height="22">
-                                <path d="M22.5 12.5c0-1.58-.88-2.95-2.18-3.66.54-1.22.4-2.66-.41-3.71-1.04-1.35-2.64-1.81-4.1-.97C14.82 3.1 13.52 2.5 12 2.5s-2.82.6-3.81 1.66c-1.46-.84-3.06-.38-4.1.97-.81 1.05-.95 2.49-.41 3.71-1.3.71-2.18 2.08-2.18 3.66 0 1.58.88 2.95 2.18 3.66-.54 1.22-.4 2.66.41 3.71 1.04 1.35 2.64 1.81 4.1.97.99 1.06 2.29 1.66 3.81 1.66s2.82-.6 3.81-1.66c1.46.84 3.06.38 4.1-.97.81-1.05.95-2.49.41-3.71 1.3-.71 2.18-2.08 2.18-3.66z" fill="#0866ff"></path>
-                                <path d="M10 17.5l-4.5-4.5 1.5-1.5 3 3 7-7 1.5 1.5-8.5 8.5z" fill="white"></path>
-                            </svg>
-                        </div>
+<div class="main-wrapper">
+    <div class="header-card">
+        <div class="cover-photo" id="coverDisplay">
+            <label for="coverUpload" style="position:absolute; bottom:15px; right:15px; background:white; padding:8px 12px; border-radius:6px; cursor:pointer; font-weight:600; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+                <i class="fas fa-camera"></i> Edit cover photo
+            </label>
+            <input type="file" id="coverUpload" accept="image/*" onchange="updateCover(event)">
+        </div>
+
+        <div class="profile-header">
+            <div class="profile-pic-container">
+                <svg class="shield-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+                <span class="z-inner">Z</span>
+            </div>
+            <div class="profile-info">
+                <h1 class="profile-name">Zaren Veto <i class="fas fa-check-circle" style="color:#1877f2; font-size:20px;"></i></h1>
+                <div class="stats">250k followers • 0 following</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="feed-container">
+        <div class="create-post">
+            <input type="text" id="postText" class="post-input" placeholder="What's on your mind, Zaren Veto?">
+            <div class="post-options">
+                <label for="videoUpload" class="upload-label">
+                    <i class="fas fa-video"></i> Video
+                </label>
+                <input type="file" id="videoUpload" accept="video/*" onchange="handleVideoSelect(event)">
+                <button class="btn-post" onclick="addNewPost()">Post</button>
+            </div>
+            <div id="fileStatus" style="font-size:12px; color:#1877f2; margin-top:5px;"></div>
+        </div>
+
+        <div id="postsList">
+            <div class="post-card">
+                <div class="post-header">
+                    <div class="mini-shield-box">
+                        <i class="fas fa-shield-alt" style="color:#1877f2"></i>
                     </div>
-                    <p class="stats-info">250k followers • 0 following</p>
-                    <p class="profile-bio">Official account of ZAREN VETO platform. Promoting digital sovereignty and freedom.</p>
+                    <div style="font-weight:bold">Zaren Veto</div>
                 </div>
-                <div class="action-buttons">
-                    <button class="btn btn-follow">Follow</button>
-                    <button class="btn btn-message">Message</button>
+                <div style="font-size:16px">Welcome to Zaren Veto. Your digital sovereignty starts here.</div>
+                <div class="post-actions">
+                    <button class="action-btn" onclick="toggleLike(this)"><i class="far fa-thumbs-up"></i> Like</button>
+                    <button class="action-btn"><i class="far fa-comment"></i> Comment</button>
+                    <button class="action-btn"><i class="fas fa-share"></i> Share</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <div id="regModal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeModal()">×</span>
-            <h2>Create Account</h2>
-            <input type="text" placeholder="Full Name">
-            <input type="email" placeholder="Email Address">
-            <input type="password" placeholder="Password">
-            <button class="btn btn-follow" style="width: 100%; margin-top: 10px;">Sign Up</button>
-        </div>
+    <div class="footer-links">
+        <a href="#">Privacy Policy</a> · <a href="#">Terms of Service</a> · <a href="#">Cookie Policy</a> · <span>Zaren Veto © 2026</span>
     </div>
+</div>
 
-    <script>
-        function openModal() { document.getElementById("regModal").style.display = "flex"; }
-        function closeModal() { document.getElementById("regModal").style.display = "none"; }
-    </script>
+<script>
+    let selectedVideo = null;
+
+    function updateCover(event) {
+        const reader = new FileReader();
+        reader.onload = function() {
+            document.getElementById('coverDisplay').style.backgroundImage = `url('${reader.result}')`;
+        }
+        reader.readAsDataURL(event.target.files[0]);
+    }
+
+    function handleVideoSelect(event) {
+        selectedVideo = event.target.files[0];
+        if(selectedVideo) {
+            document.getElementById('fileStatus').innerText = "Video selected: " + selectedVideo.name;
+        }
+    }
+
+    function addNewPost() {
+        const text = document.getElementById('postText').value;
+        if (text.trim() === "" && !selectedVideo) return;
+
+        const postsList = document.getElementById('postsList');
+        const newPost = document.createElement('div');
+        newPost.className = 'post-card';
+        newPost.style.marginTop = "16px";
+
+        let mediaHTML = '';
+        if (selectedVideo) {
+            const videoURL = URL.createObjectURL(selectedVideo);
+            mediaHTML = `<video class="post-video" controls><source src="${videoURL}" type="video/mp4"></video>`;
+        }
+
+        newPost.innerHTML = `
+            <div class="post-header">
+                <div class="mini-shield-box"><i class="fas fa-shield-alt" style="color:#1877f2"></i></div>
+                <div style="font-weight:bold">Zaren Veto</div>
+            </div>
+            <div style="font-size:16px">${text}</div>
+            ${mediaHTML}
+            <div class="post-actions">
+                <button class="action-btn" onclick="toggleLike(this)"><i class="far fa-thumbs-up"></i> Like</button>
+                <button class="action-btn"><i class="far fa-comment"></i> Comment</button>
+                <button class="action-btn"><i class="fas fa-share"></i> Share</button>
+            </div>
+        `;
+
+        postsList.prepend(newPost);
+        
+        // إعادة ضبط الحقول
+        document.getElementById('postText').value = "";
+        document.getElementById('videoUpload').value = "";
+        document.getElementById('fileStatus').innerText = "";
+        selectedVideo = null;
+    }
+
+    function toggleLike(btn) {
+        if(btn.style.color === 'rgb(24, 119, 242)') {
+            btn.style.color = '#65676b';
+            btn.querySelector('i').className = 'far fa-thumbs-up';
+        } else {
+            btn.style.color = '#1877f2';
+            btn.querySelector('i').className = 'fas fa-thumbs-up';
+        }
+    }
+</script>
+
 </body>
 </html>
