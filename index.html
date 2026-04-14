@@ -8,180 +8,158 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root { --zv-blue: #1877f2; --text-black: #000; }
-        body { background-color: #f0f2f5; font-family: 'Cairo', sans-serif; margin: 0; overflow-x: hidden; }
+        body { background-color: #f0f2f5; font-family: 'Cairo', sans-serif; margin: 0; padding: 0; }
 
-        /* تسجيل الدخول */
-        #authOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--zv-blue); z-index: 5000; display: flex; align-items: center; justify-content: center; color: white; }
-        .auth-card { background: white; padding: 30px; border-radius: 15px; width: 350px; text-align: center; color: black; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
-        .auth-card input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
+        /* نظام ثبات الصور */
+        .img-container { width: 100%; height: 100%; object-fit: cover; }
 
         /* شريط التنقل */
         .nav-bar { background: white; height: 65px; display: flex; align-items: center; padding: 0 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; justify-content: space-between; border-bottom: 2px solid var(--zv-blue); }
         .nav-logo { cursor: pointer; display: flex; align-items: center; gap: 10px; direction: ltr; }
         
         .shield-custom { 
-            background: var(--zv-blue); width: 38px; height: 44px; 
+            background: var(--zv-blue); width: 40px; height: 48px; 
             display: flex; align-items: center; justify-content: center; 
-            color: white; font-weight: bold; font-size: 22px;
-            clip-path: polygon(0% 0%, 100% 0%, 100% 65%, 50% 100%, 0% 65%);
-            border: 1px solid white;
+            color: white; font-weight: bold; font-size: 24px;
+            clip-path: polygon(0% 0%, 100% 0%, 100% 70%, 50% 100%, 0% 70%);
+            border: 2px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
-        /* إدارة الصفحات والقوائم */
+        /* إدارة الصفحات */
         .page { display: none; max-width: 900px; margin: 0 auto; background: white; min-height: 100vh; }
         .page.active { display: block; }
-        .side-menu { position: fixed; right: -300px; top: 0; width: 280px; height: 100%; background: white; box-shadow: -2px 0 5px rgba(0,0,0,0.2); z-index: 2000; transition: 0.3s; padding: 20px; text-align: right; }
-        .side-menu.active { right: 0; }
-        .menu-item { padding: 15px; border-bottom: 1px solid #eee; cursor: pointer; color: var(--text-black); display: flex; align-items: center; gap: 10px; font-weight: 600; }
 
-        /* الملف الشخصي */
-        .profile-header { display: flex; flex-direction: column; align-items: center; margin-top: -100px; padding-bottom: 40px; position: relative; }
-        .avatar-box { position: relative; width: 180px; height: 180px; background: #eee; border-radius: 50%; overflow: visible; }
-        .avatar-circle { width: 100%; height: 100%; border-radius: 50%; border: 6px solid var(--zv-blue); background: white url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%231877f2"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zM9.8 17.3l-4.2-4.1L7 11.8l2.8 2.7L17 7.4l1.4 1.4-8.6 8.5z"/></svg>') center/40% no-repeat; overflow: hidden; position: relative; }
-        .avatar-circle img { width: 100%; height: 100%; object-fit: cover; }
-        .crown-shield { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); z-index: 100; transform: scale(1.1) translateX(-45%); }
+        /* الملف الشخصي والدرع المثبت */
+        .profile-header { display: flex; flex-direction: column; align-items: center; margin-top: -110px; padding-bottom: 40px; position: relative; }
+        .avatar-box { position: relative; width: 190px; height: 190px; }
+        .avatar-circle { width: 100%; height: 100%; border-radius: 50%; border: 6px solid var(--zv-blue); background: white; overflow: hidden; position: relative; }
+        
+        /* الدرع التاجي - الموقع المصحح */
+        .crown-shield { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); z-index: 100; pointer-events: none; }
 
-        /* التفاعلات والمنشورات */
-        .post-card { background: white; border: 1px solid #ddd; border-radius: 8px; margin: 20px; padding: 15px; text-align: right; }
-        .post-actions { border-top: 1px solid #eee; margin-top: 10px; padding-top: 10px; display: flex; gap: 20px; }
-        .action-btn { cursor: pointer; color: #65676b; font-weight: 600; font-size: 14px; }
+        /* التوثيق الاحترافي */
+        .verify-badge { color: var(--zv-blue); width: 22px; height: 22px; vertical-align: middle; }
+
+        /* المنشورات والتفاعل */
+        .post-card { background: white; border: 1px solid #ddd; border-radius: 8px; margin: 15px; padding: 15px; text-align: right; }
+        .post-actions { border-top: 1px solid #eee; margin-top: 10px; padding-top: 10px; display: flex; justify-content: space-around; }
+        .action-btn { cursor: pointer; color: #65676b; font-weight: 700; font-size: 15px; display: flex; align-items: center; gap: 8px; }
         .action-btn:hover { color: var(--zv-blue); }
-        .verify-badge { color: var(--zv-blue); width: 20px; height: 20px; vertical-align: middle; }
+        .liked { color: var(--zv-blue) !important; }
+
+        /* زر الإضافة السريع */
+        .fab-post { position: fixed; bottom: 30px; left: 30px; width: 60px; height: 60px; background: var(--zv-blue); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.3); z-index: 999; }
     </style>
 </head>
 <body>
-
-<div id="authOverlay">
-    <div class="auth-card">
-        <h2 style="color:var(--zv-blue)">انضم إلى Zaren Veto</h2>
-        <input type="text" id="regName" placeholder="الاسم الكامل">
-        <input type="email" id="regEmail" placeholder="البريد الإلكتروني">
-        <button onclick="startApp()" style="width:100%; padding:12px; background:var(--zv-blue); color:white; border:none; border-radius:8px; cursor:pointer; font-weight:bold;">فتح حساب الآن</button>
-        <p style="font-size:12px; margin-top:15px;">بالتسجيل أنت توافق على ميثاق المنصة السيادي.</p>
-    </div>
-</div>
 
 <nav class="nav-bar">
     <div class="nav-logo" onclick="showPage('official')">
         <div class="shield-custom">Z</div>
         <span style="font-family:'Playfair Display'; color:var(--zv-blue); font-size:24px; font-weight:700;">Zaren Veto</span>
     </div>
-    <i class="fas fa-bars" style="cursor:pointer; font-size:22px; color:var(--zv-blue);" onclick="toggleMenu()"></i>
+    <div style="display: flex; gap: 15px;">
+        <i class="fas fa-home" style="cursor:pointer; font-size:20px; color:var(--zv-blue);" onclick="showPage('home')"></i>
+        <i class="fas fa-user-circle" style="cursor:pointer; font-size:20px; color:var(--zv-blue);" onclick="showPage('profile')"></i>
+    </div>
 </nav>
 
-<div class="side-menu" id="sideMenu">
-    <div class="menu-item" onclick="showPage('home')"><i class="fas fa-home"></i> الصفحة الرئيسية</div>
-    <div class="menu-item" onclick="showPage('profile')"><i class="fas fa-user"></i> حسابي الشخصي</div>
-    <div class="menu-item" onclick="showPage('official')"><i class="fas fa-shield-alt"></i> الصفحة الرسمية ZV</div>
-    <div class="menu-item" onclick="location.reload()"><i class="fas fa-sign-out-alt"></i> تسجيل الخروج</div>
-    <button onclick="toggleMenu()" style="margin-top:20px; width:100%; padding:10px; background:var(--zv-blue); color:white; border:none; border-radius:8px;">إغلاق</button>
-</div>
-
-<div id="profilePage" class="page">
-    <div style="width:100%; height:300px; background:#ddd; position:relative; overflow:hidden;">
-        <img id="myCoverImg" src="" style="width:100%; height:100%; object-fit:cover; display:none;">
-        <button onclick="document.getElementById('uploadCover').click()" style="position:absolute; bottom:15px; left:15px; padding:8px 15px; background:white; border:none; border-radius:5px; cursor:pointer; font-weight:bold;"><i class="fas fa-camera"></i> تعديل الغلاف</button>
-        <input type="file" id="uploadCover" hidden onchange="saveMedia(this, 'myCover')">
+<div id="profilePage" class="page active">
+    <div style="width:100%; height:320px; background:#ccc; position:relative;">
+        <img id="storeCover" class="img-container" src="">
+        <input type="file" id="coverInp" hidden onchange="processMedia(this, 'storeCover')">
+        <button onclick="document.getElementById('coverInp').click()" style="position:absolute; bottom:15px; left:15px; padding:10px 15px; background:white; border:none; border-radius:8px; font-weight:700; cursor:pointer;"><i class="fas fa-camera"></i> تغيير الغلاف</button>
     </div>
+    
     <div class="profile-header">
         <div class="avatar-box">
             <div class="shield-custom crown-shield">Z</div>
             <div class="avatar-circle">
-                <img id="myAvatarImg" src="" style="display:none;">
+                <img id="storeAvatar" class="img-container" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ddd'><path d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/></svg>">
             </div>
-            <button onclick="document.getElementById('uploadAvatar').click()" style="position:absolute; bottom:5px; right:5px; width:35px; height:35px; border-radius:50%; border:none; background:#e4e6eb; cursor:pointer;"><i class="fas fa-camera"></i></button>
-            <input type="file" id="uploadAvatar" hidden onchange="saveMedia(this, 'myAvatar')">
+            <button onclick="document.getElementById('avatarInp').click()" style="position:absolute; bottom:5px; right:15px; background:#e4e6eb; border-radius:50%; width:35px; height:35px; border:3px solid white; cursor:pointer;"><i class="fas fa-camera"></i></button>
+            <input type="file" id="avatarInp" hidden onchange="processMedia(this, 'storeAvatar')">
         </div>
-        <h2 id="displayName" style="margin-top:20px;">الاسم المستخدم</h2>
-        <div style="color:#65676b; font-weight:bold;">250k followers</div>
+        <h1 style="margin-top:20px; font-size:24px;">Princesse Narzine Bani Hashem <svg class="verify-badge" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zM9.8 17.3l-4.2-4.1L7 11.8l2.8 2.7L17 7.4l1.4 1.4-8.6 8.5z"/></svg></h1>
+        <div style="font-weight:700; color:#65676b;">250k abonnés • Zaren Veto Official Profile</div>
+        <button style="background:var(--zv-blue); color:white; border:none; padding:10px 50px; border-radius:8px; font-weight:700; margin-top:15px; cursor:pointer;">Suivre</button>
     </div>
 </div>
 
-<div id="officialPage" class="page active">
-    <div style="padding:20px; text-align:center; border-bottom:1px solid #ddd;">
-        <div class="shield-custom" style="margin: 0 auto; width:60px; height:70px; font-size:35px;">Z</div>
-        <h1 style="color:var(--zv-blue); margin-bottom:5px;">Zaren Veto Official</h1>
-        <p style="color:black; font-weight:bold;">القناة الرسمية للمنصة والبرامج السيادية</p>
+<div id="officialPage" class="page">
+    <div style="padding:40px; text-align:center;">
+        <div class="shield-custom" style="margin: 0 auto; width:70px; height:85px; font-size:40px;">Z</div>
+        <h1 style="color:var(--zv-blue); font-size:35px;">Zaren Veto Official</h1>
+        <p style="font-weight:bold; color:black;">المنصة السيادية للبرامج والخدمات الإنسانية</p>
     </div>
-    <div id="officialFeed">
-        <div class="post-card">
-            <strong>Zaren Veto Official <i class="fas fa-check-circle" style="color:var(--zv-blue)"></i></strong>
-            <p style="color:black">مرحباً بكم في الانطلاقة الرسمية لـ Zaren Veto. المنصة التي تحترم سيادتك وخصوصيتك.</p>
-            <div class="post-actions">
-                <span class="action-btn"><i class="far fa-thumbs-up"></i> إعجاب</span>
-                <span class="action-btn"><i class="far fa-comment"></i> تعليق</span>
-                <span class="action-btn"><i class="far fa-share-square"></i> مشاركة</span>
-            </div>
-        </div>
+    <div class="post-card">
+        <strong>إعلان المنصة <i class="fas fa-bullhorn" style="color:var(--zv-blue)"></i></strong>
+        <p style="color:black">تم تفعيل ميزة التفاعل والحفظ المطلق للصور. سيادة المستخدم تبدأ من خصوصية بياناته.</p>
     </div>
 </div>
 
 <div id="homePage" class="page">
-    <div style="padding:20px;">
-        <div class="post-card" style="margin:0;">
-            <textarea id="postInput" style="width:100%; border:none; background:#f0f2f5; padding:15px; border-radius:10px; resize:none;" placeholder="انشر فكراً سيادياً..."></textarea>
-            <button onclick="addNewPost()" style="margin-top:10px; background:var(--zv-blue); color:white; border:none; padding:8px 25px; border-radius:5px; cursor:pointer; font-weight:bold;">نشر</button>
+    <div id="feedArea" style="padding-top:20px;">
+        <div class="post-card">
+            <div style="font-weight:700; margin-bottom:10px;">نظام الحماية والتوثيق <i class="fas fa-check-circle" style="color:var(--zv-blue)"></i></div>
+            <p style="color:black">أهلاً بكم في Zaren Veto. يمنع استخدام صور غير بشرية كخلفية أو صور حساب لضمان مصداقية المنصة.</p>
+            <div class="post-actions">
+                <span class="action-btn" onclick="toggleLike(this)"><i class="fas fa-thumbs-up"></i> إعجاب</span>
+                <span class="action-btn" onclick="alert('فتح قسم التعليقات...')"><i class="fas fa-comment"></i> تعليق</span>
+                <span class="action-btn" onclick="alert('تم نسخ الرابط لمشاركته!')"><i class="fas fa-share"></i> مشاركة</span>
+            </div>
         </div>
-        <div id="userFeed"></div>
     </div>
 </div>
 
-<script>
-    function toggleMenu() { document.getElementById('sideMenu').classList.toggle('active'); }
+<div class="fab-post" onclick="addNewPost()"><i class="fas fa-plus"></i></div>
 
+<script>
     function showPage(p) {
         document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
         document.getElementById(p + 'Page').classList.add('active');
-        if (p !== 'official') toggleMenu();
+        window.scrollTo(0,0);
     }
 
-    function startApp() {
-        const name = document.getElementById('regName').value;
-        if(name) {
-            localStorage.setItem('zv_user_name', name);
-            document.getElementById('displayName').innerText = name;
-            document.getElementById('authOverlay').style.display = 'none';
-            loadStoredMedia();
-        } else { alert("يرجى إدخال اسمك لفتح الحساب."); }
-    }
-
-    function saveMedia(input, type) {
+    // نظام الحفظ المتقدم (Base64) لضمان ثبات الصور
+    function processMedia(input, targetId) {
         if (input.files && input.files[0]) {
             const reader = new FileReader();
             reader.onload = function(e) {
-                localStorage.setItem('zv_' + type, e.target.result);
-                loadStoredMedia();
-            };
+                const data = e.target.result;
+                document.getElementById(targetId).src = data;
+                localStorage.setItem('ZV_DATA_' + targetId, data); // تخزين أبدي
+            }
             reader.readAsDataURL(input.files[0]);
         }
     }
 
-    function loadStoredMedia() {
-        const avatar = localStorage.getItem('zv_myAvatar');
-        const cover = localStorage.getItem('zv_myCover');
-        const name = localStorage.getItem('zv_user_name');
-        
-        if(avatar) { document.getElementById('myAvatarImg').src = avatar; document.getElementById('myAvatarImg').style.display='block'; }
-        if(cover) { document.getElementById('myCoverImg').src = cover; document.getElementById('myCoverImg').style.display='block'; }
-        if(name) { document.getElementById('displayName').innerText = name; }
+    function loadSavedData() {
+        const ids = ['storeCover', 'storeAvatar'];
+        ids.forEach(id => {
+            const saved = localStorage.getItem('ZV_DATA_' + id);
+            if(saved) document.getElementById(id).src = saved;
+        });
     }
+
+    function toggleLike(btn) { btn.classList.toggle('liked'); }
 
     function addNewPost() {
-        const val = document.getElementById('postInput').value;
-        if(val.trim() === "") return;
-        const feed = document.getElementById('userFeed');
-        const post = document.createElement('div');
-        post.className = 'post-card';
-        post.innerHTML = `<strong>${localStorage.getItem('zv_user_name')}</strong><p style="color:black">${val}</p>
-            <div class="post-actions">
-                <span class="action-btn" onclick="this.style.color='#1877f2'"><i class="far fa-thumbs-up"></i> إعجاب</span>
-                <span class="action-btn"><i class="far fa-comment"></i> تعليق</span>
-            </div>`;
-        feed.prepend(post);
-        document.getElementById('postInput').value = "";
+        const text = prompt("اكتب منشورك السيادي الجديد:");
+        if(text) {
+            const feed = document.getElementById('feedArea');
+            const post = document.createElement('div');
+            post.className = 'post-card';
+            post.innerHTML = `<strong>أنت الآن</strong><p style='color:black'>${text}</p>
+                <div class='post-actions'>
+                    <span class='action-btn' onclick='toggleLike(this)'><i class='fas fa-thumbs-up'></i> إعجاب</span>
+                    <span class='action-btn'><i class='fas fa-comment'></i> تعليق</span>
+                </div>`;
+            feed.prepend(post);
+        }
     }
 
-    window.onload = loadStoredMedia;
+    window.onload = loadSavedData;
 </script>
 
 </body>
