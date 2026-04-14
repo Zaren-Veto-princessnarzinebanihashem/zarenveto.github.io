@@ -3,69 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zaren Veto | Official</title>
-    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>Zaren Veto | المنصة الرسمية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --zv-blue: #0866ff; --zv-bg: #f0f2f5; }
-        body { background-color: var(--zv-bg); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; }
-
-        /* اللوجو الدرع الاحترافي */
-        .shield-svg { width: 100%; height: 100%; fill: #0d47a1; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); }
-        .shield-z { fill: white; font-weight: bold; font-size: 60px; }
-
+        :root { 
+            --zv-blue: #0d47a1; /* اللون الأزرق الموحد للسيادة */
+            --zv-bg: #f0f2f5; 
+            --text-black: #050505; /* لون المنشورات والقواعد */
+        }
+        
+        body { background-color: var(--zv-bg); font-family: 'Cairo', sans-serif; margin: 0; padding: 0; direction: rtl; }
+        
         /* شريط التنقل */
-        .nav-bar { background: white; height: 60px; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; direction: ltr; }
-        .nav-left { display: flex; align-items: center; gap: 8px; }
-        .nav-logo-box { width: 35px; height: 35px; }
-        .app-title { font-size: 24px; color: var(--zv-blue); text-decoration: none; font-weight: 700; letter-spacing: -0.5px; }
-
-        .nav-icons { display: flex; gap: 10px; }
-        .nav-btn { background: #e4e6eb; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; border: none; }
-
-        .main-container { max-width: 940px; margin: 0 auto; background: white; min-height: 100vh; border-radius: 0 0 8px 8px; }
-
-        /* الغلاف ونظام الكاميرا */
-        .cover-wrapper { position: relative; width: 100%; height: 348px; background: #ddd url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1000') center/cover; }
-        .cam-cover { position: absolute; bottom: 15px; right: 15px; background: white; padding: 8px 12px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 14px; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
-
-        /* منطقة الهوية الشخصية */
-        .profile-header { display: flex; flex-direction: column; align-items: center; margin-top: -85px; padding-bottom: 30px; position: relative; }
-        .avatar-container { position: relative; width: 168px; height: 168px; }
+        .nav-bar { background: white; height: 70px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; border-bottom: 3px solid var(--zv-blue); }
+        .nav-left { display: flex; align-items: center; gap: 10px; direction: ltr; }
+        .app-title { font-family: 'Cormorant Garamond', serif; font-size: 28px; color: var(--zv-blue); text-decoration: none; font-weight: 700; }
         
-        /* الدرع الصغير المثبت على رأس القرص */
-        .crown-shield { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); width: 40px; height: 40px; z-index: 100; pointer-events: none; }
+        /* الدرع الصغير في الناف بار */
+        .nav-shield { width: 30px; height: 30px; background: var(--zv-blue); clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 18px; }
 
-        .avatar-circle { width: 100%; height: 100%; border-radius: 50%; border: 4px solid white; background: white; overflow: hidden; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-        .avatar-circle img { width: 100%; height: 100%; object-fit: cover; }
+        .main-container { max-width: 900px; margin: 0 auto; background: white; min-height: 100vh; }
+        .cover-photo { width: 100%; height: 320px; background: #ccc url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1000') center/cover; position: relative; }
+
+        /* منطقة الهوية والدرع */
+        .profile-wrap { display: flex; flex-direction: column; align-items: center; margin-top: -100px; padding-bottom: 40px; position: relative; }
+        .avatar-box { position: relative; width: 180px; height: 180px; }
         
-        /* كاميرا القرص */
-        .cam-avatar { position: absolute; bottom: 8px; right: 8px; width: 36px; height: 36px; background: #e4e6eb; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 3px solid white; cursor: pointer; transition: 0.2s; }
+        /* حافة القرص الزرقاء الموحدة */
+        .avatar-main { width: 100%; height: 100%; border-radius: 50%; border: 6px solid var(--zv-blue); background: white; overflow: hidden; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+        .avatar-main img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* الاسم والتوثيق والمتابعين */
-        .user-info { text-align: center; margin-top: 15px; }
-        .name-row { display: flex; align-items: center; justify-content: center; gap: 6px; }
-        .name-txt { font-size: 32px; font-weight: 700; color: #050505; margin: 0; }
-        .verified-badge { color: var(--zv-blue); font-size: 18px; margin-top: 4px; }
+        /* الدرع الموحد (التاج) */
+        .crown-shield { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); width: 45px; height: 45px; background: var(--zv-blue); clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 24px; border: 2px solid white; z-index: 100; }
 
-        .follower-count { color: #65676b; font-size: 16px; margin: 10px 0; font-weight: 600; }
-        .follower-count span { color: #050505; }
+        /* أيقونة كاميرا القرص */
+        .cam-icon { position: absolute; bottom: 8px; right: 8px; width: 36px; height: 36px; background: #e4e6eb; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 3px solid white; cursor: pointer; color: #050505; }
 
-        /* زر المتابعة فقط */
-        .btn-follow { background: var(--zv-blue); color: white; border: none; padding: 10px 40px; border-radius: 6px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 16px; margin-top: 15px; }
-        .btn-follow:hover { background: #075ce4; }
+        /* الاسم والتوثيق بدقة متناهية */
+        .name-container { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 25px; direction: ltr; } /* استخدام ltr لضمان ظهور العلامة بعد الاسم */
+        .user-name { font-size: 26px; font-weight: 700; color: var(--text-black); margin: 0; font-family: 'Cairo', sans-serif; }
+        .verify-badge { color: var(--zv-blue); font-size: 22px; }
+
+        .follower-info { color: #65676b; font-size: 16px; font-weight: 600; margin: 10px 0; }
+        .btn-follow { background: var(--zv-blue); color: white; border: none; padding: 10px 50px; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 16px; margin-top: 10px; }
+
+        /* المنشورات والقواعد بالأسود */
+        .content-area { max-width: 800px; margin: 30px auto; padding: 20px; border-top: 1px solid #ddd; text-align: right; }
+        .rule-item { color: var(--text-black); font-size: 16px; line-height: 1.8; margin-bottom: 10px; }
     </style>
 </head>
 <body>
 
 <nav class="nav-bar">
     <div class="nav-left">
-        <div class="nav-logo-box">
-            <svg viewBox="0 0 100 100" class="shield-svg">
-                <path d="M50 0 L100 25 L100 75 L50 100 L0 75 L0 25 Z" />
-                <text x="50" y="70" text-anchor="middle" class="shield-z" style="font-size: 55px;">Z</text>
-            </svg>
-        </div>
+        <div class="nav-shield">Z</div>
         <a href="#" class="app-title">Zaren Veto</a>
     </div>
     <div class="nav-icons">
@@ -75,32 +67,29 @@
 </nav>
 
 <div class="main-container">
-    <div class="cover-wrapper">
-        <div class="cam-cover"><i class="fas fa-camera"></i> تعديل صورة الغلاف</div>
-    </div>
-    
-    <div class="profile-header">
-        <div class="avatar-container">
-            <div class="crown-shield">
-                <svg viewBox="0 0 100 100" class="shield-svg">
-                    <path d="M50 0 L100 25 L100 75 L50 100 L0 75 L0 25 Z" />
-                    <text x="50" y="70" text-anchor="middle" class="shield-z">Z</text>
-                </svg>
-            </div>
-            <div class="avatar-circle">
+    <div class="cover-photo"></div>
+    <div class="profile-wrap">
+        <div class="avatar-box">
+            <div class="crown-shield">Z</div>
+            <div class="avatar-main">
                 <img src="https://via.placeholder.com/200" alt="Princess Narzine">
             </div>
-            <div class="cam-avatar" title="تعديل الصورة الشخصية"><i class="fas fa-camera"></i></div>
+            <div class="cam-icon"><i class="fas fa-camera"></i></div>
         </div>
 
-        <div class="user-info">
-            <div class="name-row">
-                <h1 class="name-txt">Princess Narzine Bani Hashem</h1>
-                <i class="fas fa-check-circle verified-badge" title="حساب موثق"></i>
-            </div>
-            <div class="follower-count"><span>250k</span> followers • <span>0</span> following</div>
-            <button class="btn-follow"><i class="fas fa-user-plus"></i> Follow</button>
-        </div>
+        <div class="name-container">
+            <h1 class="user-name">Princess Narzine Bani Hashem</h1>
+            <i class="fas fa-check-circle verify-badge"></i> </div>
+        
+        <div class="follower-info">250k followers • 0 following</div>
+        <button class="btn-follow">Follow</button>
+    </div>
+
+    <div class="content-area">
+        <h3 style="color: var(--text-black);">قواعد المنصة السيادية:</h3>
+        <div class="rule-item">1. الالتزام بالهوية المستقلة للمنصة.</div>
+        <div class="rule-item">2. المحتوى الأسود مخصص للقواعد والمنشورات لضمان الرسمية.</div>
+        <div class="rule-item">3. التوثيق والدرع هما شعار السيادة في Zaren Veto.</div>
     </div>
 </div>
 
