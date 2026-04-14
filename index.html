@@ -8,48 +8,48 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root { --zv-blue: #1877f2; --bg-gray: #f0f2f5; }
-        body { background-color: var(--bg-gray); font-family: 'Cairo', sans-serif; margin: 0; overflow-x: hidden; }
+        body { background-color: var(--bg-gray); font-family: 'Cairo', sans-serif; margin: 0; }
 
-        /* شاشة التسجيل الاحترافية */
-        #authOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-gray); z-index: 9999; display: flex; align-items: center; justify-content: center; }
-        .auth-card { background: white; padding: 35px; border-radius: 12px; width: 380px; text-align: center; box-shadow: 0 12px 28px rgba(0,0,0,0.12); border-top: 6px solid var(--zv-blue); }
-        .auth-card input, .auth-card select { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; font-family: 'Cairo'; font-size: 15px; }
+        /* شاشة تسجيل الدخول السيادية */
+        #authOverlay { position: fixed; inset: 0; background: var(--bg-gray); z-index: 9999; display: flex; align-items: center; justify-content: center; }
+        .auth-card { background: white; padding: 40px; border-radius: 12px; width: 400px; text-align: center; box-shadow: 0 12px 28px rgba(0,0,0,0.1); border-top: 6px solid var(--zv-blue); }
+        .auth-card input, .auth-card select { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 8px; font-family: 'Cairo'; font-size: 15px; }
 
-        /* اللوجو والدرع السيادي */
+        /* أيقونة التوثيق الاحترافية (Facebook Style) */
+        .verified-badge-fb {
+            width: 20px;
+            height: 20px;
+            fill: var(--zv-blue);
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 5px; /* تلتصق بنهاية الاسم */
+        }
+
+        /* الدرع واللوغو Z */
         .shield-custom { 
-            background: var(--zv-blue); width: 40px; height: 48px; 
+            background: var(--zv-blue); width: 42px; height: 50px; 
             display: flex; align-items: center; justify-content: center; 
             color: white; font-weight: bold; font-size: 24px;
             clip-path: polygon(0% 0%, 100% 0%, 100% 70%, 50% 100%, 0% 70%);
-            border: 1px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            border: 1px solid white;
         }
 
-        /* شريط التنقل العلوي */
+        /* تنسيق الاسم */
+        .name-wrapper { display: flex; align-items: center; justify-content: center; gap: 4px; margin-top: 15px; direction: rtl; }
+        #userName { margin: 0; font-size: 26px; font-weight: 700; color: #050505; }
+
+        /* شريط التنقل */
         .nav-bar { background: white; height: 60px; display: flex; align-items: center; padding: 0 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; justify-content: space-between; }
-        .nav-logo { cursor: pointer; display: flex; align-items: center; gap: 10px; direction: ltr; }
-        
+        .nav-logo { display: flex; align-items: center; gap: 10px; direction: ltr; cursor: pointer; }
+
+        /* الصفحة والبروفايل */
         .page { display: none; max-width: 900px; margin: 0 auto; background: white; min-height: 100vh; }
         .page.active { display: block; }
-
-        /* الملف الشخصي وعلامة التوثيق */
         .profile-header { display: flex; flex-direction: column; align-items: center; margin-top: -100px; padding-bottom: 40px; position: relative; }
         .avatar-box { position: relative; width: 180px; height: 180px; }
         .avatar-circle { width: 100%; height: 100%; border-radius: 50%; border: 6px solid var(--zv-blue); background: white; overflow: hidden; }
         .avatar-circle img { width: 100%; height: 100%; object-fit: cover; }
-        .crown-shield { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); z-index: 100; scale: 0.9; }
-
-        .name-container { display: flex; align-items: center; gap: 6px; margin-top: 15px; }
-        .verified-badge { 
-            background: var(--zv-blue); color: white; width: 18px; height: 18px; 
-            border-radius: 50%; display: flex; align-items: center; justify-content: center; 
-            font-size: 10px; flex-shrink: 0; 
-        }
-
-        /* التفاعلات */
-        .post-card { background: white; border: 1px solid #ddd; border-radius: 8px; margin: 20px; padding: 15px; text-align: right; }
-        .post-actions { border-top: 1px solid #eee; margin-top: 10px; padding-top: 10px; display: flex; justify-content: space-around; }
-        .action-btn { cursor: pointer; color: #65676b; font-weight: 600; font-size: 14px; transition: 0.2s; }
-        .action-btn:hover { color: var(--zv-blue); }
+        .crown-shield { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); z-index: 100; scale: 0.8; }
     </style>
 </head>
 <body>
@@ -57,10 +57,10 @@
 <div id="authOverlay">
     <div class="auth-card">
         <div class="shield-custom" style="margin: 0 auto 15px; width: 60px; height: 75px; font-size: 35px;">Z</div>
-        <h2 style="color:var(--zv-blue); margin-bottom: 20px;">Zaren Veto | تسجيل سيادي</h2>
+        <h2 style="color:var(--zv-blue); margin-bottom: 20px;">Zaren Veto | التسجيل الرسمي</h2>
         <input type="text" id="regName" placeholder="الاسم الكامل">
         <input type="email" id="regEmail" placeholder="البريد الإلكتروني">
-        <input type="date" id="regDate" title="تاريخ الميلاد">
+        <input type="date" id="regDate">
         <select id="regGender">
             <option value="">الجنس</option>
             <option value="أنثى">أنثى</option>
@@ -94,32 +94,25 @@
             <div class="avatar-circle">
                 <img id="viewAvatar" src="" style="display:none;">
             </div>
-            <button onclick="document.getElementById('inAvatar').click()" style="position:absolute; bottom:5px; right:5px; width:38px; height:38px; border-radius:50%; border:3px solid white; background:#e4e6eb; cursor:pointer;"><i class="fas fa-camera"></i></button>
+            <button onclick="document.getElementById('inAvatar').click()" style="position:absolute; bottom:8px; right:8px; width:38px; height:38px; border-radius:50%; border:3px solid white; background:#e4e6eb; cursor:pointer;"><i class="fas fa-camera"></i></button>
             <input type="file" id="inAvatar" hidden onchange="saveMedia(this, 'Avatar')">
         </div>
-        <div class="name-container">
-            <h2 id="userName" style="margin:0; font-size:26px;">Princesse Narzine</h2>
-            <div class="verified-badge"><i class="fas fa-check"></i></div>
+        
+        <div class="name-wrapper">
+            <h2 id="userName">Princesse Narzine</h2>
+            <svg class="verified-badge-fb" viewBox="0 0 24 24" aria-label="Verified">
+                <path d="M22.5 12.5c0-1.58-.8-3.04-2.12-3.88.31-1.58-.04-3.23-1-4.43-1.12-1.42-2.84-2.19-4.57-2.07-1.14-1.38-2.88-2.12-4.66-1.87-1.78-.25-3.52.49-4.66 1.87-1.73-.12-3.45.65-4.57 2.07-0.96 1.2-1.31 2.85-1 4.43-1.32.84-2.12 2.3-2.12 3.88 0 1.58.8 3.04 2.12 3.88-0.31 1.58.04 3.23 1 4.43 1.12 1.42 2.84 2.19 4.57 2.07 1.14 1.38 2.88 2.12 4.66 1.87 1.78.25 3.52-.49 4.66-1.87 1.73.12 3.45-.65 4.57-2.07 0.96-1.2 1.31-2.85 1-4.43 1.32-.84 2.12-2.3 2.12-3.88zm-12.72 4.5l-4.14-4.14 1.76-1.76 2.38 2.38 5.4-5.4 1.76 1.76-7.16 7.16z"></path>
+            </svg>
         </div>
-        <p id="userInfo" style="color:#65676b; font-weight:bold; margin-top:8px;">250k abonnés • Zaren Veto Official Profile</p>
-    </div>
-</div>
-
-<div id="homePage" class="page">
-    <div style="padding:20px;">
-        <div class="post-card">
-            <textarea id="postTxt" style="width:100%; border:none; background:#f0f2f5; padding:15px; border-radius:10px;" placeholder="ماذا يدور في فكرك السيادي؟"></textarea>
-            <button onclick="post()" style="margin-top:10px; background:var(--zv-blue); color:white; border:none; padding:10px 30px; border-radius:6px; cursor:pointer; font-weight:bold;">نشر</button>
-        </div>
-        <div id="feed"></div>
+        
+        <p style="color:#65676b; font-weight:bold; margin-top:8px;">250k abonnés • الحساب الرسمي السيادي</p>
     </div>
 </div>
 
 <div id="officialPage" class="page active">
-    <div style="text-align:center; padding:50px;">
-        <div class="shield-custom" style="margin:0 auto; width:70px; height:90px; font-size:40px;">Z</div>
-        <h1 style="color:var(--zv-blue); font-size:35px;">Zaren Veto Official</h1>
-        <p style="font-weight:bold;">المنصة العالمية للسيادة والخصوصية الرقمية</p>
+    <div style="text-align:center; padding:80px;">
+        <div class="shield-custom" style="margin:0 auto; width:80px; height:100px; font-size:45px;">Z</div>
+        <h1 style="color:var(--zv-blue); font-size:38px;">Zaren Veto Official</h1>
     </div>
 </div>
 
@@ -130,13 +123,9 @@
     }
 
     function activateAccount() {
-        const data = {
-            name: document.getElementById('regName').value,
-            info: document.getElementById('regCountry').value + " • " + document.getElementById('regGender').value,
-            status: 'active'
-        };
-        if(!data.name) return alert("يرجى إدخال الاسم الكامل");
-        localStorage.setItem('zv_session', JSON.stringify(data));
+        const name = document.getElementById('regName').value;
+        if(!name) return alert("يرجى إدخال اسمك");
+        localStorage.setItem('zv_session', JSON.stringify({ name: name, status: 'active' }));
         render();
     }
 
@@ -145,7 +134,6 @@
         if(session && session.status === 'active') {
             document.getElementById('authOverlay').style.display = 'none';
             document.getElementById('userName').innerText = session.name;
-            document.getElementById('userInfo').innerText = session.info;
             loadMedia();
         }
     }
@@ -166,21 +154,6 @@
         const cv = localStorage.getItem('zv_img_Cover');
         if(av) { document.getElementById('viewAvatar').src = av; document.getElementById('viewAvatar').style.display = 'block'; }
         if(cv) { document.getElementById('viewCover').src = cv; document.getElementById('viewCover').style.display = 'block'; }
-    }
-
-    function post() {
-        const val = document.getElementById('postTxt').value;
-        if(!val) return;
-        const p = document.createElement('div');
-        p.className = 'post-card';
-        p.innerHTML = `<strong>${document.getElementById('userName').innerText}</strong><p>${val}</p>
-            <div class="post-actions">
-                <span class="action-btn" onclick="this.style.color='#1877f2'"><i class="fas fa-thumbs-up"></i> إعجاب</span>
-                <span class="action-btn"><i class="fas fa-comment"></i> تعليق</span>
-                <span class="action-btn"><i class="fas fa-share"></i> مشاركة</span>
-            </div>`;
-        document.getElementById('feed').prepend(p);
-        document.getElementById('postTxt').value = "";
     }
 
     window.onload = render;
