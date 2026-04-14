@@ -8,145 +8,164 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root { --zv-blue: #1877f2; --bg-gray: #f0f2f5; }
-        body { background-color: var(--bg-gray); font-family: 'Cairo', sans-serif; margin: 0; }
+        body { background-color: var(--bg-gray); font-family: 'Cairo', sans-serif; margin: 0; overflow-x: hidden; }
 
         /* شاشة تسجيل الدخول السيادية */
         #authOverlay { position: fixed; inset: 0; background: var(--bg-gray); z-index: 9999; display: flex; align-items: center; justify-content: center; }
-        .auth-card { background: white; padding: 40px; border-radius: 12px; width: 400px; text-align: center; box-shadow: 0 12px 28px rgba(0,0,0,0.1); border-top: 6px solid var(--zv-blue); }
-        .auth-card input, .auth-card select { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 8px; font-family: 'Cairo'; font-size: 15px; }
+        .auth-card { background: white; padding: 35px; border-radius: 12px; width: 380px; text-align: center; box-shadow: 0 12px 28px rgba(0,0,0,0.12); border-top: 6px solid var(--zv-blue); }
+        .auth-card input, .auth-card select { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 8px; font-family: 'Cairo'; }
 
-        /* أيقونة التوثيق الاحترافية (Facebook Style) */
-        .verified-badge-fb {
-            width: 20px;
-            height: 20px;
-            fill: var(--zv-blue);
-            display: inline-block;
-            vertical-align: middle;
-            margin-right: 5px; /* تلتصق بنهاية الاسم */
-        }
-
-        /* الدرع واللوغو Z */
-        .shield-custom { 
-            background: var(--zv-blue); width: 42px; height: 50px; 
+        /* الدرع الملكي (اللوغو المعتمد) */
+        .shield-logo { 
+            background: var(--zv-blue); width: 40px; height: 48px; 
             display: flex; align-items: center; justify-content: center; 
-            color: white; font-weight: bold; font-size: 24px;
+            color: white; font-weight: bold; font-size: 22px;
             clip-path: polygon(0% 0%, 100% 0%, 100% 70%, 50% 100%, 0% 70%);
-            border: 1px solid white;
+            border: 1px solid white; cursor: pointer;
         }
 
-        /* تنسيق الاسم */
-        .name-wrapper { display: flex; align-items: center; justify-content: center; gap: 4px; margin-top: 15px; direction: rtl; }
-        #userName { margin: 0; font-size: 26px; font-weight: 700; color: #050505; }
-
-        /* شريط التنقل */
+        /* شريط التنقل العلوي */
         .nav-bar { background: white; height: 60px; display: flex; align-items: center; padding: 0 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; justify-content: space-between; }
-        .nav-logo { display: flex; align-items: center; gap: 10px; direction: ltr; cursor: pointer; }
+        
+        /* القائمة الجانبية (الإعدادات والسياسة) */
+        .side-menu { position: fixed; left: -300px; top: 0; width: 280px; height: 100%; background: white; z-index: 2000; transition: 0.3s; padding: 20px; box-shadow: 2px 0 10px rgba(0,0,0,0.1); }
+        .side-menu.active { left: 0; }
+        .menu-item { padding: 12px; border-bottom: 1px solid #eee; cursor: pointer; display: flex; align-items: center; gap: 10px; font-size: 14px; }
 
-        /* الصفحة والبروفايل */
-        .page { display: none; max-width: 900px; margin: 0 auto; background: white; min-height: 100vh; }
+        /* الملف الشخصي والتوثيق */
+        .page { display: none; max-width: 800px; margin: 0 auto; background: white; min-height: 100vh; }
         .page.active { display: block; }
-        .profile-header { display: flex; flex-direction: column; align-items: center; margin-top: -100px; padding-bottom: 40px; position: relative; }
-        .avatar-box { position: relative; width: 180px; height: 180px; }
-        .avatar-circle { width: 100%; height: 100%; border-radius: 50%; border: 6px solid var(--zv-blue); background: white; overflow: hidden; }
+        
+        .profile-header { display: flex; flex-direction: column; align-items: center; margin-top: -90px; padding-bottom: 30px; }
+        .avatar-container { position: relative; width: 170px; height: 170px; }
+        .avatar-circle { width: 100%; height: 100%; border-radius: 50%; border: 5px solid var(--zv-blue); background: white; overflow: hidden; }
         .avatar-circle img { width: 100%; height: 100%; object-fit: cover; }
-        .crown-shield { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); z-index: 100; scale: 0.8; }
+        
+        /* اللوكو الصغير المثبت على رأس القرص */
+        .crown-fix { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); z-index: 100; scale: 0.8; pointer-events: none; }
+
+        .name-row { display: flex; align-items: center; gap: 6px; margin-top: 10px; direction: rtl; }
+        #userNameDisplay { font-size: 20px; font-weight: 700; color: #050505; }
+        
+        /* أيقونة التوثيق الاحترافية */
+        .v-badge { fill: var(--zv-blue); width: 18px; height: 18px; flex-shrink: 0; }
+
+        .stats-text { font-size: 14px; color: #65676b; margin-top: 5px; font-weight: 600; }
+
+        /* الكاميرا للتغيير */
+        .cam-btn { position: absolute; background: #e4e6eb; border: none; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
+        .cam-btn:hover { background: #d8dadf; }
     </style>
 </head>
 <body>
 
 <div id="authOverlay">
     <div class="auth-card">
-        <div class="shield-custom" style="margin: 0 auto 15px; width: 60px; height: 75px; font-size: 35px;">Z</div>
-        <h2 style="color:var(--zv-blue); margin-bottom: 20px;">Zaren Veto | التسجيل الرسمي</h2>
+        <div class="shield-logo" style="margin:0 auto 15px; width:55px; height:65px; font-size:30px;">Z</div>
+        <h2>تفعيل الحساب السيادي</h2>
         <input type="text" id="regName" placeholder="الاسم الكامل">
         <input type="email" id="regEmail" placeholder="البريد الإلكتروني">
         <input type="date" id="regDate">
-        <select id="regGender">
-            <option value="">الجنس</option>
-            <option value="أنثى">أنثى</option>
-            <option value="ذكر">ذكر</option>
-        </select>
+        <select id="regGender"><option value="أنثى">أنثى</option><option value="ذكر">ذكر</option></select>
         <input type="text" id="regCountry" placeholder="البلد">
-        <button onclick="activateAccount()" style="width:100%; padding:14px; background:var(--zv-blue); color:white; border:none; border-radius:8px; cursor:pointer; font-weight:bold; margin-top:10px;">تفعيل الحساب السيادي</button>
+        <button onclick="startApp()" class="btn-main" style="width:100%; padding:12px; background:var(--zv-blue); color:white; border:none; border-radius:8px; cursor:pointer; font-weight:bold;">تفعيل الآن</button>
     </div>
 </div>
 
+<div id="sideMenu" class="side-menu">
+    <h3 style="color:var(--zv-blue)">الإعدادات والسياسة</h3>
+    <div class="menu-item"><i class="fas fa-user-shield"></i> سياسة الخصوصية السيادية</div>
+    <div class="menu-item"><i class="fas fa-gavel"></i> القوانين (منع التجاوز)</div>
+    <div class="menu-item" onclick="location.reload()"><i class="fas fa-sign-out-alt"></i> تسجيل الخروج</div>
+    <button onclick="toggleMenu()" style="margin-top:20px; width:100%; border:none; padding:10px; background:#eee; border-radius:8px;">إغلاق</button>
+</div>
+
 <nav class="nav-bar">
+    <i class="fas fa-bars" onclick="toggleMenu()" style="font-size:20px; color:var(--zv-blue); cursor:pointer;"></i>
     <div class="nav-logo" onclick="showPage('official')">
-        <div class="shield-custom">Z</div>
-        <span style="font-family:'Playfair Display'; color:var(--zv-blue); font-size:24px; font-weight:700;">Zaren Veto</span>
+        <div class="shield-logo">Z</div>
+        <span style="font-family:'Playfair Display'; color:var(--zv-blue); font-size:22px; font-weight:700;">Zaren Veto</span>
     </div>
-    <div style="display:flex; gap:20px; color:var(--zv-blue);">
+    <div style="display:flex; gap:15px; color:var(--zv-blue);">
         <i class="fas fa-home" onclick="showPage('home')" style="cursor:pointer; font-size:20px;"></i>
         <i class="fas fa-user-circle" onclick="showPage('profile')" style="cursor:pointer; font-size:20px;"></i>
     </div>
 </nav>
 
 <div id="profilePage" class="page">
-    <div style="width:100%; height:320px; background:#ddd; position:relative;">
+    <div style="width:100%; height:280px; background:#ccc; position:relative;">
         <img id="viewCover" src="" style="width:100%; height:100%; object-fit:cover; display:none;">
-        <button onclick="document.getElementById('inCover').click()" style="position:absolute; bottom:15px; left:15px; padding:10px; background:white; border:none; border-radius:6px; font-weight:bold; cursor:pointer;"><i class="fas fa-camera"></i> تعديل الغلاف</button>
-        <input type="file" id="inCover" hidden onchange="saveMedia(this, 'Cover')">
+        <button class="cam-btn" onclick="document.getElementById('inCover').click()" style="bottom:10px; left:10px; padding:10px 15px; border-radius:6px;"><i class="fas fa-camera"></i></button>
+        <input type="file" id="inCover" hidden onchange="processMedia(this, 'Cover')">
     </div>
     <div class="profile-header">
-        <div class="avatar-box">
-            <div class="shield-custom crown-shield">Z</div>
+        <div class="avatar-container">
+            <div class="shield-logo crown-fix">Z</div>
             <div class="avatar-circle">
                 <img id="viewAvatar" src="" style="display:none;">
             </div>
-            <button onclick="document.getElementById('inAvatar').click()" style="position:absolute; bottom:8px; right:8px; width:38px; height:38px; border-radius:50%; border:3px solid white; background:#e4e6eb; cursor:pointer;"><i class="fas fa-camera"></i></button>
-            <input type="file" id="inAvatar" hidden onchange="saveMedia(this, 'Avatar')">
+            <button class="cam-btn" onclick="document.getElementById('inAvatar').click()" style="bottom:5px; right:5px; width:38px; height:38px;"><i class="fas fa-camera"></i></button>
+            <input type="file" id="inAvatar" hidden onchange="processMedia(this, 'Avatar')">
         </div>
-        
-        <div class="name-wrapper">
-            <h2 id="userName">Princesse Narzine</h2>
-            <svg class="verified-badge-fb" viewBox="0 0 24 24" aria-label="Verified">
-                <path d="M22.5 12.5c0-1.58-.8-3.04-2.12-3.88.31-1.58-.04-3.23-1-4.43-1.12-1.42-2.84-2.19-4.57-2.07-1.14-1.38-2.88-2.12-4.66-1.87-1.78-.25-3.52.49-4.66 1.87-1.73-.12-3.45.65-4.57 2.07-0.96 1.2-1.31 2.85-1 4.43-1.32.84-2.12 2.3-2.12 3.88 0 1.58.8 3.04 2.12 3.88-0.31 1.58.04 3.23 1 4.43 1.12 1.42 2.84 2.19 4.57 2.07 1.14 1.38 2.88 2.12 4.66 1.87 1.78.25 3.52-.49 4.66-1.87 1.73.12 3.45-.65 4.57-2.07 0.96-1.2 1.31-2.85 1-4.43 1.32-.84 2.12-2.3 2.12-3.88zm-12.72 4.5l-4.14-4.14 1.76-1.76 2.38 2.38 5.4-5.4 1.76 1.76-7.16 7.16z"></path>
-            </svg>
+        <div class="name-row">
+            <h2 id="userNameDisplay">Princesse Narzine</h2>
+            <svg class="v-badge" viewBox="0 0 24 24"><path d="M22.5 12.5c0-1.58-.8-3.04-2.12-3.88.31-1.58-.04-3.23-1-4.43-1.12-1.42-2.84-2.19-4.57-2.07-1.14-1.38-2.88-2.12-4.66-1.87-1.78-.25-3.52.49-4.66 1.87-1.73-.12-3.45.65-4.57 2.07-0.96 1.2-1.31 2.85-1 4.43-1.32.84-2.12 2.3-2.12 3.88 0 1.58.8 3.04 2.12 3.88-0.31 1.58.04 3.23 1 4.43 1.12 1.42 2.84 2.19 4.57 2.07 1.14 1.38 2.88 2.12 4.66 1.87 1.78.25 3.52-.49 4.66-1.87 1.73.12 3.45-.65 4.57-2.07 0.96-1.2 1.31-2.85 1-4.43 1.32-.84 2.12-2.3 2.12-3.88zm-12.72 4.5l-4.14-4.14 1.76-1.76 2.38 2.38 5.4-5.4 1.76 1.76-7.16 7.16z"></path></svg>
         </div>
-        
-        <p style="color:#65676b; font-weight:bold; margin-top:8px;">250k abonnés • الحساب الرسمي السيادي</p>
+        <div class="stats-text">250k متابع • 0 متابعة</div>
     </div>
 </div>
 
 <div id="officialPage" class="page active">
-    <div style="text-align:center; padding:80px;">
-        <div class="shield-custom" style="margin:0 auto; width:80px; height:100px; font-size:45px;">Z</div>
-        <h1 style="color:var(--zv-blue); font-size:38px;">Zaren Veto Official</h1>
+    <div style="text-align:center; padding:40px; border-bottom:1px solid #eee;">
+        <div class="shield-logo" style="margin:0 auto 10px; width:60px; height:75px; font-size:35px;">Z</div>
+        <div class="name-row" style="justify-content:center;">
+            <h2>Zaren Veto Official</h2>
+            <svg class="v-badge" viewBox="0 0 24 24"><path d="M22.5 12.5c0-1.58-.8-3.04-2.12-3.88.31-1.58-.04-3.23-1-4.43-1.12-1.42-2.84-2.19-4.57-2.07-1.14-1.38-2.88-2.12-4.66-1.87-1.78-.25-3.52.49-4.66 1.87-1.73-.12-3.45.65-4.57 2.07-0.96 1.2-1.31 2.85-1 4.43-1.32.84-2.12 2.3-2.12 3.88 0 1.58.8 3.04 2.12 3.88-0.31 1.58.04 3.23 1 4.43 1.12 1.42 2.84 2.19 4.57 2.07 1.14 1.38 2.88 2.12 4.66 1.87 1.78.25 3.52-.49 4.66-1.87 1.73.12 3.45-.65 4.57-2.07 0.96-1.2 1.31-2.85 1-4.43 1.32-.84 2.12-2.3 2.12-3.88zm-12.72 4.5l-4.14-4.14 1.76-1.76 2.38 2.38 5.4-5.4 1.76 1.76-7.16 7.16z"></path></svg>
+        </div>
+        <p class="stats-text">250k متابع</p>
+        <div style="padding:20px; font-size:14px; text-align:right;">
+            <h4>سياسة المنصة:</h4>
+            <p>1. يُمنع نشر روابط تطبيقات منافسة عدا TikTok و YouTube.</p>
+            <p>2. يُحظر استخدام صور الحيوانات أو الطبيعة كصور شخصية.</p>
+            <p>3. خرق القوانين يؤدي للحظر الأبدي.</p>
+        </div>
     </div>
 </div>
 
 <script>
-    function showPage(p) {
+    function toggleMenu() { document.getElementById('sideMenu').classList.toggle('active'); }
+    function showPage(p) { 
         document.querySelectorAll('.page').forEach(pg => pg.classList.remove('active'));
         document.getElementById(p + 'Page').classList.add('active');
+        if(window.innerWidth < 768) document.getElementById('sideMenu').classList.remove('active');
     }
 
-    function activateAccount() {
+    function startApp() {
         const name = document.getElementById('regName').value;
         if(!name) return alert("يرجى إدخال اسمك");
-        localStorage.setItem('zv_session', JSON.stringify({ name: name, status: 'active' }));
+        localStorage.setItem('zv_session', JSON.stringify({name: name, active: true}));
         render();
     }
 
     function render() {
         const session = JSON.parse(localStorage.getItem('zv_session'));
-        if(session && session.status === 'active') {
+        if(session && session.active) {
             document.getElementById('authOverlay').style.display = 'none';
-            document.getElementById('userName').innerText = session.name;
+            document.getElementById('userNameDisplay').innerText = session.name;
             loadMedia();
         }
     }
 
-    function saveMedia(input, type) {
-        if (input.files && input.files[0]) {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                localStorage.setItem('zv_img_' + type, e.target.result);
-                loadMedia();
-            };
-            reader.readAsDataURL(input.files[0]);
-        }
+    function processMedia(input, type) {
+        const file = input.files[0];
+        if (!file) return;
+        // منع صور معينة (افتراضياً بالاسم أو النوع، برمجياً هنا نحتاج ذكاء بصري ولكن سنطبق القيود على الرفع)
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            localStorage.setItem('zv_img_' + type, e.target.result);
+            loadMedia();
+        };
+        reader.readAsDataURL(file);
     }
 
     function loadMedia() {
