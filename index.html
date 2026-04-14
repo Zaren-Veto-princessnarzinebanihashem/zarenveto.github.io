@@ -5,131 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ZAREN VETO - Profile</title>
     <style>
-        body { background-color: #f0f2f5; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; }
-        
-        /* غلاف الصفحة */
-        .cover-photo {
-            width: 100%;
-            height: 250px;
-            background: linear-gradient(to bottom, #1e293b, #0f172a);
-            position: relative;
-            border-bottom: 1px solid #ddd;
-        }
-
-        /* حاوية المعلومات الشخصية */
-        .profile-container {
-            max-width: 900px;
-            margin: 0 auto;
-            position: relative;
-            background: white;
-            padding-bottom: 20px;
-            border-bottom-left-radius: 8px;
-            border-bottom-right-radius: 8px;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-        }
-
-        /* الصورة الشخصية */
-        .profile-pic-container {
-            position: absolute;
-            top: -100px;
-            right: 30px; /* جهة اليمين للغة العربية */
-        }
-
-        .profile-pic {
-            width: 160px;
-            height: 160px;
-            border-radius: 50%;
-            border: 4px solid white;
-            background-color: white;
-            object-fit: cover;
-        }
-
-        /* تفاصيل الاسم والمعلومات */
-        .profile-info {
-            padding: 70px 30px 10px 30px;
-            text-align: right;
-        }
-
-        .profile-name {
-            font-size: 32px;
-            font-weight: bold;
-            color: #050505;
-            margin: 0;
-        }
-
-        .profile-bio {
-            color: #65676b;
-            font-size: 16px;
-            margin-top: 5px;
-        }
-
-        /* أزرار التحكم */
-        .profile-actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
-            border-top: 1px solid #ebedf0;
-            padding-top: 15px;
-        }
-
-        .btn {
-            padding: 8px 15px;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-            border: none;
-            font-size: 14px;
-        }
-
-        .btn-blue { background-color: #0866ff; color: white; }
-        .btn-gray { background-color: #e4e6eb; color: #050505; }
-
-        /* منطقة المنشورات السفلى */
-        .feed-container {
-            max-width: 900px;
-            margin: 20px auto;
-            display: grid;
-            grid-template-columns: 1fr 1.5fr;
-            gap: 15px;
-        }
-
-        .box { background: white; border-radius: 8px; padding: 15px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
-        .box-title { font-weight: bold; margin-bottom: 10px; display: block; }
+        body { background-color: #f0f2f5; font-family: sans-serif; margin: 0; padding: 0; }
+        .cover { width: 100%; height: 200px; background: linear-gradient(to bottom, #1e293b, #000); }
+        .p-container { max-width: 800px; margin: 0 auto; background: white; position: relative; padding-bottom: 20px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); border-bottom-left-radius: 8px; border-bottom-right-radius: 8px; }
+        .p-pic { width: 150px; height: 150px; border-radius: 50%; border: 4px solid white; position: absolute; top: -75px; right: 30px; background: white; object-fit: cover; }
+        .p-info { padding: 85px 30px 10px; text-align: right; }
+        .p-name { font-size: 30px; font-weight: bold; margin: 0; color: #050505; }
+        .p-bio { color: #65676b; margin: 8px 0; font-size: 16px; line-height: 1.4; }
+        .btn-row { display: flex; gap: 10px; margin-top: 15px; border-top: 1px solid #eee; padding-top: 15px; }
+        .btn { padding: 8px 20px; border-radius: 6px; border: none; font-weight: bold; cursor: pointer; font-size: 14px; }
+        .btn-b { background: #0866ff; color: white; }
+        .btn-g { background: #e4e6eb; color: #050505; }
     </style>
 </head>
 <body>
-
-    <div class="cover-photo"></div>
-
-    <div class="profile-container">
-        <div class="profile-pic-container">
-            <img src="1776120756397.png" alt="ZAREN VETO" class="profile-pic">
-        </div>
-        
-        <div class="profile-info">
-            <h1 class="profile-name">ZAREN VETO</h1>
-            <p class="profile-bio">تطبيق التواصل الاجتماعي الحر.. بدون قيود هوية.</p>
-            
-            <div class="profile-actions">
-                <button class="btn btn-blue">إضافة منشور</button>
-                <button class="btn btn-gray">تعديل الملف الشخصي</button>
+    <div class="cover"></div>
+    <div class="p-container">
+        <img src="1776120756397.png" class="p-pic" alt="Logo">
+        <div class="p-info">
+            <h1 class="p-name">ZAREN VETO</h1>
+            <p class="p-bio">منصة تواصل اجتماعي حرة تحترم السيادة الرقمية والخصوصية دون قيود الهوية الرسمية</p>
+            <div class="btn-row">
+                <button class="btn btn-b">إضافة منشور</button>
+                <button class="btn btn-g">تعديل الملف الشخصي</button>
             </div>
         </div>
     </div>
-
-    <div class="feed-container">
-        <div class="box">
-            <span class="box-title">حول التطبيق</span>
-            <p style="font-size: 14px; color: #444;">نظام تواصل عالمي يحترم الخصوصية المطلقة ويوفر بيئة إعلامية سيادية.</p>
-        </div>
-
-        <div class="box">
-            <span class="box-title">المنشورات</span>
-            <div style="background: #f0f2f5; height: 100px; border-radius: 8px; display: flex; align-items: center; padding: 0 15px; color: #65676b;">
-                بماذا تفكر الآن؟
-            </div>
-        </div>
-    </div>
-
 </body>
 </html>
