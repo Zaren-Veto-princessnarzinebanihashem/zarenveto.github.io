@@ -5,98 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ZAREN VETO</title>
     <style>
-        body { 
-            background-color: #f0f2f5; 
-            font-family: Arial, sans-serif; 
-            margin: 0; 
-            padding: 0; 
-        }
-        .header-wrapper {
-            background-color: white;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .cover-photo { 
-            width: 100%; 
-            height: 350px; 
-            background: linear-gradient(to bottom, #1e293b, #000); 
-            background-size: cover;
-            background-position: center;
-        }
-        .profile-container { 
-            max-width: 940px; 
-            margin: 0 auto; 
-            position: relative; 
-            padding-bottom: 20px;
-        }
-        .profile-header {
-            display: flex;
-            align-items: flex-end;
-            margin-top: -100px;
-            padding: 0 30px;
-            padding-bottom: 20px;
-        }
-        .profile-pic-container {
-            position: relative;
-        }
-        .profile-pic { 
-            width: 168px; 
-            height: 168px; 
-            border-radius: 50%; 
-            border: 4px solid white; 
-            background: white;
-            object-fit: cover;
-            display: block;
-        }
-        .profile-details {
-            margin-right: 20px;
-            margin-bottom: 15px;
-            flex-grow: 1;
-        }
-        .profile-name { 
-            font-size: 32px; 
-            font-weight: bold; 
-            margin: 0; 
-            color: #050505; 
-        }
-        .profile-bio { 
-            color: #65676b; 
-            margin: 5px 0; 
-            font-size: 16px; 
-            font-weight: 600;
-        }
-        .action-buttons {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-        .btn { 
-            padding: 8px 16px; 
-            border-radius: 6px; 
-            border: none; 
-            font-weight: bold; 
-            cursor: pointer; 
-            font-size: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+        body { background-color: #f0f2f5; font-family: Arial, sans-serif; margin: 0; padding: 0; }
+        .header-wrapper { background-color: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .cover-photo { width: 100%; height: 350px; background: linear-gradient(to bottom, #1e293b, #000); background-size: cover; background-position: center; }
+        .profile-container { max-width: 940px; margin: 0 auto; position: relative; padding-bottom: 20px; }
+        .profile-header { display: flex; align-items: flex-end; margin-top: -100px; padding: 0 30px; padding-bottom: 20px; }
+        .profile-pic { width: 168px; height: 168px; border-radius: 50%; border: 4px solid white; background: white; object-fit: cover; }
+        .profile-details { margin-right: 20px; margin-bottom: 15px; flex-grow: 1; }
+        .name-wrapper { display: flex; align-items: center; gap: 8px; }
+        .profile-name { font-size: 32px; font-weight: bold; margin: 0; color: #050505; }
+        /* شارة التحقق الزرقاء مخصصة لحسابكِ هنا فقط */
+        .verified-badge { width: 22px; height: 22px; background-color: #0866ff; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        .profile-bio { color: #65676b; margin: 5px 0; font-size: 16px; font-weight: 600; }
+        .action-buttons { display: flex; gap: 10px; margin-bottom: 15px; }
+        .btn { padding: 8px 16px; border-radius: 6px; border: none; font-weight: bold; cursor: pointer; font-size: 15px; }
         .btn-primary { background-color: #0866ff; color: white; }
         .btn-secondary { background-color: #e4e6eb; color: #050505; }
         
         @media (max-width: 700px) {
-            .profile-header {
-                flex-direction: column;
-                align-items: center;
-                margin-top: -85px;
-            }
-            .profile-details {
-                margin-right: 0;
-                text-align: center;
-                margin-top: 10px;
-            }
-            .action-buttons {
-                justify-content: center;
-            }
+            .profile-header { flex-direction: column; align-items: center; margin-top: -85px; }
+            .profile-details { margin-right: 0; text-align: center; margin-top: 10px; }
+            .name-wrapper { justify-content: center; }
+            .action-buttons { justify-content: center; }
         }
     </style>
 </head>
@@ -105,11 +35,14 @@
         <div class="cover-photo"></div>
         <div class="profile-container">
             <div class="profile-header">
-                <div class="profile-pic-container">
-                    <img src="1776120756397.png" class="profile-pic" alt="ZAREN VETO Logo">
-                </div>
+                <img src="1776120756397.png" class="profile-pic" alt="Logo">
                 <div class="profile-details">
-                    <h1 class="profile-name" translate="no">ZAREN VETO</h1>
+                    <div class="name-wrapper">
+                        <h1 class="profile-name" translate="no">ZAREN VETO</h1>
+                        <div class="verified-badge" title="Compte vérifié">
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"></path></svg>
+                        </div>
+                    </div>
                     <p class="profile-bio">منصة تواصل اجتماعي حرة تحترم السيادة الرقمية والخصوصية دون قيود الهوية الرسمية</p>
                 </div>
                 <div class="action-buttons">
