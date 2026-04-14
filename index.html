@@ -3,145 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zaren Veto | المنصة الرسمية</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>Zaren Veto | Official</title>
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --zv-blue: #1877f2; --zv-bg: #f0f2f5; --gold: #c4a77d; }
-        body { background-color: var(--zv-bg); font-family: 'Cairo', sans-serif; margin: 0; padding: 0; overflow-x: hidden; }
-        
+        :root { --zv-blue: #0866ff; --zv-bg: #f0f2f5; }
+        body { background-color: var(--zv-bg); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; }
+
+        /* اللوجو الدرع الاحترافي */
+        .shield-svg { width: 100%; height: 100%; fill: #0d47a1; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); }
+        .shield-z { fill: white; font-weight: bold; font-size: 60px; }
+
         /* شريط التنقل */
-        .nav-bar { background: white; height: 70px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; direction: ltr; border-bottom: 2px solid var(--gold); }
-        .nav-left { display: flex; align-items: center; gap: 10px; }
-        .nav-logo { width: 38px; height: 38px; object-fit: contain; }
-        .app-title { font-family: 'Cormorant Garamond', serif; font-size: 26px; color: #050505; text-decoration: none; font-weight: 700; }
-        .app-title span { color: var(--zv-blue); }
+        .nav-bar { background: white; height: 60px; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; direction: ltr; }
+        .nav-left { display: flex; align-items: center; gap: 8px; }
+        .nav-logo-box { width: 35px; height: 35px; }
+        .app-title { font-size: 24px; color: var(--zv-blue); text-decoration: none; font-weight: 700; letter-spacing: -0.5px; }
 
-        .nav-icons { display: flex; gap: 15px; }
-        .nav-btn { background: #e4e6eb; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; border: none; }
+        .nav-icons { display: flex; gap: 10px; }
+        .nav-btn { background: #e4e6eb; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; border: none; }
 
-        .main-wrapper { max-width: 900px; margin: 0 auto; background: white; min-height: 100vh; position: relative; }
+        .main-container { max-width: 940px; margin: 0 auto; background: white; min-height: 100vh; border-radius: 0 0 8px 8px; }
+
+        /* الغلاف ونظام الكاميرا */
+        .cover-wrapper { position: relative; width: 100%; height: 348px; background: #ddd url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1000') center/cover; }
+        .cam-cover { position: absolute; bottom: 15px; right: 15px; background: white; padding: 8px 12px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 14px; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+
+        /* منطقة الهوية الشخصية */
+        .profile-header { display: flex; flex-direction: column; align-items: center; margin-top: -85px; padding-bottom: 30px; position: relative; }
+        .avatar-container { position: relative; width: 168px; height: 168px; }
         
-        /* صورة الغلاف مع أيقونة الكاميرا */
-        .cover-section { position: relative; width: 100%; height: 320px; background: #ddd url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1000') center/cover; }
-        .cam-cover { position: absolute; bottom: 15px; right: 20px; background: white; padding: 8px 12px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 14px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+        /* الدرع الصغير المثبت على رأس القرص */
+        .crown-shield { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); width: 40px; height: 40px; z-index: 100; pointer-events: none; }
 
-        /* منطقة الهوية - نظام الفايسبوك */
-        .profile-container { display: flex; flex-direction: column; align-items: center; margin-top: -90px; padding-bottom: 50px; position: relative; }
-        .avatar-box { position: relative; width: 180px; height: 180px; }
-        
-        /* اللوجو على رأس القرص */
-        .crown-logo { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); width: 42px; height: 42px; background: white; border-radius: 50%; padding: 3px; box-shadow: 0 3px 8px rgba(0,0,0,0.2); z-index: 100; border: 1px solid #f0f0f0; }
-
-        .avatar-circle { width: 100%; height: 100%; border-radius: 50%; border: 5px solid var(--zv-blue); background: white; overflow: hidden; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .avatar-circle { width: 100%; height: 100%; border-radius: 50%; border: 4px solid white; background: white; overflow: hidden; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
         .avatar-circle img { width: 100%; height: 100%; object-fit: cover; }
         
-        /* كاميرا الحساب (القرص) */
-        .cam-avatar { position: absolute; bottom: 10px; right: 10px; width: 36px; height: 36px; background: #e4e6eb; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #050505; border: 3px solid white; cursor: pointer; z-index: 110; }
+        /* كاميرا القرص */
+        .cam-avatar { position: absolute; bottom: 8px; right: 8px; width: 36px; height: 36px; background: #e4e6eb; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 3px solid white; cursor: pointer; transition: 0.2s; }
 
-        /* الاسم والتوثيق */
-        .name-wrapper { display: flex; align-items: center; justify-content: center; gap: 5px; margin-top: 15px; }
-        .display-name { font-size: 22px; font-weight: 700; color: #050505; margin: 0; }
-        .verify-badge { color: var(--zv-blue); width: 22px; height: 22px; flex-shrink: 0; }
+        /* الاسم والتوثيق والمتابعين */
+        .user-info { text-align: center; margin-top: 15px; }
+        .name-row { display: flex; align-items: center; justify-content: center; gap: 6px; }
+        .name-txt { font-size: 32px; font-weight: 700; color: #050505; margin: 0; }
+        .verified-badge { color: var(--zv-blue); font-size: 18px; margin-top: 4px; }
 
-        .btn-follow { background: var(--zv-blue); color: white; border: none; padding: 10px 45px; border-radius: 8px; font-weight: 700; cursor: pointer; margin-top: 15px; }
+        .follower-count { color: #65676b; font-size: 16px; margin: 10px 0; font-weight: 600; }
+        .follower-count span { color: #050505; }
 
-        /* النوافذ */
-        .zv-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 9999; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
-        .zv-modal-content { background: white; padding: 35px; border-radius: 15px; width: 380px; text-align: center; border-top: 6px solid var(--zv-blue); }
-        .zv-modal-content input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; font-family: 'Cairo'; }
-        .btn-submit { background: var(--zv-blue); color: white; border: none; padding: 14px; width: 100%; border-radius: 8px; font-weight: 700; cursor: pointer; }
+        /* زر المتابعة فقط */
+        .btn-follow { background: var(--zv-blue); color: white; border: none; padding: 10px 40px; border-radius: 6px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 16px; margin-top: 15px; }
+        .btn-follow:hover { background: #075ce4; }
     </style>
 </head>
 <body>
 
 <nav class="nav-bar">
     <div class="nav-left">
-        <img src="https://via.placeholder.com/100" class="nav-logo" alt="Logo">
-        <a href="#" class="app-title">Zaren <span>Veto</span></a>
+        <div class="nav-logo-box">
+            <svg viewBox="0 0 100 100" class="shield-svg">
+                <path d="M50 0 L100 25 L100 75 L50 100 L0 75 L0 25 Z" />
+                <text x="50" y="70" text-anchor="middle" class="shield-z" style="font-size: 55px;">Z</text>
+            </svg>
+        </div>
+        <a href="#" class="app-title">Zaren Veto</a>
     </div>
     <div class="nav-icons">
-        <button class="nav-btn" onclick="toggleM('blockM')"><i class="fas fa-user-slash"></i></button>
-        <button class="nav-btn" onclick="toggleM('regM')"><i class="fas fa-user-plus"></i></button>
+        <button class="nav-btn"><i class="fas fa-search"></i></button>
+        <button class="nav-btn"><i class="fas fa-bars"></i></button>
     </div>
 </nav>
 
-<div class="main-wrapper">
-    <div class="cover-section">
+<div class="main-container">
+    <div class="cover-wrapper">
         <div class="cam-cover"><i class="fas fa-camera"></i> تعديل صورة الغلاف</div>
     </div>
     
-    <div class="profile-container">
-        <div class="avatar-box">
-            <img src="https://via.placeholder.com/100" class="crown-logo" alt="Logo">
-            <div class="avatar-circle">
-                <img src="https://via.placeholder.com/200" alt="Profile">
+    <div class="profile-header">
+        <div class="avatar-container">
+            <div class="crown-shield">
+                <svg viewBox="0 0 100 100" class="shield-svg">
+                    <path d="M50 0 L100 25 L100 75 L50 100 L0 75 L0 25 Z" />
+                    <text x="50" y="70" text-anchor="middle" class="shield-z">Z</text>
+                </svg>
             </div>
-            <div class="cam-avatar"><i class="fas fa-camera"></i></div>
+            <div class="avatar-circle">
+                <img src="https://via.placeholder.com/200" alt="Princess Narzine">
+            </div>
+            <div class="cam-avatar" title="تعديل الصورة الشخصية"><i class="fas fa-camera"></i></div>
         </div>
 
-        <div class="name-wrapper">
-            <h1 class="display-name">Princess Narzine Bani Hashem</h1>
-            <svg class="verify-badge" viewBox="0 0 24 24" fill="currentColor"><path d="M22.5 12.5c0-1.58-.8-3.04-2.12-3.88.59-1.58.2-3.38-1.01-4.59s-3.01-1.6-4.59-1.01C13.94 1.7 12.48.9 10.9.9s-3.04.8-3.88 2.12c-1.58-.59-3.38-.2-4.59 1.01s-1.6 3.01-1.01 4.59C.7 10.06-.1 11.52-.1 13.1s.8 3.04 2.12 3.88c-.59 1.58-.2 3.38 1.01 4.59s3.01 1.6 4.59 1.01c.84 1.32 2.3 2.12 3.88 2.12s3.04-.8 3.88-2.12c1.58.59 3.38.2 4.59-1.01s1.6-3.01 1.01-4.59c1.32-.84 2.12-2.3 2.12-3.88zM10.69 17.5l-4-4 1.41-1.41 2.59 2.58 6.58-6.59 1.41 1.41-7.99 8.01z"/></svg>
+        <div class="user-info">
+            <div class="name-row">
+                <h1 class="name-txt">Princess Narzine Bani Hashem</h1>
+                <i class="fas fa-check-circle verified-badge" title="حساب موثق"></i>
+            </div>
+            <div class="follower-count"><span>250k</span> followers • <span>0</span> following</div>
+            <button class="btn-follow"><i class="fas fa-user-plus"></i> Follow</button>
         </div>
-        
-        <p style="color:#65676b; font-weight:600; margin: 10px 0;">250k followers • 0 following</p>
-        <button class="btn-follow">Follow</button>
     </div>
 </div>
 
-<div class="zv-modal" id="regM">
-    <div class="zv-modal-content" id="formSide">
-        <h2 style="color:var(--zv-blue);">إنشاء حساب جديد</h2>
-        <form id="mainForm">
-            <input type="text" name="FullName" id="uInp" placeholder="الاسم الكامل" required>
-            <input type="email" name="Email" placeholder="البريد الإلكتروني" required>
-            <input type="password" name="Password" placeholder="كلمة السر" required>
-            <button type="submit" class="btn-submit">تفعيل الحساب</button>
-        </form>
-    </div>
-    <div class="zv-modal-content" id="successSide" style="display:none;">
-        <i class="fas fa-check-circle" style="font-size: 50px; color: #28a745; margin-bottom: 15px;"></i>
-        <h2>تم بنجاح!</h2>
-        <p>سيتم تفعيل حسابك خلال **5 دقائق**.</p>
-        <button onclick="location.reload()" class="btn-submit" style="background:#28a745;">حسناً</button>
-    </div>
-</div>
-
-<div class="zv-modal" id="blockM">
-    <div class="zv-modal-content">
-        <h2 style="color:#fa3e3e;">الحظر</h2>
-        <input type="text" id="blockInp" placeholder="اسم المستخدم للحظر...">
-        <button class="btn-submit" style="background:#fa3e3e;" onclick="addB()">تأكيد الحظر</button>
-        <button onclick="toggleM('blockM')" style="background:none; border:none; color:gray; margin-top:10px;">إغلاق</button>
-    </div>
-</div>
-
-<script>
-    let bl = JSON.parse(localStorage.getItem('zv_bl')) || [];
-    function toggleM(id) { 
-        const m = document.getElementById(id);
-        m.style.display = (m.style.display === 'flex') ? 'none' : 'flex';
-    }
-    function addB() {
-        const n = document.getElementById('blockInp').value.trim().toLowerCase();
-        if(n) { bl.push(n); localStorage.setItem('zv_bl', JSON.stringify(bl)); alert("تم الحظر."); }
-        toggleM('blockM');
-    }
-    document.getElementById('mainForm').onsubmit = function(e) {
-        e.preventDefault();
-        const n = document.getElementById('uInp').value.trim().toLowerCase();
-        if(bl.includes(n)) { alert("محظور!"); return; }
-        
-        fetch('https://formspree.io/f/xvzdgokp', {
-            method: 'POST',
-            body: new FormData(this),
-            headers: { 'Accept': 'application/json' }
-        }).then(() => {
-            document.getElementById('formSide').style.display = 'none';
-            document.getElementById('successSide').style.display = 'block';
-        });
-    };
-</script>
 </body>
 </html>
