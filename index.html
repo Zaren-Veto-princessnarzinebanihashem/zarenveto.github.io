@@ -3,18 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zaren Veto | Official</title>
+    <title>Zaren Veto | المنصة السيادية</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root { --zv-blue: #1877f2; --text-black: #000; }
         body { background-color: #f0f2f5; font-family: 'Cairo', sans-serif; margin: 0; overflow-x: hidden; }
 
-        /* شريط التنقل العلوي */
+        /* تسجيل الدخول */
+        #authOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--zv-blue); z-index: 5000; display: flex; align-items: center; justify-content: center; color: white; }
+        .auth-card { background: white; padding: 30px; border-radius: 15px; width: 350px; text-align: center; color: black; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
+        .auth-card input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
+
+        /* شريط التنقل */
         .nav-bar { background: white; height: 65px; display: flex; align-items: center; padding: 0 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; justify-content: space-between; border-bottom: 2px solid var(--zv-blue); }
-        .nav-logo { cursor: pointer; display: flex; align-items: center; gap: 10px; text-decoration: none; direction: ltr; }
+        .nav-logo { cursor: pointer; display: flex; align-items: center; gap: 10px; direction: ltr; }
         
-        /* الدرع المعتمد (مدبب من الأسفل) */
         .shield-custom { 
             background: var(--zv-blue); width: 38px; height: 44px; 
             display: flex; align-items: center; justify-content: center; 
@@ -23,152 +27,161 @@
             border: 1px solid white;
         }
 
-        /* القائمة الجانبية (الاعدادات والروابط) */
+        /* إدارة الصفحات والقوائم */
+        .page { display: none; max-width: 900px; margin: 0 auto; background: white; min-height: 100vh; }
+        .page.active { display: block; }
         .side-menu { position: fixed; right: -300px; top: 0; width: 280px; height: 100%; background: white; box-shadow: -2px 0 5px rgba(0,0,0,0.2); z-index: 2000; transition: 0.3s; padding: 20px; text-align: right; }
         .side-menu.active { right: 0; }
         .menu-item { padding: 15px; border-bottom: 1px solid #eee; cursor: pointer; color: var(--text-black); display: flex; align-items: center; gap: 10px; font-weight: 600; }
 
-        /* إدارة الصفحات */
-        .page { display: none; max-width: 900px; margin: 0 auto; background: white; min-height: 100vh; }
-        .page.active { display: block; }
-
         /* الملف الشخصي */
         .profile-header { display: flex; flex-direction: column; align-items: center; margin-top: -100px; padding-bottom: 40px; position: relative; }
-        .avatar-box { position: relative; width: 180px; height: 180px; }
-        .avatar-circle { width: 100%; height: 100%; border-radius: 50%; border: 6px solid var(--zv-blue); background: white; overflow: hidden; display: flex; align-items: center; justify-content: center; }
-        .avatar-circle img { width: 100%; height: 100%; object-fit: cover; cursor: pointer; }
-        .crown-shield { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); z-index: 100; transform: scale(1.2) translateX(-42%); }
-        
-        .name-container { display: flex; align-items: center; justify-content: center; gap: 6px; margin-top: 25px; direction: ltr; }
-        .user-name { font-size: 24px; font-weight: 700; color: #000; margin: 0; }
-        .fb-verify { color: var(--zv-blue); width: 24px; height: 24px; display: none; } /* مخفية افتراضياً للمستخدمين */
-        .is-admin .fb-verify { display: block; } /* تظهر لكِ فقط وللموثقين من قبلك */
+        .avatar-box { position: relative; width: 180px; height: 180px; background: #eee; border-radius: 50%; overflow: visible; }
+        .avatar-circle { width: 100%; height: 100%; border-radius: 50%; border: 6px solid var(--zv-blue); background: white url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%231877f2"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zM9.8 17.3l-4.2-4.1L7 11.8l2.8 2.7L17 7.4l1.4 1.4-8.6 8.5z"/></svg>') center/40% no-repeat; overflow: hidden; position: relative; }
+        .avatar-circle img { width: 100%; height: 100%; object-fit: cover; }
+        .crown-shield { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); z-index: 100; transform: scale(1.1) translateX(-45%); }
 
-        .follower-count { color: #65676b; font-size: 16px; font-weight: 600; margin: 10px 0; }
-
-        /* صندوق النشر */
-        .post-box { background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 15px; margin: 20px; text-align: right; }
-        .post-input { width: 100%; border: none; background: #f0f2f5; padding: 12px; border-radius: 20px; outline: none; font-family: 'Cairo'; margin-bottom: 10px; resize: none; color: black; box-sizing: border-box; }
-        .btn-post { background: var(--zv-blue); color: white; padding: 8px 25px; border: none; border-radius: 6px; font-weight: 700; cursor: pointer; }
-
-        /* زر Suivre */
-        .btn-follow { background: var(--zv-blue); color: white; border: none; padding: 10px 45px; border-radius: 8px; font-weight: 700; cursor: pointer; margin-top: 10px; }
-        
-        /* التنبيهات */
-        .admin-alert { background: #ffebe9; color: #d93025; padding: 10px; border-radius: 5px; margin: 10px; display: none; font-size: 14px; }
+        /* التفاعلات والمنشورات */
+        .post-card { background: white; border: 1px solid #ddd; border-radius: 8px; margin: 20px; padding: 15px; text-align: right; }
+        .post-actions { border-top: 1px solid #eee; margin-top: 10px; padding-top: 10px; display: flex; gap: 20px; }
+        .action-btn { cursor: pointer; color: #65676b; font-weight: 600; font-size: 14px; }
+        .action-btn:hover { color: var(--zv-blue); }
+        .verify-badge { color: var(--zv-blue); width: 20px; height: 20px; vertical-align: middle; }
     </style>
 </head>
-<body class="is-admin"> <nav class="nav-bar">
-    <div class="nav-logo" onclick="showPage('home')">
+<body>
+
+<div id="authOverlay">
+    <div class="auth-card">
+        <h2 style="color:var(--zv-blue)">انضم إلى Zaren Veto</h2>
+        <input type="text" id="regName" placeholder="الاسم الكامل">
+        <input type="email" id="regEmail" placeholder="البريد الإلكتروني">
+        <button onclick="startApp()" style="width:100%; padding:12px; background:var(--zv-blue); color:white; border:none; border-radius:8px; cursor:pointer; font-weight:bold;">فتح حساب الآن</button>
+        <p style="font-size:12px; margin-top:15px;">بالتسجيل أنت توافق على ميثاق المنصة السيادي.</p>
+    </div>
+</div>
+
+<nav class="nav-bar">
+    <div class="nav-logo" onclick="showPage('official')">
         <div class="shield-custom">Z</div>
         <span style="font-family:'Playfair Display'; color:var(--zv-blue); font-size:24px; font-weight:700;">Zaren Veto</span>
     </div>
-    <div style="display: flex; gap: 15px; align-items: center;">
-        <i class="fas fa-bars" style="cursor:pointer; font-size:22px; color:var(--zv-blue);" onclick="toggleMenu()"></i>
-    </div>
+    <i class="fas fa-bars" style="cursor:pointer; font-size:22px; color:var(--zv-blue);" onclick="toggleMenu()"></i>
 </nav>
 
 <div class="side-menu" id="sideMenu">
-    <h3 style="color:var(--zv-blue)">لوحة التحكم والروابط</h3>
     <div class="menu-item" onclick="showPage('home')"><i class="fas fa-home"></i> الصفحة الرئيسية</div>
-    <div class="menu-item" onclick="showPage('profile')"><i class="fas fa-user-circle"></i> حسابي الشخصي</div>
-    <div class="menu-item" onclick="copyLink('account')"><i class="fas fa-link"></i> رابط حسابي الخاص</div>
-    <div class="menu-item" onclick="copyLink('app')"><i class="fas fa-share-alt"></i> رابط التطبيق الرسمي</div>
-    <div class="menu-item" onclick="showPage('rules')"><i class="fas fa-gavel"></i> قوانين المنصة</div>
-    <div class="menu-item" onclick="toggleModal('adminModal')"><i class="fas fa-user-shield"></i> إدارة المحظورين</div>
-    <button onclick="toggleMenu()" style="margin-top:30px; width:100%; padding:12px; background:var(--zv-blue); color:white; border:none; border-radius:8px; font-weight:700;">إغلاق</button>
+    <div class="menu-item" onclick="showPage('profile')"><i class="fas fa-user"></i> حسابي الشخصي</div>
+    <div class="menu-item" onclick="showPage('official')"><i class="fas fa-shield-alt"></i> الصفحة الرسمية ZV</div>
+    <div class="menu-item" onclick="location.reload()"><i class="fas fa-sign-out-alt"></i> تسجيل الخروج</div>
+    <button onclick="toggleMenu()" style="margin-top:20px; width:100%; padding:10px; background:var(--zv-blue); color:white; border:none; border-radius:8px;">إغلاق</button>
 </div>
 
-<div id="profilePage" class="page active">
-    <div style="width:100%; height:300px; background:#ccc; position:relative; overflow:hidden;">
-        <img id="coverImg" src="https://via.placeholder.com/1200x400" style="width:100%; height:100%; object-fit:cover;">
-        <input type="file" id="coverUpload" style="display:none" onchange="updatePhoto(this, 'coverImg')">
-        <button onclick="document.getElementById('coverUpload').click()" style="position:absolute; bottom:10px; left:10px; padding:8px; background:white; border:none; border-radius:5px; cursor:pointer;"><i class="fas fa-camera"></i> تغيير الغلاف</button>
+<div id="profilePage" class="page">
+    <div style="width:100%; height:300px; background:#ddd; position:relative; overflow:hidden;">
+        <img id="myCoverImg" src="" style="width:100%; height:100%; object-fit:cover; display:none;">
+        <button onclick="document.getElementById('uploadCover').click()" style="position:absolute; bottom:15px; left:15px; padding:8px 15px; background:white; border:none; border-radius:5px; cursor:pointer; font-weight:bold;"><i class="fas fa-camera"></i> تعديل الغلاف</button>
+        <input type="file" id="uploadCover" hidden onchange="saveMedia(this, 'myCover')">
     </div>
     <div class="profile-header">
         <div class="avatar-box">
             <div class="shield-custom crown-shield">Z</div>
             <div class="avatar-circle">
-                <img id="profileImg" src="https://via.placeholder.com/200" onclick="document.getElementById('profileUpload').click()">
+                <img id="myAvatarImg" src="" style="display:none;">
             </div>
-            <input type="file" id="profileUpload" style="display:none" onchange="updatePhoto(this, 'profileImg')">
+            <button onclick="document.getElementById('uploadAvatar').click()" style="position:absolute; bottom:5px; right:5px; width:35px; height:35px; border-radius:50%; border:none; background:#e4e6eb; cursor:pointer;"><i class="fas fa-camera"></i></button>
+            <input type="file" id="uploadAvatar" hidden onchange="saveMedia(this, 'myAvatar')">
         </div>
-        <div class="name-container">
-            <h1 class="user-name">Princess Narzine Bani Hashem</h1>
-            <svg class="fb-verify" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zM9.8 17.3l-4.2-4.1L7 11.8l2.8 2.7L17 7.4l1.4 1.4-8.6 8.5z"/></svg>
+        <h2 id="displayName" style="margin-top:20px;">الاسم المستخدم</h2>
+        <div style="color:#65676b; font-weight:bold;">250k followers</div>
+    </div>
+</div>
+
+<div id="officialPage" class="page active">
+    <div style="padding:20px; text-align:center; border-bottom:1px solid #ddd;">
+        <div class="shield-custom" style="margin: 0 auto; width:60px; height:70px; font-size:35px;">Z</div>
+        <h1 style="color:var(--zv-blue); margin-bottom:5px;">Zaren Veto Official</h1>
+        <p style="color:black; font-weight:bold;">القناة الرسمية للمنصة والبرامج السيادية</p>
+    </div>
+    <div id="officialFeed">
+        <div class="post-card">
+            <strong>Zaren Veto Official <i class="fas fa-check-circle" style="color:var(--zv-blue)"></i></strong>
+            <p style="color:black">مرحباً بكم في الانطلاقة الرسمية لـ Zaren Veto. المنصة التي تحترم سيادتك وخصوصيتك.</p>
+            <div class="post-actions">
+                <span class="action-btn"><i class="far fa-thumbs-up"></i> إعجاب</span>
+                <span class="action-btn"><i class="far fa-comment"></i> تعليق</span>
+                <span class="action-btn"><i class="far fa-share-square"></i> مشاركة</span>
+            </div>
         </div>
-        <div class="follower-count">250k followers</div>
-        <button class="btn-follow">Suivre</button>
     </div>
 </div>
 
 <div id="homePage" class="page">
-    <div id="breachAlert" class="admin-alert">تنبيه: محاولة وصول غير مصرح بها للبيانات. تم إرسال إشعار للإيميل.</div>
-    <div class="post-box">
-        <textarea id="postInput" class="post-input" rows="3" placeholder="اكتب منشورك الرسمي (يمنع الروابط الخارجية)..."></textarea>
-        <div style="text-align: left;">
-            <button class="btn-post" onclick="handlePost()">نشر</button>
+    <div style="padding:20px;">
+        <div class="post-card" style="margin:0;">
+            <textarea id="postInput" style="width:100%; border:none; background:#f0f2f5; padding:15px; border-radius:10px; resize:none;" placeholder="انشر فكراً سيادياً..."></textarea>
+            <button onclick="addNewPost()" style="margin-top:10px; background:var(--zv-blue); color:white; border:none; padding:8px 25px; border-radius:5px; cursor:pointer; font-weight:bold;">نشر</button>
         </div>
+        <div id="userFeed"></div>
     </div>
-    <div id="mainFeed" style="padding: 0 20px;"></div>
-</div>
-
-<div id="rulesPage" class="page" style="padding:40px; color:black; text-align:right;">
-    <h2>ميثاق Zaren Veto</h2>
-    <p>1. يمنع منعاً باتاً نشر أي روابط لفيسبوك، واتساب، أو إنستغرام.</p>
-    <p>2. يمنع نشر الصور الافتراضية، الطبيعة، أو الحيوانات؛ فقط الصور الشخصية الحقيقية.</p>
-    <p>3. يمنع نشر أي محتوى يسيء للأديان أو محتوى غير أخلاقي/إباحي.</p>
-    <p>4. التجاوز يعرض المستخدم للحظر النهائي والفوري.</p>
 </div>
 
 <script>
-    const forbiddenWords = ['facebook', 'instagram', 'whatsapp', 'messenger', 'fb.com', 'wa.me', 'إباحي', 'دين'];
-
     function toggleMenu() { document.getElementById('sideMenu').classList.toggle('active'); }
-    
+
     function showPage(p) {
         document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
         document.getElementById(p + 'Page').classList.add('active');
-        if (p === 'home') toggleMenu();
+        if (p !== 'official') toggleMenu();
     }
 
-    function handlePost() {
-        const input = document.getElementById('postInput');
-        const text = input.value.toLowerCase();
-        
-        if (forbiddenWords.some(w => text.includes(w))) {
-            alert("⚠️ مخالفة: المنشور يحتوي على كلمات أو روابط محظورة سيادياً.");
-            return;
-        }
-        
-        if (input.value.trim() !== "") {
-            const post = document.createElement('div');
-            post.style.cssText = "background:white; padding:15px; border-radius:8px; margin-bottom:15px; border:1px solid #ddd; color:black; text-align:right;";
-            post.innerHTML = `<strong>المنصة الرسمية:</strong><br>${input.value}`;
-            document.getElementById('mainFeed').prepend(post);
-            input.value = "";
-        }
+    function startApp() {
+        const name = document.getElementById('regName').value;
+        if(name) {
+            localStorage.setItem('zv_user_name', name);
+            document.getElementById('displayName').innerText = name;
+            document.getElementById('authOverlay').style.display = 'none';
+            loadStoredMedia();
+        } else { alert("يرجى إدخال اسمك لفتح الحساب."); }
     }
 
-    function updatePhoto(input, imgId) {
+    function saveMedia(input, type) {
         if (input.files && input.files[0]) {
             const reader = new FileReader();
-            reader.onload = function(e) { document.getElementById(imgId).src = e.target.result; }
+            reader.onload = function(e) {
+                localStorage.setItem('zv_' + type, e.target.result);
+                loadStoredMedia();
+            };
             reader.readAsDataURL(input.files[0]);
         }
     }
 
-    function copyLink(type) {
-        const link = type === 'app' ? window.location.origin : window.location.href + "?user=official";
-        navigator.clipboard.writeText(link);
-        alert("تم نسخ الرابط المطلوب بنجاح.");
+    function loadStoredMedia() {
+        const avatar = localStorage.getItem('zv_myAvatar');
+        const cover = localStorage.getItem('zv_myCover');
+        const name = localStorage.getItem('zv_user_name');
+        
+        if(avatar) { document.getElementById('myAvatarImg').src = avatar; document.getElementById('myAvatarImg').style.display='block'; }
+        if(cover) { document.getElementById('myCoverImg').src = cover; document.getElementById('myCoverImg').style.display='block'; }
+        if(name) { document.getElementById('displayName').innerText = name; }
     }
 
-    // محاكاة حماية البيانات
-    function protectData() {
-        document.getElementById('breachAlert').style.display = 'block';
-        console.log("إرسال إيميل تنبيه للمسؤول...");
+    function addNewPost() {
+        const val = document.getElementById('postInput').value;
+        if(val.trim() === "") return;
+        const feed = document.getElementById('userFeed');
+        const post = document.createElement('div');
+        post.className = 'post-card';
+        post.innerHTML = `<strong>${localStorage.getItem('zv_user_name')}</strong><p style="color:black">${val}</p>
+            <div class="post-actions">
+                <span class="action-btn" onclick="this.style.color='#1877f2'"><i class="far fa-thumbs-up"></i> إعجاب</span>
+                <span class="action-btn"><i class="far fa-comment"></i> تعليق</span>
+            </div>`;
+        feed.prepend(post);
+        document.getElementById('postInput').value = "";
     }
+
+    window.onload = loadStoredMedia;
 </script>
 
 </body>
