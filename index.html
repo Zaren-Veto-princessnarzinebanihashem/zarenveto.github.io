@@ -1,125 +1,108 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, ImageBackground, Dimensions } from 'react-native';
-import { FontAwesome5, MaterialIcons } from '@expo/vector-icons';
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zaren Veto | Official Account</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { --fb-blue: #1877f2; --royal-blue: #002366; --bg: #f0f2f5; }
+        body { font-family: -apple-system, system-ui, sans-serif; background: var(--bg); margin: 0; padding: 0; }
+        
+        /* هيدر التطبيق */
+        .fb-header { background: #fff; height: 56px; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; border-bottom: 1px solid #ddd; position: sticky; top: 0; z-index: 1000; }
+        .app-title { color: var(--royal-blue); font-size: 24px; font-weight: bold; }
 
-const { width } = Dimensions.get('window');
+        /* منطقة الغلاف التفاعلية */
+        .cover-section { height: 230px; background: linear-gradient(135deg, var(--royal-blue), #0055ff); position: relative; cursor: pointer; display: block; }
+        .cover-section img { width: 100%; height: 100%; object-fit: cover; }
+        .cam-icon-cover { position: absolute; bottom: 12px; left: 12px; background: #e4e6eb; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid #ccc; color: #050505; }
 
-export default function ZarenVetoApp() {
-  const [profileImage, setProfileImage] = useState(null);
-  const [coverImage, setCoverImage] = useState(null);
+        /* البروفايل والدرع الملكي */
+        .profile-header { background: #fff; padding-bottom: 20px; text-align: center; position: relative; border-bottom: 1px solid #ddd; }
+        .avatar-container { position: relative; width: 170px; height: 170px; margin: -85px auto 0; }
+        .avatar-img { width: 100%; height: 100%; border-radius: 50%; border: 4px solid #fff; background: #ddd; object-fit: cover; display: block; }
+        
+        /* الدرع الملكي المعلق مع Z الأبيض */
+        .royal-shield-badge { 
+            position: absolute; top: 10px; right: 10px; width: 48px; height: 48px; 
+            background: var(--royal-blue); clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            border: 2px solid #fff; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: bold; font-size: 22px; z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
 
-  return (
-    <ScrollView style={styles.container}>
-      {/* منطقة غلاف فيسبوك التفاعلية */}
-      <ImageBackground 
-        source={{ uri: coverImage || 'https://via.placeholder.com/800x400' }} 
-        style={styles.cover}
-      >
-        <TouchableOpacity style={styles.camBtnCover}>
-          <FontAwesome5 name="camera" size={18} color="#050505" />
-          <Text style={styles.camText}>تعديل</Text>
-        </TouchableOpacity>
-      </ImageBackground>
+        .cam-icon-avatar { position: absolute; bottom: 8px; left: 12px; background: #e4e6eb; width: 34px; height: 34px; border-radius: 50%; border: 3px solid #fff; display: flex; align-items: center; justify-content: center; color: #050505; cursor: pointer; }
 
-      {/* تفاصيل الحساب الموثق */}
-      <View style={styles.profileSection}>
-        <View style={styles.avatarContainer}>
-          <Image 
-            source={{ uri: profileImage || 'https://via.placeholder.com/150' }} 
-            style={styles.avatar} 
-          />
-          
-          {/* الدرع الملكي المعلق مع حرف Z الأبيض */}
-          <View style={styles.royalShield}>
-             <Text style={styles.shieldText}>Z</Text>
-          </View>
+        /* الاسم والتوثيق المسنن (محمي برمجياً) */
+        .name-wrapper { display: flex; align-items: center; justify-content: center; margin-top: 12px; gap: 4px; }
+        .profile-name { font-size: 24px; font-weight: bold; color: #050505; margin: 0; line-height: 1; }
+        
+        /* علامة التوثيق المسننة الأصلية */
+        .fb-verified-star { 
+            color: var(--fb-blue); 
+            font-size: 19px; 
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 2px;
+        }
 
-          {/* كاميرا تغيير صورة الحساب */}
-          <TouchableOpacity style={styles.camBtnAvatar}>
-            <FontAwesome5 name="camera" size={16} color="#050505" />
-          </TouchableOpacity>
-        </View>
+        .stats { color: #65676b; font-size: 16px; margin-top: 8px; }
+        .stats b { color: #050505; }
 
-        {/* الاسم وعلامة التوثيق المسننة (مثل فيسبوك تماماً) */}
-        <View style={styles.nameContainer}>
-          <Text style={styles.userName}>Princess Narzine Bani Hashem</Text>
-          <View style={styles.badgeWrapper}>
-             <MaterialIcons name="verified" size={22} color="#1877f2" />
-          </View>
-        </View>
+        /* أزرار تفاعلية */
+        .action-btns { display: flex; gap: 8px; padding: 16px; justify-content: center; }
+        .btn { border: none; border-radius: 8px; padding: 10px; font-weight: bold; font-size: 15px; flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; }
+        .btn-blue { background: var(--fb-blue); color: #fff; }
+        .btn-gray { background: #e4e6eb; color: #050505; }
 
-        {/* إحصائيات المتابعين الاحترافية 250K */}
-        <View style={styles.statsWrapper}>
-            <Text style={styles.statsText}>
-              <Text style={styles.boldText}>250K</Text> متابع  •  <Text style={styles.boldText}>0</Text> متابعة
-            </Text>
-        </View>
+        input[type="file"] { display: none; }
+    </style>
+</head>
+<body>
 
-        {/* شريط الأدوات الرئيسي (أضف، رسالة، المزيد) */}
-        <View style={styles.actionRow}>
-          <TouchableOpacity style={styles.btnBlue}>
-            <FontAwesome5 name="user-plus" size={14} color="#fff" />
-            <Text style={styles.btnTextWhite}>متابعة</Text>
-          </TouchableOpacity>
-          
-          <TouchableOpacity style={styles.btnGray}>
-            <FontAwesome5 name="facebook-messenger" size={14} color="#000" />
-            <Text style={styles.btnTextBlack}>رسالة</Text>
-          </TouchableOpacity>
+    <div class="fb-header">
+        <div class="app-title">Zaren Veto</div>
+        <i class="fa-solid fa-magnifying-glass" style="font-size: 20px;"></i>
+    </div>
 
-          <TouchableOpacity style={styles.btnMore}>
-            <FontAwesome5 name="ellipsis-h" size={14} color="#000" />
-          </TouchableOpacity>
-        </View>
-      </View>
-      
-      {/* شريط المعلومات الإضافية */}
-      <View style={styles.infoSection}>
-          <View style={styles.infoRow}>
-              <FontAwesome5 name="briefcase" size={16} color="#65676b" />
-              <Text style={styles.infoText}>الحساب الرسمي الموثق لـ Zaren Veto</Text>
-          </View>
-      </View>
-    </ScrollView>
-  );
-}
+    <label for="upload-cover" class="cover-section">
+        <img id="display-cover" src="">
+        <div class="cam-icon-cover"><i class="fa-solid fa-camera"></i></div>
+    </label>
+    <input type="file" id="upload-cover" accept="image/*" onchange="previewImage(event, 'display-cover')">
 
-const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#f0f2f5' },
-  cover: { height: 230, justifyContent: 'flex-end', alignItems: 'flex-end', padding: 12 },
-  camBtnCover: { backgroundColor: '#e4e6eb', flexDirection: 'row', paddingVertical: 6, paddingHorizontal: 12, borderRadius: 6, alignItems: 'center', gap: 5 },
-  camText: { fontWeight: '600', fontSize: 14 },
-  
-  profileSection: { backgroundColor: '#fff', paddingBottom: 20, alignItems: 'center', borderBottomWidth: 1, borderBottomColor: '#ddd' },
-  avatarContainer: { marginTop: -90, position: 'relative' },
-  avatar: { width: 170, height: 170, borderRadius: 85, borderHighlight: 5, borderColor: '#fff', backgroundColor: '#ddd' },
-  
-  royalShield: {
-    position: 'absolute', top: 10, left: 15, width: 48, height: 48, 
-    backgroundColor: '#002366', transform: [{ rotate: '45deg' }], 
-    borderWidth: 2, borderColor: '#fff', justifyContent: 'center', alignItems: 'center',
-    shadowColor: "#000", shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.3, shadowRadius: 3.84, elevation: 5,
-  },
-  shieldText: { color: '#fff', fontWeight: 'bold', fontSize: 24, transform: [{ rotate: '-45deg' }] },
-  
-  camBtnAvatar: { position: 'absolute', bottom: 10, right: 10, backgroundColor: '#e4e6eb', padding: 10, borderRadius: 20, borderWidth: 3, borderColor: '#fff' },
-  
-  nameContainer: { flexDirection: 'row', alignItems: 'center', marginTop: 15, gap: 5 },
-  userName: { fontSize: 26, fontWeight: 'bold', color: '#050505' },
-  badgeWrapper: { justifyContent: 'center', alignItems: 'center' },
-  
-  statsWrapper: { marginTop: 8 },
-  statsText: { color: '#65676b', fontSize: 16 },
-  boldText: { color: '#050505', fontWeight: 'bold' },
-  
-  actionRow: { flexDirection: 'row', marginTop: 18, gap: 8, paddingHorizontal: 15, width: '100%' },
-  btnBlue: { flex: 5, backgroundColor: '#1877f2', flexDirection: 'row', padding: 10, borderRadius: 6, justifyContent: 'center', alignItems: 'center', gap: 8 },
-  btnGray: { flex: 5, backgroundColor: '#e4e6eb', flexDirection: 'row', padding: 10, borderRadius: 6, justifyContent: 'center', alignItems: 'center', gap: 8 },
-  btnMore: { flex: 1.5, backgroundColor: '#e4e6eb', padding: 10, borderRadius: 6, justifyContent: 'center', alignItems: 'center' },
-  btnTextWhite: { color: '#fff', fontWeight: 'bold', fontSize: 15 },
-  btnTextBlack: { color: '#050505', fontWeight: 'bold', fontSize: 15 },
+    <div class="profile-header">
+        <div class="avatar-container">
+            <div class="royal-shield-badge">Z</div>
+            <img id="display-avatar" src="" class="avatar-img">
+            
+            <label for="upload-avatar" class="cam-icon-avatar"><i class="fa-solid fa-camera"></i></label>
+            <input type="file" id="upload-avatar" accept="image/*" onchange="previewImage(event, 'display-avatar')">
+        </div>
 
-  infoSection: { padding: 15, backgroundColor: '#fff', marginTop: 10 },
-  infoRow: { flexDirection: 'row', alignItems: 'center', gap: 10 },
-  infoText: { fontSize: 15, color: '#050505' }
-});
+        <div class="name-wrapper">
+            <h1 class="profile-name">Princess Narzine Bani Hashem</h1>
+            <span class="fb-verified-star"><i class="fa-solid fa-certificate"></i><i class="fa-solid fa-check" style="position: absolute; font-size: 10px; color: white;"></i></span>
+        </div>
+
+        <div class="stats"><b>250K</b> متابع • <b>0</b> متابعة</div>
+
+        <div class="action-btns">
+            <button class="btn btn-blue"><i class="fa-solid fa-user-plus"></i> متابعة</button>
+            <button class="btn btn-gray"><i class="fa-brands fa-facebook-messenger"></i> مراسلة</button>
+        </div>
+    </div>
+
+    <script>
+        // وظيفة التفاعل الحي لتغيير الصور
+        function previewImage(event, elementId) {
+            var reader = new FileReader();
+            reader.onload = function() {
+                var output = document.getElementById(elementId);
+                output.src = reader.result;
+            }
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    </script>
+</body>
+</html>
