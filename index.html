@@ -3,156 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zaren Veto | Sovereign Edition</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Zaren Veto</title>
     <style>
-        :root { --zv-blue: #1877f2; --zv-bg: #f0f2f5; }
-        body { background-color: var(--zv-bg); font-family: 'Cairo', sans-serif; margin: 0; padding: 0; }
-
-        /* الشعار الملكي */
-        .royal-shield { 
-            background: var(--zv-blue); width: 40px; height: 50px; 
-            display: flex; align-items: center; justify-content: center; 
-            color: white; font-weight: bold; font-size: 20px;
-            clip-path: polygon(0% 0%, 100% 0%, 100% 75%, 50% 100%, 0% 75%);
-            border: 1px solid white;
+        :root {
+            --royal-blue: #002366; /* الأزرق الملكي المعتمد */
+            --fb-blue: #1877f2;
+            --fb-bg: #f0f2f5;
+            --white: #ffffff;
         }
 
-        /* واجهة التسجيل المستمرة */
-        #authLayer { position: fixed; inset: 0; background: var(--zv-bg); z-index: 9999; display: flex; align-items: center; justify-content: center; }
-        .auth-card { background: white; padding: 30px; border-radius: 12px; width: 380px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border-top: 6px solid var(--zv-blue); }
-        .auth-card input, .auth-card select { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 8px; font-family: 'Cairo'; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Helvetica, Arial, sans-serif; background-color: var(--fb-bg); margin: 0; padding: 0; }
 
-        /* الهيكل العام */
-        .nav-bar { background: white; height: 56px; display: flex; align-items: center; padding: 0 16px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100; justify-content: space-between; }
-        .container { max-width: 850px; margin: 0 auto; background: white; min-height: 100vh; }
-
-        /* منطقة الغلاف والكاميرا */
-        .cover-photo { width: 100%; height: 300px; background: #ccd0d5; position: relative; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px; overflow: hidden; }
-        .cover-photo img { width: 100%; height: 100%; object-fit: cover; }
-        .cam-btn-cover { position: absolute; bottom: 15px; left: 15px; background: white; padding: 8px 12px; border-radius: 6px; border: none; cursor: pointer; font-weight: bold; font-family: 'Cairo'; z-index: 10; }
-
-        /* البروفايل والقرص الأزرق */
-        .profile-header { display: flex; flex-direction: column; align-items: center; margin-top: -90px; padding-bottom: 25px; border-bottom: 1px solid #ddd; }
-        .avatar-container { position: relative; width: 175px; height: 175px; }
-        .avatar-circle { width: 100%; height: 100%; border-radius: 50%; border: 6px solid var(--zv-blue); background: white; overflow: hidden; position: relative; }
-        .avatar-circle img { width: 100%; height: 100%; object-fit: cover; }
+        /* الهيدر بنمط فيسبوك */
+        .header { background: var(--white); height: 56px; display: flex; align-items: center; padding: 0 16px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; justify-content: space-between; }
         
-        /* اللوغو الثابت الصغير على رأس القرص */
-        .fixed-logo-top { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); z-index: 30; scale: 0.65; pointer-events: none; }
+        .logo-section { display: flex; align-items: center; }
+        .app-name { color: var(--royal-blue); font-size: 24px; font-weight: bold; letter-spacing: -0.5px; }
+
+        /* منطقة البروفايل */
+        .profile-container { max-width: 940px; margin: 0 auto; background: var(--white); box-shadow: 0 1px 2px rgba(0,0,0,0.1); border-radius: 0 0 8px 8px; }
         
-        /* كاميرا البروفايل */
-        .cam-btn-avatar { position: absolute; bottom: 10px; right: 10px; background: #e4e6eb; border-radius: 50%; width: 36px; height: 36px; border: 3px solid white; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 25; }
+        .cover-photo { height: 350px; background: linear-gradient(135deg, #002366, #0044cc); border-radius: 0 0 8px 8px; position: relative; }
+        
+        .profile-header-info { padding: 0 32px 32px; display: flex; align-items: flex-end; margin-top: -110px; position: relative; }
 
-        /* الاسم والتوثيق */
-        .name-row { display: flex; align-items: center; margin-top: 15px; gap: 6px; }
-        .user-name { font-size: 24px; font-weight: 700; color: #050505; }
-        .verified-badge { fill: var(--zv-blue); width: 22px; height: 22px; }
+        /* صورة الحساب مع الشعار المعلق */
+        .avatar-wrapper { position: relative; }
+        .main-avatar { width: 168px; height: 168px; border-radius: 50%; border: 4px solid var(--white); background: #ddd; object-fit: cover; }
+        
+        /* الشعار الصغير المعلق على رأس صورة الحساب */
+        .mini-logo-overlay { 
+            position: absolute; top: 5px; left: 50%; transform: translateX(-50%);
+            width: 40px; height: 40px; background-color: var(--royal-blue); 
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            display: flex; justify-content: center; align-items: center; 
+            color: var(--white); font-weight: bold; font-size: 18px; border: 2px solid var(--white);
+        }
 
-        /* أزرار التفاعل */
-        .action-bar { display: flex; justify-content: space-around; padding: 10px; border-top: 1px solid #eee; margin-top: 15px; color: #65676b; font-weight: bold; cursor: pointer; }
+        .user-info-text { margin-right: 20px; padding-bottom: 20px; flex-grow: 1; text-align: right; }
+        
+        /* الاسم وعلامة التوثيق */
+        .name-wrapper { display: flex; align-items: center; gap: 8px; }
+        .user-name { font-size: 32px; font-weight: bold; color: #1c1e21; }
+        
+        .verified-badge { 
+            width: 24px; height: 24px; background-color: var(--fb-blue); 
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 14px; position: relative;
+        }
+        /* شكل التوثيق المسنن */
+        .verified-badge::after {
+            content: ''; position: absolute; width: 100%; height: 100%;
+            border: 2px dotted var(--fb-blue); border-radius: 50%; transform: scale(1.2);
+        }
+
+        /* إحصائيات المتابعة */
+        .stats-bar { display: flex; gap: 15px; margin-top: 8px; font-size: 16px; color: #65676b; }
+        .stats-bar b { color: #1c1e21; }
+
+        /* الأزرار بنمط فيسبوك */
+        .profile-actions { display: flex; gap: 8px; margin-top: 15px; }
+        .btn-blue { background: var(--fb-blue); color: white; border: none; padding: 8px 12px; border-radius: 6px; font-weight: 600; cursor: pointer; }
+        .btn-gray { background: #e4e6eb; color: black; border: none; padding: 8px 12px; border-radius: 6px; font-weight: 600; cursor: pointer; }
+
     </style>
 </head>
 <body>
 
-<div id="authLayer">
-    <div class="auth-card">
-        <div class="royal-shield" style="margin: 0 auto 15px">Z</div>
-        <h3 style="color:var(--zv-blue)">تسجيل الدخول السيادي</h3>
-        <input type="text" id="regName" placeholder="الاسم الكامل">
-        <input type="password" id="regPass" placeholder="كلمة المرور">
-        <button onclick="saveAndStart()" style="width:100%; padding:12px; background:var(--zv-blue); color:white; border:none; border-radius:8px; cursor:pointer; font-weight:bold; margin-top:10px;">دخول آمن</button>
-    </div>
-</div>
-
-<nav class="nav-bar">
-    <div style="display:flex; align-items:center; gap:8px;">
-        <div class="royal-shield" style="scale:0.6">Z</div>
-        <span style="font-weight:bold; color:var(--zv-blue); font-size:20px;">Zaren Veto</span>
-    </div>
-    <div style="display:flex; gap:20px; color:#65676b; font-size:20px;">
-        <i class="fas fa-home"></i>
-        <i class="fas fa-cog"></i>
-    </div>
-</nav>
-
-<div class="container">
-    <div class="cover-photo">
-        <img id="cvImg" src="">
-        <button class="cam-btn-cover" onclick="document.getElementById('fCv').click()"><i class="fas fa-camera"></i> تعديل الغلاف</button>
-        <input type="file" id="fCv" hidden onchange="storeImg(this, 'zv_cv')">
+    <div class="header">
+        <div class="logo-section">
+            <span class="app-name">Zaren Veto</span>
+        </div>
     </div>
 
-    <div class="profile-header">
-        <div class="avatar-container">
-            <div class="royal-shield fixed-logo-top">Z</div>
-            <div class="avatar-circle">
-                <img id="avImg" src="">
+    <div class="profile-container">
+        <div class="cover-photo"></div>
+        <div class="profile-header-info">
+            <div class="avatar-wrapper">
+                <div class="main-avatar"></div>
+                <div class="mini-logo-overlay">Z</div>
             </div>
-            <button class="cam-btn-avatar" onclick="document.getElementById('fAv').click()"><i class="fas fa-camera"></i></button>
-            <input type="file" id="fAv" hidden onchange="storeImg(this, 'zv_av')">
-        </div>
-
-        <div class="name-row">
-            <span class="user-name" id="uNameDisplay">Princess Narzine Bani Hashem</span>
-            <svg id="vBadge" class="verified-badge" viewBox="0 0 24 24" style="display:none;"><path d="M22.5 12.5c0-1.58-.8-3.04-2.12-3.88.31-1.58-.04-3.23-1-4.43-1.12-1.42-2.84-2.19-4.57-2.07-1.14-1.38-2.88-2.12-4.66-1.87-1.78-.25-3.52.49-4.66 1.87-1.73-.12-3.45.65-4.57 2.07-0.96 1.2-1.31 2.85-1 4.43-1.32.84-2.12 2.3-2.12 3.88 0 1.58.8 3.04 2.12 3.88-0.31 1.58.04 3.23 1 4.43 1.12 1.42 2.84 2.19 4.57 2.07 1.14 1.38 2.88 2.12 4.66 1.87 1.78.25 3.52-.49 4.66-1.87 1.73.12 3.45-.65 4.57-2.07 0.96-1.2 1.31-2.85 1-4.43 1.32-.84 2.12-2.3 2.12-3.88zm-12.72 4.5l-4.14-4.14 1.76-1.76 2.38 2.38 5.4-5.4 1.76 1.76-7.16 7.16z"></path></svg>
-        </div>
-        <div style="font-weight:bold; color:#65676b; margin-top:5px;">250k متابع • 0 متابعة</div>
-    </div>
-
-    <div style="padding:15px;">
-        <div style="background:#f0f2f5; padding:15px; border-radius:8px;">
-            <input type="text" placeholder="ماذا يدور في فكرك؟" style="width:100%; border:none; padding:10px; border-radius:20px; background:white; outline:none;">
-        </div>
-        <div class="action-bar">
-            <div><i class="far fa-thumbs-up"></i> أعجبني</div>
-            <div><i class="far fa-comment"></i> تعليق</div>
-            <div><i class="fas fa-share"></i> مشاركة</div>
+            <div class="user-info-text">
+                <div class="name-wrapper">
+                    <span class="user-name">HRH Princess Amb. Dr. Narzine Bani Hashem</span>
+                    <div class="verified-badge">✓</div>
+                </div>
+                <div class="stats-bar">
+                    <span><b>250K</b> متابع</span>
+                    <span><b>0</b> متابعة</span>
+                </div>
+                <div class="profile-actions">
+                    <button class="btn-blue">متابعة</button>
+                    <button class="btn-gray">رسالة</button>
+                </div>
+            </div>
         </div>
     </div>
-</div>
 
-<script>
-    function saveAndStart() {
-        const name = document.getElementById('regName').value;
-        if(!name) return alert("يرجى إدخال الاسم");
-        localStorage.setItem('zv_active_user', name);
-        localStorage.setItem('zv_logged', 'true');
-        loadData();
-    }
-
-    function storeImg(input, key) {
-        if (input.files && input.files[0]) {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                localStorage.setItem(key, e.target.result);
-                loadData();
-            };
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
-
-    function loadData() {
-        const isLogged = localStorage.getItem('zv_logged');
-        if(isLogged === 'true') {
-            document.getElementById('authLayer').style.display = 'none';
-            const name = localStorage.getItem('zv_active_user');
-            document.getElementById('uNameDisplay').innerText = name;
-            
-            // تفعيل التوثيق تلقائياً لاسمك
-            if(name.toLowerCase().includes("narzine bani hashem")) {
-                document.getElementById('vBadge').style.display = 'block';
-            }
-
-            const av = localStorage.getItem('zv_av');
-            const cv = localStorage.getItem('zv_cv');
-            if(av) document.getElementById('avImg').src = av;
-            if(cv) document.getElementById('cvImg').src = cv;
-        }
-    }
-
-    window.onload = loadData;
-</script>
 </body>
 </html>
