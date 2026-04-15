@@ -6,93 +6,93 @@
     <title>Zaren Veto</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --fb-blue: #1877f2; --royal-blue: #002366; --bg-gray: #f0f2f5; --text-main: #050505; }
-        body { font-family: -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; background-color: var(--bg-gray); margin: 0; padding: 0; }
-
-        /* شريط التنقل العلوي (مثل فيسبوك تماماً) */
-        .fb-header { background: white; height: 54px; display: flex; align-items: center; padding: 0 16px; justify-content: space-between; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        .header-left { display: flex; align-items: center; gap: 10px; }
-        .app-name-title { color: var(--royal-blue); font-size: 26px; font-weight: bold; letter-spacing: -1px; }
-        .header-icons { display: flex; gap: 12px; }
-        .icon-circle { background: #e4e6eb; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; }
-
-        /* منطقة الملف الشخصي */
-        .profile-card { background: white; margin-bottom: 12px; }
-        .cover-photo { height: 200px; background: linear-gradient(135deg, var(--royal-blue), #0044cc); position: relative; }
+        :root { --fb-blue: #1877f2; --royal: #002366; --bg: #f0f2f5; }
+        body { font-family: -apple-system, sans-serif; background: var(--bg); margin: 0; padding: 0; }
         
-        .profile-info-section { position: relative; padding: 0 16px 16px; margin-top: -60px; border-bottom: 1px solid #ced0d4; }
-        .avatar-container { position: relative; width: 160px; height: 160px; margin: 0 auto; }
-        .main-avatar { width: 160px; height: 160px; border-radius: 50%; border: 4px solid white; background: #ddd; }
+        /* شريط علوي تفاعلي */
+        .header { background: #fff; height: 55px; display: flex; align-items: center; justify-content: space-between; padding: 0 15px; border-bottom: 1px solid #ddd; position: sticky; top: 0; z-index: 100; }
+        .logo-text { color: var(--royal); font-size: 24px; font-weight: bold; }
+
+        /* الغلاف مع أيقونة كاميرا حقيقية تعمل */
+        .cover-container { height: 200px; background: linear-gradient(135deg, var(--royal), #0044cc); position: relative; overflow: hidden; }
+        .cover-img { width: 100%; height: 100%; object-fit: cover; }
+        .cam-btn-cover { position: absolute; bottom: 12px; right: 12px; background: rgba(0,0,0,0.6); color: white; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 14px; display: flex; align-items: center; gap: 5px; }
+
+        /* صورة الحساب مع الدرع الملكي وكاميرا التغيير */
+        .profile-header { background: #fff; padding-bottom: 20px; text-align: center; position: relative; }
+        .avatar-wrapper { position: relative; width: 160px; height: 160px; margin: -80px auto 0; }
+        .profile-pic { width: 160px; height: 160px; border-radius: 50%; border: 4px solid #fff; background: #ddd; object-fit: cover; }
         
-        /* الشعار الملكي المعلق (درع أزرق بوسطه Z أبيض) */
-        .royal-shield-badge { 
-            position: absolute; top: 5px; left: 15px; 
-            width: 42px; height: 42px; background: var(--royal-blue); 
-            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-            border: 2px solid white; display: flex; align-items: center; justify-content: center;
-            color: white; font-weight: bold; font-size: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        /* الدرع الملكي مع حرف Z الأبيض (تصميم دقيق) */
+        .royal-shield { 
+            position: absolute; top: 5px; left: 15px; width: 45px; height: 45px; 
+            background: var(--royal); clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            border: 2px solid #fff; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: bold; font-size: 20px; z-index: 10;
         }
 
-        .user-name-box { text-align: center; margin-top: 12px; }
-        .user-name { font-size: 24px; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 6px; }
-        .verified-icon { color: var(--fb-blue); font-size: 20px; }
+        /* كاميرا تغيير صورة الحساب */
+        .cam-btn-avatar { position: absolute; bottom: 10px; right: 10px; background: #e4e6eb; width: 36px; height: 36px; border-radius: 50%; border: 3px solid #fff; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #050505; }
 
-        /* إحصائيات المتابعة بصيغة 250K */
-        .follow-stats { color: #65676b; font-size: 16px; margin-top: 8px; text-align: center; }
-        .follow-stats b { color: black; }
+        /* الاسم والتوثيق الملتصق مباشرة */
+        .name-container { margin-top: 15px; display: flex; align-items: center; justify-content: center; gap: 5px; }
+        .user-name { font-size: 24px; font-weight: bold; color: #050505; margin: 0; }
+        .verified-badge { color: var(--fb-blue); font-size: 20px; }
+
+        .follower-count { color: #65676b; font-size: 16px; margin-top: 5px; }
+        .follower-count b { color: #050505; }
 
         /* أزرار التفاعل */
-        .action-buttons { display: flex; gap: 8px; margin-top: 15px; justify-content: center; }
-        .btn { border: none; border-radius: 6px; padding: 8px 30px; font-weight: 600; font-size: 15px; cursor: pointer; display: flex; align-items: center; gap: 6px; }
-        .btn-add { background: var(--fb-blue); color: white; }
-        .btn-msg { background: #e4e6eb; color: black; }
+        .action-btns { display: flex; justify-content: center; gap: 8px; padding: 15px; }
+        .btn-blue { background: var(--fb-blue); color: #fff; border: none; padding: 10px; border-radius: 6px; font-weight: bold; flex: 1; max-width: 160px; }
+        .btn-gray { background: #e4e6eb; color: #000; border: none; padding: 10px; border-radius: 6px; font-weight: bold; flex: 1; max-width: 160px; }
 
-        /* شريط الأدوات (مثل التطبيق) */
-        .fb-tabs { background: white; display: flex; justify-content: space-around; padding: 10px 0; border-bottom: 1px solid #ddd; }
-        .tab-item { color: #65676b; font-size: 20px; }
-        .active-tab { color: var(--fb-blue); border-bottom: 3px solid var(--fb-blue); padding-bottom: 5px; }
-
+        input[type="file"] { display: none; }
     </style>
 </head>
 <body>
 
-    <div class="fb-header">
-        <div class="header-left">
-            <div class="app-name-title">Zaren Veto</div>
+    <div class="header">
+        <div class="logo-text">Zaren Veto</div>
+        <div style="display: flex; gap: 15px;"><i class="fas fa-search"></i><i class="fas fa-bars"></i></div>
+    </div>
+
+    <div class="cover-container">
+        <img id="cover-display" class="cover-img">
+        <label for="cover-input" class="cam-btn-cover"><i class="fas fa-camera"></i> تعديل</label>
+        <input type="file" id="cover-input" accept="image/*" onchange="updateImage(event, 'cover-display')">
+    </div>
+
+    <div class="profile-header">
+        <div class="avatar-wrapper">
+            <div class="royal-shield">Z</div>
+            <img id="avatar-display" class="profile-pic">
+            <label for="avatar-input" class="cam-btn-avatar"><i class="fas fa-camera"></i></label>
+            <input type="file" id="avatar-input" accept="image/*" onchange="updateImage(event, 'avatar-display')">
         </div>
-        <div class="header-icons">
-            <div class="icon-circle"><i class="fas fa-search"></i></div>
-            <div class="icon-circle"><i class="fas fa-bars"></i></div>
+
+        <div class="name-container">
+            <h1 class="user-name">Princess Narzine Bani Hashem</h1>
+            <i class="fas fa-check-circle verified-badge"></i>
+        </div>
+
+        <div class="follower-count"><b>250K</b> متابع • <b>0</b> متابعة</div>
+
+        <div class="action-btns">
+            <button class="btn-blue"><i class="fas fa-plus"></i> متابعة</button>
+            <button class="btn-gray"><i class="fab fa-facebook-messenger"></i> رسالة</button>
         </div>
     </div>
 
-    <div class="fb-tabs">
-        <div class="tab-item active-tab"><i class="fas fa-home"></i></div>
-        <div class="tab-item"><i class="fas fa-user-friends"></i></div>
-        <div class="tab-item"><i class="fas fa-video"></i></div>
-        <div class="tab-item"><i class="fas fa-bell"></i></div>
-    </div>
-
-    <div class="profile-card">
-        <div class="cover-photo"></div>
-        <div class="profile-info-section">
-            <div class="avatar-container">
-                <div class="main-avatar"></div>
-                <div class="royal-shield-badge">Z</div>
-            </div>
-            <div class="user-name-box">
-                <div class="user-name">
-                    HRH Princess Narzine Bani Hashem
-                    <i class="fas fa-check-circle verified-icon"></i>
-                </div>
-                <div class="follow-stats"><b>250K</b> متابع • <b>0</b> متابعة</div>
-            </div>
-            <div class="action-buttons">
-                <button class="btn btn-add"><i class="fas fa-user-plus"></i> متابعة</button>
-                <button class="btn btn-msg"><i class="fab fa-facebook-messenger"></i> مراسلة</button>
-            </div>
-        </div>
-    </div>
+    <script>
+        function updateImage(event, displayId) {
+            const reader = new FileReader();
+            reader.onload = function() {
+                const output = document.getElementById(displayId);
+                output.src = reader.result;
+            }
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    </script>
 
 </body>
 </html>
