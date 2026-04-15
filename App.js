@@ -41,7 +41,7 @@ export default function App() {
         {/* 3. الاسم والتوثيق والمتابعين */}
         <View style={styles.infoSection}>
           <View style={styles.nameRow}>
-            <Text style={styles.userName}>Your Name</Text>
+<Text style={styles.userName}>Princess Narzine Bani Hashem</Text>
             {/* أيقونة التوثيق المسننة الزرقاء */}
             <MaterialCommunityIcons name="check-decagram" size={22} color="#1877F2" style={{marginLeft: 5}} />
           </View>
