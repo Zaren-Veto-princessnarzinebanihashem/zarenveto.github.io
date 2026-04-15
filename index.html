@@ -4,98 +4,92 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zaren Veto</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root {
-            --royal-blue: #002366; /* الأزرق الملكي المعتمد */
-            --fb-blue: #1877f2;
-            --fb-bg: #f0f2f5;
-            --white: #ffffff;
-        }
+        :root { --fb-blue: #1877f2; --royal-blue: #002366; --bg-gray: #f0f2f5; --text-main: #050505; }
+        body { font-family: -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; background-color: var(--bg-gray); margin: 0; padding: 0; }
 
-        body { font-family: 'Segoe UI', Helvetica, Arial, sans-serif; background-color: var(--fb-bg); margin: 0; padding: 0; }
+        /* شريط التنقل العلوي (مثل فيسبوك تماماً) */
+        .fb-header { background: white; height: 54px; display: flex; align-items: center; padding: 0 16px; justify-content: space-between; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .header-left { display: flex; align-items: center; gap: 10px; }
+        .app-name-title { color: var(--royal-blue); font-size: 26px; font-weight: bold; letter-spacing: -1px; }
+        .header-icons { display: flex; gap: 12px; }
+        .icon-circle { background: #e4e6eb; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; }
 
-        /* الهيدر بنمط فيسبوك */
-        .header { background: var(--white); height: 56px; display: flex; align-items: center; padding: 0 16px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; justify-content: space-between; }
+        /* منطقة الملف الشخصي */
+        .profile-card { background: white; margin-bottom: 12px; }
+        .cover-photo { height: 200px; background: linear-gradient(135deg, var(--royal-blue), #0044cc); position: relative; }
         
-        .logo-section { display: flex; align-items: center; }
-        .app-name { color: var(--royal-blue); font-size: 24px; font-weight: bold; letter-spacing: -0.5px; }
-
-        /* منطقة البروفايل */
-        .profile-container { max-width: 940px; margin: 0 auto; background: var(--white); box-shadow: 0 1px 2px rgba(0,0,0,0.1); border-radius: 0 0 8px 8px; }
+        .profile-info-section { position: relative; padding: 0 16px 16px; margin-top: -60px; border-bottom: 1px solid #ced0d4; }
+        .avatar-container { position: relative; width: 160px; height: 160px; margin: 0 auto; }
+        .main-avatar { width: 160px; height: 160px; border-radius: 50%; border: 4px solid white; background: #ddd; }
         
-        .cover-photo { height: 350px; background: linear-gradient(135deg, #002366, #0044cc); border-radius: 0 0 8px 8px; position: relative; }
-        
-        .profile-header-info { padding: 0 32px 32px; display: flex; align-items: flex-end; margin-top: -110px; position: relative; }
-
-        /* صورة الحساب مع الشعار المعلق */
-        .avatar-wrapper { position: relative; }
-        .main-avatar { width: 168px; height: 168px; border-radius: 50%; border: 4px solid var(--white); background: #ddd; object-fit: cover; }
-        
-        /* الشعار الصغير المعلق على رأس صورة الحساب */
-        .mini-logo-overlay { 
-            position: absolute; top: 5px; left: 50%; transform: translateX(-50%);
-            width: 40px; height: 40px; background-color: var(--royal-blue); 
+        /* الشعار الملكي المعلق (درع أزرق بوسطه Z أبيض) */
+        .royal-shield-badge { 
+            position: absolute; top: 5px; left: 15px; 
+            width: 42px; height: 42px; background: var(--royal-blue); 
             clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-            display: flex; justify-content: center; align-items: center; 
-            color: var(--white); font-weight: bold; font-size: 18px; border: 2px solid var(--white);
+            border: 2px solid white; display: flex; align-items: center; justify-content: center;
+            color: white; font-weight: bold; font-size: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
 
-        .user-info-text { margin-right: 20px; padding-bottom: 20px; flex-grow: 1; text-align: right; }
-        
-        /* الاسم وعلامة التوثيق */
-        .name-wrapper { display: flex; align-items: center; gap: 8px; }
-        .user-name { font-size: 32px; font-weight: bold; color: #1c1e21; }
-        
-        .verified-badge { 
-            width: 24px; height: 24px; background-color: var(--fb-blue); 
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            color: white; font-size: 14px; position: relative;
-        }
-        /* شكل التوثيق المسنن */
-        .verified-badge::after {
-            content: ''; position: absolute; width: 100%; height: 100%;
-            border: 2px dotted var(--fb-blue); border-radius: 50%; transform: scale(1.2);
-        }
+        .user-name-box { text-align: center; margin-top: 12px; }
+        .user-name { font-size: 24px; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 6px; }
+        .verified-icon { color: var(--fb-blue); font-size: 20px; }
 
-        /* إحصائيات المتابعة */
-        .stats-bar { display: flex; gap: 15px; margin-top: 8px; font-size: 16px; color: #65676b; }
-        .stats-bar b { color: #1c1e21; }
+        /* إحصائيات المتابعة بصيغة 250K */
+        .follow-stats { color: #65676b; font-size: 16px; margin-top: 8px; text-align: center; }
+        .follow-stats b { color: black; }
 
-        /* الأزرار بنمط فيسبوك */
-        .profile-actions { display: flex; gap: 8px; margin-top: 15px; }
-        .btn-blue { background: var(--fb-blue); color: white; border: none; padding: 8px 12px; border-radius: 6px; font-weight: 600; cursor: pointer; }
-        .btn-gray { background: #e4e6eb; color: black; border: none; padding: 8px 12px; border-radius: 6px; font-weight: 600; cursor: pointer; }
+        /* أزرار التفاعل */
+        .action-buttons { display: flex; gap: 8px; margin-top: 15px; justify-content: center; }
+        .btn { border: none; border-radius: 6px; padding: 8px 30px; font-weight: 600; font-size: 15px; cursor: pointer; display: flex; align-items: center; gap: 6px; }
+        .btn-add { background: var(--fb-blue); color: white; }
+        .btn-msg { background: #e4e6eb; color: black; }
+
+        /* شريط الأدوات (مثل التطبيق) */
+        .fb-tabs { background: white; display: flex; justify-content: space-around; padding: 10px 0; border-bottom: 1px solid #ddd; }
+        .tab-item { color: #65676b; font-size: 20px; }
+        .active-tab { color: var(--fb-blue); border-bottom: 3px solid var(--fb-blue); padding-bottom: 5px; }
 
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <div class="logo-section">
-            <span class="app-name">Zaren Veto</span>
+    <div class="fb-header">
+        <div class="header-left">
+            <div class="app-name-title">Zaren Veto</div>
+        </div>
+        <div class="header-icons">
+            <div class="icon-circle"><i class="fas fa-search"></i></div>
+            <div class="icon-circle"><i class="fas fa-bars"></i></div>
         </div>
     </div>
 
-    <div class="profile-container">
+    <div class="fb-tabs">
+        <div class="tab-item active-tab"><i class="fas fa-home"></i></div>
+        <div class="tab-item"><i class="fas fa-user-friends"></i></div>
+        <div class="tab-item"><i class="fas fa-video"></i></div>
+        <div class="tab-item"><i class="fas fa-bell"></i></div>
+    </div>
+
+    <div class="profile-card">
         <div class="cover-photo"></div>
-        <div class="profile-header-info">
-            <div class="avatar-wrapper">
+        <div class="profile-info-section">
+            <div class="avatar-container">
                 <div class="main-avatar"></div>
-                <div class="mini-logo-overlay">Z</div>
+                <div class="royal-shield-badge">Z</div>
             </div>
-            <div class="user-info-text">
-                <div class="name-wrapper">
-                    <span class="user-name">HRH Princess Amb. Dr. Narzine Bani Hashem</span>
-                    <div class="verified-badge">✓</div>
+            <div class="user-name-box">
+                <div class="user-name">
+                    HRH Princess Narzine Bani Hashem
+                    <i class="fas fa-check-circle verified-icon"></i>
                 </div>
-                <div class="stats-bar">
-                    <span><b>250K</b> متابع</span>
-                    <span><b>0</b> متابعة</span>
-                </div>
-                <div class="profile-actions">
-                    <button class="btn-blue">متابعة</button>
-                    <button class="btn-gray">رسالة</button>
-                </div>
+                <div class="follow-stats"><b>250K</b> متابع • <b>0</b> متابعة</div>
+            </div>
+            <div class="action-buttons">
+                <button class="btn btn-add"><i class="fas fa-user-plus"></i> متابعة</button>
+                <button class="btn btn-msg"><i class="fab fa-facebook-messenger"></i> مراسلة</button>
             </div>
         </div>
     </div>
